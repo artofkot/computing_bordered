@@ -122,10 +122,8 @@ class DA_Bimodule(object):
                     count_of_mismatches+=1
         return count_of_mismatches==0
 
-
-    def check_dd_is_0(self): 
+    def compute_dd(self):
         dd=collection_counter_of_Arrows_as_tuples(name='dd of identity bimodule')
-
         #contribution of double arrows
         for arrow1 in self.arrows:
             for arrow2 in self.arrows:
@@ -143,8 +141,10 @@ class DA_Bimodule(object):
                         arrow.out_alg_gen,arrow.out_mod_gen)
                     dd[ar]+=1
 
-        dd.show()
+        return dd
 
+    def check_dd_is_0(self):
+        dd=self.compute_dd()
         for arrow in dd:
             if dd[arrow] % 2 != 0:
                 return False
