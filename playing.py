@@ -32,9 +32,9 @@ class Generator(object): # over F2
 # I will assume that algebra is vector space over F2, and does not have differentials, 
 # which happens in the first symmetric product
 class DGAlgebra(object):
-    def __init__(self,gen,idem,multiplication_table):
-        self.gen=gen #dictionary of generators, where keys are their names
-        self.genset=self.gen.values() #list of generators
+    def __init__(self,gen_by_name,idem,multiplication_table):
+        self.gen_by_name=gen_by_name #dictionary of generators, where keys are their names
+        self.genset=self.gen_by_name.values() #list of generators
         self.idem=idem #dictionary with idempotents, where keys are their names
         self.idemset=idem.values() #list of idempotents
         self.multiplication_table=multiplication_table
@@ -70,9 +70,9 @@ class DGAlgebra(object):
 
 # conventions: D side is left, A side is right
 class DA_Bimodule(object):
-    def __init__(self,gen,arrows,algebra):
-        self.gen=gen
-        self.genset=self.gen.values()
+    def __init__(self,gen_by_name,arrows,algebra):
+        self.gen_by_name=gen_by_name
+        self.genset=self.gen_by_name.values()
         self.arrows=arrows
         self.algebra=algebra
     
@@ -153,7 +153,7 @@ class GeneratorA_tensor_M(object):
 #########################################################################################################
 
 def init_torus_algebra():
-    gen=AttrDict({
+    gen_by_name=AttrDict({
                 "r1": Generator("r1"),
                 "r2": Generator("r2"),
                 "r3": Generator("r3"),
@@ -165,60 +165,60 @@ def init_torus_algebra():
                 })
 
     idem=AttrDict({
-                    "i0": gen.i0,
-                    "i1": gen.i1,
+                    "i0": gen_by_name.i0,
+                    "i1": gen_by_name.i1,
                     })
-    multiplication_table={(gen.r1,gen.r2):gen.r12,
-                        (gen.r2,gen.r3):gen.r23,
-                        (gen.r1,gen.r23):gen.r123,
-                        (gen.r12,gen.r3):gen.r123,
-                        (gen.i0,gen.r1):gen.r1,
-                        (gen.i0,gen.r3):gen.r3,
-                        (gen.i0,gen.r12):gen.r12,
-                        (gen.i0,gen.r123):gen.r123,
-                        (gen.i0,gen.i0):gen.i0,
-                        (gen.i1,gen.i1):gen.i1,
-                        (gen.i1,gen.r23):gen.r23,
-                        (gen.i1,gen.r2):gen.r2,
-                        (gen.r1,gen.i1):gen.r1,
-                        (gen.r2,gen.i0):gen.r2,
-                        (gen.r3,gen.i1):gen.r3,
-                        (gen.r12,gen.i0):gen.r12,
-                        (gen.r23,gen.i1):gen.r23,
-                        (gen.r123,gen.i1):gen.r123,
+    multiplication_table={(gen_by_name.r1,gen_by_name.r2):gen_by_name.r12,
+                        (gen_by_name.r2,gen_by_name.r3):gen_by_name.r23,
+                        (gen_by_name.r1,gen_by_name.r23):gen_by_name.r123,
+                        (gen_by_name.r12,gen_by_name.r3):gen_by_name.r123,
+                        (gen_by_name.i0,gen_by_name.r1):gen_by_name.r1,
+                        (gen_by_name.i0,gen_by_name.r3):gen_by_name.r3,
+                        (gen_by_name.i0,gen_by_name.r12):gen_by_name.r12,
+                        (gen_by_name.i0,gen_by_name.r123):gen_by_name.r123,
+                        (gen_by_name.i0,gen_by_name.i0):gen_by_name.i0,
+                        (gen_by_name.i1,gen_by_name.i1):gen_by_name.i1,
+                        (gen_by_name.i1,gen_by_name.r23):gen_by_name.r23,
+                        (gen_by_name.i1,gen_by_name.r2):gen_by_name.r2,
+                        (gen_by_name.r1,gen_by_name.i1):gen_by_name.r1,
+                        (gen_by_name.r2,gen_by_name.i0):gen_by_name.r2,
+                        (gen_by_name.r3,gen_by_name.i1):gen_by_name.r3,
+                        (gen_by_name.r12,gen_by_name.i0):gen_by_name.r12,
+                        (gen_by_name.r23,gen_by_name.i1):gen_by_name.r23,
+                        (gen_by_name.r123,gen_by_name.i1):gen_by_name.r123,
                                     }
 
     return DGAlgebra(gen=gen,idem=idem,multiplication_table=multiplication_table)
 
 def init_identity_DA_bimodule(torus_algebra):
-    gen=AttrDict({
+    gen_by_name=AttrDict({
                 "x": Generator("x"),
                 "y": Generator("y")
                 })
-    gen.x.add_idems(torus_algebra.idem.i0,torus_algebra.idem.i0)
-    gen.y.add_idems(torus_algebra.idem.i1,torus_algebra.idem.i1)
+    gen_by_name.x.add_idems(torus_algebra.idem.i0,torus_algebra.idem.i0)
+    gen_by_name.y.add_idems(torus_algebra.idem.i1,torus_algebra.idem.i1)
 
     arrows=Set([
-        Arrow(              gen.x,(torus_algebra.gen.r12,),
-                torus_algebra.gen.r12,gen.x),
+        Arrow(              gen_by_name.x,(torus_algebra.gen_by_name.r12,),
+                torus_algebra.gen_by_name.r12,gen_by_name.x),
 
-        Arrow(              gen.y,(torus_algebra.gen.r23,),
-                torus_algebra.gen.r23,gen.y),
+        Arrow(              gen_by_name.y,(torus_algebra.gen_by_name.r23,),
+                torus_algebra.gen_by_name.r23,gen_by_name.y),
 
-        Arrow(              gen.x,(torus_algebra.gen.r1,),
-                torus_algebra.gen.r1,gen.y),
+        Arrow(              gen_by_name.x,(torus_algebra.gen_by_name.r1,),
+                torus_algebra.gen_by_name.r1,gen_by_name.y),
 
-        Arrow(              gen.y,(torus_algebra.gen.r2,),
-                torus_algebra.gen.r2,gen.x),
+        Arrow(              gen_by_name.y,(torus_algebra.gen_by_name.r2,),
+                torus_algebra.gen_by_name.r2,gen_by_name.x),
 
-        Arrow(              gen.x,(torus_algebra.gen.r123,),
-                torus_algebra.gen.r123,gen.y),
+        Arrow(              gen_by_name.x,(torus_algebra.gen_by_name.r123,),
+                torus_algebra.gen_by_name.r123,gen_by_name.y),
 
-        Arrow(              gen.x,(torus_algebra.gen.r3,),
-                torus_algebra.gen.r3,gen.y)
+        Arrow(              gen_by_name.x,(torus_algebra.gen_by_name.r3,),
+                torus_algebra.gen_by_name.r3,gen_by_name.y)
     ])
 
-    return DA_Bimodule(gen,arrows,torus_algebra)
+    return DA_Bimodule(gen_by_name,arrows,torus_algebra)
 
 
 #########################################################################################################
