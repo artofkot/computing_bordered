@@ -1,8 +1,25 @@
+# -*- coding: utf-8 -*- 
 from sets import Set
 import collections
 
+def arrow_as_a_tuple(in_mod_gen, in_alg_tuple, out_alg_gen, out_mod_gen):
+    return(in_mod_gen, in_alg_tuple, out_alg_gen, out_mod_gen)
+
+def print_arrow_from_tuple(tuplee):
+    print str(tuplee[0]) +'⊗'+ str(tuplee[1]) + "---->" + str(tuplee[2]) +'⊗'+ str(tuplee[3])
+
 def check_idempotents_match(l,m):
     return (l.idem.right==m.idem.left)
+
+class collection_counter_of_Arrows_as_tuples(collections.Counter):
+    def __init__(self,name):
+        self.name=name
+        pass
+
+    def show(self):
+        print '\nHere are all the arrows in ' + self.name +':'
+        for arrow_as_a_tuple in self:
+            print str(arrow_as_a_tuple[0]) +'⊗'+ str(arrow_as_a_tuple[1]) + "---->" + str(arrow_as_a_tuple[2]) +'⊗'+ str(arrow_as_a_tuple[3]) + '     *' + str(self[arrow_as_a_tuple])  
 
 class AttrDict(dict):
     def __init__(self, *args, **kwargs):
@@ -16,12 +33,21 @@ class Arrow(object):
         self.in_alg_tuple=in_alg_tuple
         self.out_alg_gen=out_alg_gen
 
+    def __repr__(self):
+        return str(self.in_mod_gen) +'⊗'+ str(self.in_alg_tuple) + "---->" + str(self.out_alg_gen) +'⊗'+ str(self.out_mod_gen)
+
+
 class Generator(object): # over F2
     def __init__(self, name):
         self.name = name
 
     def add_idems(self,idem1,idem2):
         self.idem=AttrDict({"left":idem1, "right":idem2})
+
+    def add_factorizations(self,*factorizations): #for algebra generators only!
+        self.factorizations=getattr(self,'factorizations', [])
+        for factorization in factorizations:
+            self.factorizations.append(factorization)
 
     def __str__(self):
         return self.name
@@ -42,7 +68,6 @@ class DGAlgebra(object):
         for gen in self.genset:
             for idem1 in self.idemset:
                 for idem2 in self.idemset:
-                    print 
                     if (self.multiplication_table.get((gen,idem2))==gen) and (self.multiplication_table.get((idem1,gen))==gen):
                         gen.add_idems(idem1,idem2)
 
@@ -61,10 +86,10 @@ class DGAlgebra(object):
         return x
 
     def show(self):
-        print('Generators of algebra with their idempotents:')
+        print('\nGenerators of algebra with their idempotents:')
         for gen in self.genset:
             print str(gen.idem.left) + ' ' + str(gen) + ' ' + str(gen.idem.right)
-        print('Multiplications:')
+        print('Multiplications in algebra:')
         for k in self.multiplication_table:
             print str(k[0]) + '*' + str(k[1]) + '=' + str(self.multiplication_table[k])
 
@@ -77,14 +102,13 @@ class DA_Bimodule(object):
         self.algebra=algebra
     
     def show(self):
-        print('Generators of Da bimodule with their idempotents:')
+        print('\nGenerators of DA bimodule with their idempotents:')
         for gen in self.genset:
             print str(gen.idem.left) + ' ' + str(gen) + ' ' + str(gen.idem.right)
 
         print('Actions of DA bimodule:')
         for arrow in self.arrows:
-            print "incoming:         " + str(arrow.in_mod_gen) +' '+ str(arrow.in_alg_tuple)
-            print "outgoing: " + str(arrow.out_alg_gen) +' '+ str(arrow.out_mod_gen) + '\n'
+            print arrow
 
     def check_matching_of_idempotents_in_action(self): 
         count_of_mismatches=0
@@ -100,28 +124,39 @@ class DA_Bimodule(object):
 
 
     def check_dd_is_0(self): 
-        dd=collections.Counter()
+        dd=collection_counter_of_Arrows_as_tuples(name='dd of identity bimodule')
 
         #contribution of double arrows
-        # for arrow1 in self.arrows
-        #     for arrow2 in self.arrows
-        #         if arrow1.in
+        for arrow1 in self.arrows:
+            for arrow2 in self.arrows:
+                a1a2=self.algebra.multiply(arrow1.out_alg_gen,arrow2.out_alg_gen)
+                if a1a2:
+                    dd[arrow_as_a_tuple(arrow1.in_mod_gen, arrow1.in_alg_tuple + arrow2.in_alg_tuple,
+                        a1a2,arrow2.out_mod_gen)]+=1
 
+        #contribution of factorizing algebra elements        
+        for arrow in self.arrows:
+            for index, a in enumerate(arrow.in_alg_tuple):
+                for factorization in getattr(a,'factorizations', []):
+                    new_tuple=arrow.in_alg_tuple[:index] + factorization + arrow.in_alg_tuple[index+1:]
+                    ar=arrow_as_a_tuple(arrow.in_mod_gen, new_tuple,
+                        arrow.out_alg_gen,arrow.out_mod_gen)
+                    dd[ar]+=1
 
-        #contribution of factorizing algebra elements
-        
+        dd.show()
+
         for arrow in dd:
-            if dd[arrow] % 2 != 0:  
+            if dd[arrow] % 2 != 0:
                 return False
         return True
 
     def check(self):
         if not self.check_matching_of_idempotents_in_action():
-            print "Something is wrong with idempotents!"
-        else: print "Idempotents match!"
+            print "\nSomething is wrong with idempotents!"
+        else: print "\nIdempotents match!"
         if not self.check_dd_is_0():
-            print "Something is wrong with dd=0!"
-        else: print "dd=0!"
+            print "\nSomething is wrong with dd=0!"
+        else: print "\ndd=0!"
 
 
     def differential_of_generator_and_a_tuple(self, gen1, alg_tuple): #gives element in AtensorM
@@ -163,6 +198,9 @@ def init_torus_algebra():
                 "i0": Generator("i0"),
                 "i1": Generator("i1"),
                 })
+    gen_by_name.r12.add_factorizations((gen_by_name.r1,gen_by_name.r2))
+    gen_by_name.r23.add_factorizations((gen_by_name.r2,gen_by_name.r3))
+    gen_by_name.r123.add_factorizations((gen_by_name.r1,gen_by_name.r23),(gen_by_name.r12,gen_by_name.r3))
 
     idem=AttrDict({
                     "i0": gen_by_name.i0,
@@ -188,7 +226,7 @@ def init_torus_algebra():
                         (gen_by_name.r123,gen_by_name.i1):gen_by_name.r123,
                                     }
 
-    return DGAlgebra(gen=gen,idem=idem,multiplication_table=multiplication_table)
+    return DGAlgebra(gen_by_name=gen_by_name,idem=idem,multiplication_table=multiplication_table)
 
 def init_identity_DA_bimodule(torus_algebra):
     gen_by_name=AttrDict({
