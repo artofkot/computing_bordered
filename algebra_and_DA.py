@@ -9,6 +9,8 @@ def print_arrow_from_tuple(tuplee):
     print str(tuplee[0]) +'⊗'+ str(tuplee[1]) + "---->" + str(tuplee[2]) +'⊗'+ str(tuplee[3])
 
 def check_idempotents_match(l,m):
+    if l==1: return True
+    if m==1: return True
     return (l.idem.right==m.idem.left)
 
 class collection_counter_of_Arrows_as_tuples(collections.Counter):
@@ -17,10 +19,10 @@ class collection_counter_of_Arrows_as_tuples(collections.Counter):
         pass
 
     def show(self):
-        print '\nHere are all the arrows in ' + self.name +':'
+        print '\n{\nHere are all the arrows in ' + self.name +':'
         for arrow_as_a_tuple in self:
             print str(arrow_as_a_tuple[0]) +'⊗'+ str(arrow_as_a_tuple[1]) + "---->" + str(arrow_as_a_tuple[2]) +'⊗'+ str(arrow_as_a_tuple[3]) + '     *' + str(self[arrow_as_a_tuple])  
-
+        print '}'
 class AttrDict(dict):
     def __init__(self, *args, **kwargs):
         super(AttrDict, self).__init__(*args, **kwargs)
@@ -36,6 +38,7 @@ class Arrow(object):
     def __repr__(self):
         return str(self.in_mod_gen) +'⊗'+ str(self.in_alg_tuple) + "---->" + str(self.out_alg_gen) +'⊗'+ str(self.out_mod_gen)
 
+    
 
 class Generator(object): # over F2
     def __init__(self, name):
@@ -86,7 +89,7 @@ class DGAlgebra(object):
         return x
 
     def show(self):
-        print('\nGenerators of algebra with their idempotents:')
+        print('========\nGenerators of algebra with their idempotents:')
         for gen in self.genset:
             print str(gen.idem.left) + ' ' + str(gen) + ' ' + str(gen.idem.right)
         print('Multiplications in algebra:')
@@ -95,31 +98,38 @@ class DGAlgebra(object):
 
 # conventions: D side is left, A side is right
 class DA_bimodule(object):
-    def __init__(self,gen_by_name,arrows,algebra):
+    def __init__(self,gen_by_name,arrows,algebra,name):
+        self.name=name
         self.gen_by_name=gen_by_name
         self.genset=self.gen_by_name.values()
         self.arrows=arrows
         self.algebra=algebra
     
     def show(self):
-        print('\nGenerators of DA bimodule with their idempotents:')
+        print '========\nGenerators of ' + self.name + ' with their idempotents:'
         for gen in self.genset:
             print str(gen.idem.left) + ' ' + str(gen) + ' ' + str(gen.idem.right)
 
-        print('Actions of DA bimodule:')
+        print '\nActions of' + self.name + ':'
         for arrow in self.arrows:
             print arrow
 
     def check_matching_of_idempotents_in_action(self): 
         count_of_mismatches=0
         for arrow in self.arrows:
-            if not check_idempotents_match(arrow.in_mod_gen,arrow.in_alg_tuple[0]):
+            # matching out algebra and out gen
+            if not check_idempotents_match(arrow.out_alg_gen,arrow.out_mod_gen): 
                 count_of_mismatches+=1
-            if not check_idempotents_match(arrow.out_alg_gen,arrow.out_mod_gen):
-                count_of_mismatches+=1
-            for i in range(len(arrow.in_alg_tuple)-1):
-                if not check_idempotents_match(arrow.in_alg_tuple[i],arrow.in_alg_tuple[i+1]):
-                    count_of_mismatches+=1
+            
+            for i in range(len(arrow.in_alg_tuple)):
+                if (i==0):
+                    #matching in algebra and gen
+                    if not check_idempotents_match(arrow.in_mod_gen,arrow.in_alg_tuple[0]): 
+                        count_of_mismatches+=1
+                else:
+                    #matching in algebras
+                    if not check_idempotents_match(arrow.in_alg_tuple[i-1],arrow.in_alg_tuple[i]): 
+                        count_of_mismatches+=1
         return count_of_mismatches==0
 
     def compute_dd(self):
@@ -128,9 +138,11 @@ class DA_bimodule(object):
         for arrow1 in self.arrows:
             for arrow2 in self.arrows:
                 a1a2=self.algebra.multiply(arrow1.out_alg_gen,arrow2.out_alg_gen)
-                if a1a2:
-                    dd[arrow_as_a_tuple(arrow1.in_mod_gen, arrow1.in_alg_tuple + arrow2.in_alg_tuple,
-                        a1a2,arrow2.out_mod_gen)]+=1
+                if a1a2 and arrow1.out_mod_gen==arrow2.in_mod_gen:
+                    ar=arrow_as_a_tuple(arrow1.in_mod_gen, arrow1.in_alg_tuple + arrow2.in_alg_tuple,
+                        a1a2,arrow2.out_mod_gen)
+                    # print_arrow_from_tuple(ar)
+                    dd[ar]+=1
 
         #contribution of factorizing algebra elements        
         for arrow in self.arrows:
@@ -139,6 +151,7 @@ class DA_bimodule(object):
                     new_tuple=arrow.in_alg_tuple[:index] + factorization + arrow.in_alg_tuple[index+1:]
                     ar=arrow_as_a_tuple(arrow.in_mod_gen, new_tuple,
                         arrow.out_alg_gen,arrow.out_mod_gen)
+                    # print_arrow_from_tuple(ar)
                     dd[ar]+=1
 
         return dd
@@ -152,12 +165,13 @@ class DA_bimodule(object):
         return True
 
     def check(self):
+        print "========\nHere we check that our " + self.name + " has all idempotents matching and dd=0:"
         if not self.check_matching_of_idempotents_in_action():
             print "\nSomething is wrong with idempotents!"
         else: print "\nIdempotents match!"
         if not self.check_dd_is_0():
-            print "\nSomething is wrong with dd=0!"
-        else: print "\ndd=0!"
+            print "Something is wrong with dd=0!"
+        else: print "dd=0!"
 
 
     def differential_of_generator_and_a_tuple(self, gen1, alg_tuple): #gives element in AtensorM
@@ -257,15 +271,15 @@ def init_identity_DA_bimodule(torus_algebra):
                 torus_algebra.gen_by_name.r3,gen_by_name.y)
     ])
 
-    return DA_bimodule(gen_by_name,arrows,torus_algebra)
+    return DA_bimodule(gen_by_name,arrows,torus_algebra,name="Identity_DA_bimodule")
 
 
 #########################################################################################################
 #########################################################################################################
 
 A=init_torus_algebra()
-Identity_DA=init_identity_DA_bimodule(A)
+Identity_DA_bimodule=init_identity_DA_bimodule(A)
 
 # A.show()
-# Identity_DA.show()
-# Identity_DA.check()
+# Identity_DA_bimodule.show()
+# Identity_DA_bimodule.check()

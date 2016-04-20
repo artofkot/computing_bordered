@@ -1,9 +1,9 @@
-from algebra_and_DA import A,Identity_DA,DA_bimodule
+from algebra_and_DA import *
 
 def init_m_Dehn_twist_DA_bimodule(A):
     gen_by_name=AttrDict({
-                "p": Generator("x"),
-                "q": Generator("y"),
+                "p": Generator("p"),
+                "q": Generator("q"),
                 "r": Generator("r")
                 })
     gen_by_name.p.add_idems(A.idem.i0,A.idem.i0)
@@ -42,7 +42,7 @@ def init_m_Dehn_twist_DA_bimodule(A):
                 A.gen_by_name.r23,gen_by_name.q)
     ])
 
-    return DA_bimodule(gen_by_name,arrows,A)
+    return DA_bimodule(gen_by_name,arrows,A,name="m_Dehn_twist_DA_bimodule")
 
 m_Dehn_twist_DA_bimodule=init_m_Dehn_twist_DA_bimodule(A)
 m_Dehn_twist_DA_bimodule.show()
