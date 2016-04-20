@@ -145,6 +145,7 @@ class DA_Bimodule(object):
 
     def check_dd_is_0(self):
         dd=self.compute_dd()
+        # dd.show()
         for arrow in dd:
             if dd[arrow] % 2 != 0:
                 return False
@@ -263,8 +264,8 @@ def init_identity_DA_bimodule(torus_algebra):
 #########################################################################################################
 
 A=init_torus_algebra()
-Id_DA=init_identity_DA_bimodule(A)
+Identity_DA=init_identity_DA_bimodule(A)
 
-A.show()
-Id_DA.show()
-Id_DA.check()
+# A.show()
+# Identity_DA.show()
+# Identity_DA.check()
