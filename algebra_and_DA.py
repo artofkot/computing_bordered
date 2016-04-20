@@ -94,7 +94,7 @@ class DGAlgebra(object):
             print str(k[0]) + '*' + str(k[1]) + '=' + str(self.multiplication_table[k])
 
 # conventions: D side is left, A side is right
-class DA_Bimodule(object):
+class DA_bimodule(object):
     def __init__(self,gen_by_name,arrows,algebra):
         self.gen_by_name=gen_by_name
         self.genset=self.gen_by_name.values()
@@ -145,7 +145,7 @@ class DA_Bimodule(object):
 
     def check_dd_is_0(self):
         dd=self.compute_dd()
-        # dd.show()
+        dd.show()
         for arrow in dd:
             if dd[arrow] % 2 != 0:
                 return False
@@ -257,7 +257,7 @@ def init_identity_DA_bimodule(torus_algebra):
                 torus_algebra.gen_by_name.r3,gen_by_name.y)
     ])
 
-    return DA_Bimodule(gen_by_name,arrows,torus_algebra)
+    return DA_bimodule(gen_by_name,arrows,torus_algebra)
 
 
 #########################################################################################################
