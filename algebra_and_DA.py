@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*- 
 from sets import Set
-import collections
+from collections import Counter
 
-def arrow_as_a_tuple(in_mod_gen, in_alg_tuple, out_alg_gen, out_mod_gen):
-    return(in_mod_gen, in_alg_tuple, out_alg_gen, out_mod_gen)
-
-def print_arrow_from_tuple(tuplee):
-    print str(tuplee[0]) +'⊗'+ str(tuplee[1]) + "---->" + str(tuplee[2]) +'⊗'+ str(tuplee[3])
+def arrow_to_str(tuplee):
+    return str(tuplee[0]) +'⊗'+ str(tuplee[1]) + "---->" + str(tuplee[2]) +'⊗'+ str(tuplee[3])
 
 def check_idempotents_match(l,m):
     if l==1: return True
     if m==1: return True
     return (l.idem.right==m.idem.left)
 
-class collection_counter_of_Arrows_as_tuples(collections.Counter):
+class bunch_of_arrows(Counter):
     def __init__(self,name):
         self.name=name
         pass
@@ -21,8 +18,9 @@ class collection_counter_of_Arrows_as_tuples(collections.Counter):
     def show(self):
         print '\n{\nHere are all the arrows in ' + self.name +':'
         for arrow_as_a_tuple in self:
-            print str(arrow_as_a_tuple[0]) +'⊗'+ str(arrow_as_a_tuple[1]) + "---->" + str(arrow_as_a_tuple[2]) +'⊗'+ str(arrow_as_a_tuple[3]) + '     *' + str(self[arrow_as_a_tuple])  
+            print arrow_to_str(arrow_as_a_tuple) + '     *' + str(self[arrow_as_a_tuple])  
         print '}'
+
 class AttrDict(dict):
     def __init__(self, *args, **kwargs):
         super(AttrDict, self).__init__(*args, **kwargs)
@@ -138,7 +136,7 @@ class DA_bimodule(object):
             for arrow2 in self.arrows:
                 a1a2=self.algebra.multiply(arrow1.out_alg_gen,arrow2.out_alg_gen)
                 if a1a2 and arrow1.out_mod_gen==arrow2.in_mod_gen:
-                    ar=arrow_as_a_tuple(arrow1.in_mod_gen, arrow1.in_alg_tuple + arrow2.in_alg_tuple,
+                    ar=(arrow1.in_mod_gen, arrow1.in_alg_tuple + arrow2.in_alg_tuple,
                         a1a2,arrow2.out_mod_gen)
                     # print_arrow_from_tuple(ar)
                     dd[ar]+=1
@@ -148,7 +146,7 @@ class DA_bimodule(object):
             for index, a in enumerate(arrow.in_alg_tuple):
                 for factorization in getattr(a,'factorizations', []):
                     new_tuple=arrow.in_alg_tuple[:index] + factorization + arrow.in_alg_tuple[index+1:]
-                    ar=arrow_as_a_tuple(arrow.in_mod_gen, new_tuple,
+                    ar=(arrow.in_mod_gen, new_tuple,
                         arrow.out_alg_gen,arrow.out_mod_gen)
                     # print_arrow_from_tuple(ar)
                     dd[ar]+=1
@@ -174,7 +172,7 @@ class DA_bimodule(object):
 
 
     def differential_of_generator_and_a_tuple(self, gen1, alg_tuple): #gives element in AtensorM
-        s=collections.Counter()
+        s=Counter()
         for arrow in self.arrows: 
             if (arrow.in_mod_gen==gen1 and arrow.in_alg_tuple==alg_tuple):
                 s[GeneratorA_tensor_M(arrow.out_alg_gen,arrow.out_mod_gen)]+=1
