@@ -5,18 +5,25 @@ from collections import Counter
 def arrow_to_str(tuplee):
     return str(tuplee[0]) +'⊗'+ str(tuplee[1]) + "---->" + str(tuplee[2]) +'⊗'+ str(tuplee[3])
 
+def in_mod_gen(arrow):
+    return arrow[0]
+
+def in_alg_tuple(arrow):
+    return arrow[1]
+
+def out_alg_gen(arrow):
+    return arrow[2]
+
+def out_mod_gen(arrow):
+    return arrow[3]
+
 def check_idempotents_match(l,m):
     if l==1: return True
     if m==1: return True
     return (l.idem.right==m.idem.left)
 
-class bunch_of_arrows(Counter):
-    def __init__(self,name):
-        self.name=name
-        pass
-
+class Bunch_of_arrows(Counter):
     def show(self):
-        print '\n{\nHere are all the arrows in ' + self.name +':'
         for arrow_as_a_tuple in self:
             print arrow_to_str(arrow_as_a_tuple) + '     *' + str(self[arrow_as_a_tuple])  
         print '}'
@@ -25,16 +32,6 @@ class AttrDict(dict):
     def __init__(self, *args, **kwargs):
         super(AttrDict, self).__init__(*args, **kwargs)
         self.__dict__ = self
-
-class Arrow(object):
-    def __init__(self, in_mod_gen, in_alg_tuple, out_alg_gen, out_mod_gen):
-        self.in_mod_gen=in_mod_gen
-        self.out_mod_gen=out_mod_gen
-        self.in_alg_tuple=in_alg_tuple
-        self.out_alg_gen=out_alg_gen
-
-    def __repr__(self):
-        return str(self.in_mod_gen) +'⊗'+ str(self.in_alg_tuple) + "---->" + str(self.out_alg_gen) +'⊗'+ str(self.out_mod_gen)
 
 
 class Generator(object): # over F2
@@ -109,45 +106,46 @@ class DA_bimodule(object):
 
         print '\nActions of' + self.name + ':'
         for arrow in self.arrows:
-            print arrow
+            print arrow_to_str(arrow)
 
     def check_matching_of_idempotents_in_action(self): 
         count_of_mismatches=0
         for arrow in self.arrows:
             # matching out algebra and out gen
-            if not check_idempotents_match(arrow.out_alg_gen,arrow.out_mod_gen): 
+            if not check_idempotents_match( out_alg_gen(arrow),out_mod_gen(arrow) ): 
                 count_of_mismatches+=1
             
-            for i in range(len(arrow.in_alg_tuple)):
+            for i in range(len(in_alg_tuple(arrow))):
                 if (i==0):
                     #matching in algebra and gen
-                    if not check_idempotents_match(arrow.in_mod_gen,arrow.in_alg_tuple[0]): 
+                    if not check_idempotents_match(in_mod_gen(arrow),in_alg_tuple(arrow)[0]): 
                         count_of_mismatches+=1
                 else:
                     #matching in algebras
-                    if not check_idempotents_match(arrow.in_alg_tuple[i-1],arrow.in_alg_tuple[i]): 
+                    if not check_idempotents_match(in_alg_tuple(arrow)[i-1],in_alg_tuple(arrow)[i]): 
                         count_of_mismatches+=1
         return count_of_mismatches==0
 
     def compute_dd(self):
-        dd=collection_counter_of_Arrows_as_tuples(name='dd of identity bimodule')
+        dd=Bunch_of_arrows()
         #contribution of double arrows
         for arrow1 in self.arrows:
             for arrow2 in self.arrows:
-                a1a2=self.algebra.multiply(arrow1.out_alg_gen,arrow2.out_alg_gen)
-                if a1a2 and arrow1.out_mod_gen==arrow2.in_mod_gen:
-                    ar=(arrow1.in_mod_gen, arrow1.in_alg_tuple + arrow2.in_alg_tuple,
-                        a1a2,arrow2.out_mod_gen)
-                    # print_arrow_from_tuple(ar)
+                a1a2=self.algebra.multiply(out_alg_gen(arrow1),out_alg_gen(arrow2))
+                if a1a2 and out_mod_gen(arrow1)==in_mod_gen(arrow2):
+                    ar=(in_mod_gen(arrow1), in_alg_tuple(arrow1) + in_alg_tuple(arrow2),a1a2,out_mod_gen(arrow2))
                     dd[ar]+=1
+
+
+
 
         #contribution of factorizing algebra elements        
         for arrow in self.arrows:
-            for index, a in enumerate(arrow.in_alg_tuple):
+            for index, a in enumerate(in_alg_tuple(arrow)):
                 for factorization in getattr(a,'factorizations', []):
-                    new_tuple=arrow.in_alg_tuple[:index] + factorization + arrow.in_alg_tuple[index+1:]
-                    ar=(arrow.in_mod_gen, new_tuple,
-                        arrow.out_alg_gen,arrow.out_mod_gen)
+                    new_tuple=in_alg_tuple(arrow)[:index] + factorization + in_alg_tuple(arrow)[index+1:]
+                    ar=(in_mod_gen(arrow), new_tuple,
+                        out_alg_gen(arrow),out_mod_gen(arrow))
                     # print_arrow_from_tuple(ar)
                     dd[ar]+=1
 
@@ -155,6 +153,8 @@ class DA_bimodule(object):
 
     def check_dd_is_0(self):
         dd=self.compute_dd()
+
+        print '\n{\nHere are all the arrows in dd'
         dd.show()
         for arrow in dd:
             if dd[arrow] % 2 != 0:
@@ -174,8 +174,8 @@ class DA_bimodule(object):
     def differential_of_generator_and_a_tuple(self, gen1, alg_tuple): #gives element in AtensorM
         s=Counter()
         for arrow in self.arrows: 
-            if (arrow.in_mod_gen==gen1 and arrow.in_alg_tuple==alg_tuple):
-                s[GeneratorA_tensor_M(arrow.out_alg_gen,arrow.out_mod_gen)]+=1
+            if (in_mod_gen(arrow)==gen1 and in_alg_tuple(arrow)==alg_tuple):
+                s[GeneratorA_tensor_M( out_alg_gen(arrow),out_mod_gen(arrow) )]+=1
         return s
 
 
@@ -248,25 +248,24 @@ def init_identity_DA_bimodule(torus_algebra):
     gen_by_name.x.add_idems(torus_algebra.idem.i0,torus_algebra.idem.i0)
     gen_by_name.y.add_idems(torus_algebra.idem.i1,torus_algebra.idem.i1)
 
-    arrows=Set([
-        Arrow(              gen_by_name.x,(torus_algebra.gen_by_name.r12,),
+    arrows=Bunch_of_arrows([
+        (              gen_by_name.x,(torus_algebra.gen_by_name.r12,),
                 torus_algebra.gen_by_name.r12,gen_by_name.x),
 
-        Arrow(              gen_by_name.y,(torus_algebra.gen_by_name.r23,),
+        (              gen_by_name.y,(torus_algebra.gen_by_name.r23,),
                 torus_algebra.gen_by_name.r23,gen_by_name.y),
 
-        Arrow(              gen_by_name.x,(torus_algebra.gen_by_name.r1,),
+        (              gen_by_name.x,(torus_algebra.gen_by_name.r1,),
                 torus_algebra.gen_by_name.r1,gen_by_name.y),
 
-        Arrow(              gen_by_name.y,(torus_algebra.gen_by_name.r2,),
+        (              gen_by_name.y,(torus_algebra.gen_by_name.r2,),
                 torus_algebra.gen_by_name.r2,gen_by_name.x),
 
-        Arrow(              gen_by_name.x,(torus_algebra.gen_by_name.r123,),
+        (              gen_by_name.x,(torus_algebra.gen_by_name.r123,),
                 torus_algebra.gen_by_name.r123,gen_by_name.y),
 
-        Arrow(              gen_by_name.x,(torus_algebra.gen_by_name.r3,),
-                torus_algebra.gen_by_name.r3,gen_by_name.y)
-    ])
+        (              gen_by_name.x,(torus_algebra.gen_by_name.r3,),
+                torus_algebra.gen_by_name.r3,gen_by_name.y)])
 
     return DA_bimodule(gen_by_name,arrows,torus_algebra,name="Identity_DA_bimodule")
 
