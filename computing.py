@@ -1,4 +1,4 @@
-from algebra_and_DA import *
+from algebra_and_DA import AttrDict, Generator,Bunch_of_arrows,torus_algebra
 
 def init_m_Dehn_twist_DA_bimodule(A):
     gen_by_name=AttrDict({
@@ -43,6 +43,8 @@ def init_m_Dehn_twist_DA_bimodule(A):
     ])
 
     return DA_bimodule(gen_by_name,arrows,A,name="m_Dehn_twist_DA_bimodule")
+
+A=torus_algebra
 
 m_Dehn_twist_DA_bimodule=init_m_Dehn_twist_DA_bimodule(A)
 m_Dehn_twist_DA_bimodule.show()

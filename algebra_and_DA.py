@@ -33,8 +33,7 @@ class AttrDict(dict):
         super(AttrDict, self).__init__(*args, **kwargs)
         self.__dict__ = self
 
-
-class Generator(object): # over F2
+class Generator(object):
     def __init__(self, name):
         self.name = name
 
@@ -269,11 +268,7 @@ def init_identity_DA_bimodule(torus_algebra):
 
     return DA_bimodule(gen_by_name,arrows,torus_algebra,name="Identity_DA_bimodule")
 
-
-#########################################################################################################
-#########################################################################################################
-
-A=init_torus_algebra()
+torus_algebra=init_torus_algebra()
 Identity_DA_bimodule=init_identity_DA_bimodule(A)
 
 # A.show()
