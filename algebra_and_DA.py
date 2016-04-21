@@ -20,10 +20,8 @@ class collection_counter_of_Arrows_as_tuples(collections.Counter):
 
     def show(self):
         print '\n{\nHere are all the arrows in ' + self.name +':'
-        for arrow in self:
-            print str(arrow) + '     *' + str(self[arrow])
-        # for arrow_as_a_tuple in self:
-        #     print str(arrow_as_a_tuple[0]) +'⊗'+ str(arrow_as_a_tuple[1]) + "---->" + str(arrow_as_a_tuple[2]) +'⊗'+ str(arrow_as_a_tuple[3]) + '     *' + str(self[arrow_as_a_tuple])  
+        for arrow_as_a_tuple in self:
+            print str(arrow_as_a_tuple[0]) +'⊗'+ str(arrow_as_a_tuple[1]) + "---->" + str(arrow_as_a_tuple[2]) +'⊗'+ str(arrow_as_a_tuple[3]) + '     *' + str(self[arrow_as_a_tuple])  
         print '}'
 class AttrDict(dict):
     def __init__(self, *args, **kwargs):
@@ -39,9 +37,6 @@ class Arrow(object):
 
     def __repr__(self):
         return str(self.in_mod_gen) +'⊗'+ str(self.in_alg_tuple) + "---->" + str(self.out_alg_gen) +'⊗'+ str(self.out_mod_gen)
-
-    def __eq__(self, other): 
-        return self.__dict__ == other.__dict__
 
 
 class Generator(object): # over F2
@@ -137,34 +132,13 @@ class DA_bimodule(object):
         return count_of_mismatches==0
 
     def compute_dd(self):
-        # dd=collection_counter_of_Arrows_as_tuples(name='dd of identity bimodule')
-        # #contribution of double arrows
-        # for arrow1 in self.arrows:
-        #     for arrow2 in self.arrows:
-        #         a1a2=self.algebra.multiply(arrow1.out_alg_gen,arrow2.out_alg_gen)
-        #         if a1a2 and arrow1.out_mod_gen==arrow2.in_mod_gen:
-        #             ar=arrow_as_a_tuple(arrow1.in_mod_gen, arrow1.in_alg_tuple + arrow2.in_alg_tuple,
-        #                 a1a2,arrow2.out_mod_gen)
-        #             # print_arrow_from_tuple(ar)
-        #             dd[ar]+=1
-
-        # #contribution of factorizing algebra elements        
-        # for arrow in self.arrows:
-        #     for index, a in enumerate(arrow.in_alg_tuple):
-        #         for factorization in getattr(a,'factorizations', []):
-        #             new_tuple=arrow.in_alg_tuple[:index] + factorization + arrow.in_alg_tuple[index+1:]
-        #             ar=arrow_as_a_tuple(arrow.in_mod_gen, new_tuple,
-        #                 arrow.out_alg_gen,arrow.out_mod_gen)
-        #             # print_arrow_from_tuple(ar)
-        #             dd[ar]+=1
-
-        dd=collection_counter_of_Arrows_as_tuples(name='dd of '+ self.name)
+        dd=collection_counter_of_Arrows_as_tuples(name='dd of identity bimodule')
         #contribution of double arrows
         for arrow1 in self.arrows:
             for arrow2 in self.arrows:
                 a1a2=self.algebra.multiply(arrow1.out_alg_gen,arrow2.out_alg_gen)
                 if a1a2 and arrow1.out_mod_gen==arrow2.in_mod_gen:
-                    ar=Arrow(arrow1.in_mod_gen, arrow1.in_alg_tuple + arrow2.in_alg_tuple,
+                    ar=arrow_as_a_tuple(arrow1.in_mod_gen, arrow1.in_alg_tuple + arrow2.in_alg_tuple,
                         a1a2,arrow2.out_mod_gen)
                     # print_arrow_from_tuple(ar)
                     dd[ar]+=1
@@ -174,11 +148,10 @@ class DA_bimodule(object):
             for index, a in enumerate(arrow.in_alg_tuple):
                 for factorization in getattr(a,'factorizations', []):
                     new_tuple=arrow.in_alg_tuple[:index] + factorization + arrow.in_alg_tuple[index+1:]
-                    ar=Arrow(arrow.in_mod_gen, new_tuple,
+                    ar=arrow_as_a_tuple(arrow.in_mod_gen, new_tuple,
                         arrow.out_alg_gen,arrow.out_mod_gen)
                     # print_arrow_from_tuple(ar)
                     dd[ar]+=1
-
 
         return dd
 

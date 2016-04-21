@@ -48,6 +48,3 @@ m_Dehn_twist_DA_bimodule=init_m_Dehn_twist_DA_bimodule(A)
 m_Dehn_twist_DA_bimodule.show()
 m_Dehn_twist_DA_bimodule.check()
 
-
-c=collections.Counter()
-a=Arrow(1,2,(32),3)
