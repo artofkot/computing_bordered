@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*- 
 from algebraic_structures.algebra import AttrDict, Generator, A
 from algebraic_structures.da_bimodule import  Bunch_of_arrows, DA_bimodule,cancel_pure_differential, box_tensor_product,arrow_to_str
+from algebraic_structures.da_bimodule import  randomly_cancel_until_possible, are_equal
 from algebraic_structures.morphism import check_df_is_0, composition
 
 def init_ID1(A):
@@ -31,7 +32,6 @@ def init_ID1(A):
                 A.gen_by_name.r3,gen_by_name.y)])
 
     return DA_bimodule(gen_by_name,arrows,A,name="ID1")
-
 def init_ID2(A):
     gen_by_name=AttrDict({
                 "x": Generator("x"),
@@ -82,7 +82,6 @@ def init_ID2(A):
         ])
 
     return DA_bimodule(gen_by_name,arrows,A,name="ID2")
-
 def init_M1(A):
     gen_by_name=AttrDict({
                 "p": Generator("p"),
@@ -134,48 +133,12 @@ ID1=init_ID1(A)
 ID2=init_ID2(A)
 M1=init_M1(A)
 
-F2=Bunch_of_arrows([
-        # from x
-        (                         ID2.gen_by_name.x,(),
-                1,ID1.gen_by_name.x),
-        (                           ID2.gen_by_name.y,(),
-                1,ID1.gen_by_name.y),
-        (              ID2.gen_by_name.z2,(),
-                A.gen_by_name.r3,ID1.gen_by_name.y)
-    ])
-#morphism from Tova's paper
-THETA=Bunch_of_arrows([
-        # from x
-        (                         ID1.gen_by_name.x,(),
-                1,M1.gen_by_name.p),
-        (                           ID1.gen_by_name.x,(),
-                A.gen_by_name.r3,M1.gen_by_name.r),
-        (              ID1.gen_by_name.x,(A.gen_by_name.r12,),
-                A.gen_by_name.r1,M1.gen_by_name.r),
-        (              ID1.gen_by_name.x,(A.gen_by_name.r123,),
-                A.gen_by_name.r1,M1.gen_by_name.q),
-        # from y
-        (              ID1.gen_by_name.y,(),
-                1,M1.gen_by_name.q),
-        (              ID1.gen_by_name.y,(A.gen_by_name.r2,),
-                1,M1.gen_by_name.r),
-        (              ID1.gen_by_name.y,(A.gen_by_name.r23,),
-                1,M1.gen_by_name.q)
-    ])
 
-F2_THETA=composition(F2,THETA,A)
-# F2_THETA.show()
+X=box_tensor_product(M1,ID2)
+Y=box_tensor_product(X,ID2)
 
-check_df_is_0(ID2,M1,F2_THETA)
-
-
-
-
-
-
-# X=box_tensor_product(M1,ID2)
-# X.show()
-# X.check()
+Y=randomly_cancel_until_possible(Y)
+print are_equal(M1,Y)
 
 # Y=cancel_pure_differential(X,(X.gen_by_name.r_z1,
 #                                                     (),1,

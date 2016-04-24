@@ -2,6 +2,7 @@
 from utility import AttrDict 
 from algebra import Generator, torus_algebra, check_idempotents_match_left_left, check_idempotents_match_left_right,check_idempotents_match_right_right
 from collections import Counter
+from itertools import permutations
 
 # conventions: D side is left, A side is right
 class DA_bimodule(object):
@@ -212,9 +213,32 @@ def cancel_pure_differential(DAbimodule_old,pure_differential):
 
     arrows_in_new_DA.delete_arrows_with_even_coeff()
 
-
-
     return DA_bimodule(generators_of_new_DA,arrows_in_new_DA,DAbimodule_old.algebra,name= DAbimodule_old.name +'_unperturbed')
+
+def randomly_cancel_until_possible(DA1):
+    there_is_diff=0
+    for arrow in DA1.arrows:
+        if (in_alg_tuple(arrow)==() and out_alg_gen(arrow)==1):
+            there_is_diff=1
+            canceled_DA=cancel_pure_differential(DA1,arrow)
+            return (randomly_cancel_until_possible(canceled_DA))
+
+    if there_is_diff==0:
+        return DA1
+
+
+def are_equal(DA1,DA2):
+    from morphism import check_df_is_0
+    if len(DA1.genset)!=len(DA2.genset): return False
+
+    perms=permutations(DA1.genset,len(DA1.genset))
+    for perm in perms:
+        f=Bunch_of_arrows()
+        for ind,gen in enumerate(perm):
+            f[(gen,(),
+                1,DA2.genset[ind])]+=1
+        if check_df_is_0: return True
+    return False
 
 
 

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*- 
 from algebraic_structures.algebra import AttrDict, Generator, A
 from algebraic_structures.da_bimodule import  Bunch_of_arrows, DA_bimodule,cancel_pure_differential, box_tensor_product,arrow_to_str
+from algebraic_structures.da_bimodule import  randomly_cancel_until_possible, are_equal
 from algebraic_structures.morphism import check_df_is_0, composition
 
 def init_ID1(A):
