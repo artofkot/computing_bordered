@@ -19,7 +19,7 @@ class DA_bimodule(object):
         for gen in self.genset:
             print str(gen.idem.left) + '___' + str(gen) + '___' + str(gen.idem.right)
 
-        print '\nActions of ' + self.name + ':' + ' (generators are ' + str(self.genset) + ')'
+        print '\nActions of ' + self.name + ':'
         for generator1 in self.genset:
             for generator2 in self.genset:
                 arrows=[arrow for arrow in self.arrows if (in_mod_gen(arrow)==generator1 and out_mod_gen(arrow)==generator2)]
@@ -323,4 +323,8 @@ def box_tensor_product(DAbimodule1,DAbimodule2):
 
     return DA_bimodule(generators_of_tensor_product_by_name,arrows_in_tensor_product,DAbimodule1.algebra,name= DAbimodule1.name +'⊠'+DAbimodule2.name)
 
-
+def box_tensor(*args):
+    tensor_prod=args[0]
+    for bimodule_n in args[1:]:
+        tensor_prod=box_tensor_product(tensor_prod,bimodule_n)
+    return tensor_prod
