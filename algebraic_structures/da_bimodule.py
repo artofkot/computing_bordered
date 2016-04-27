@@ -12,6 +12,7 @@ class DA_bimodule(object):
         self.genset=self.gen_by_name.values()
         #differentials are represented by bunch of arrows with coefficients 1
         self.arrows=arrows
+        self.arrows.delete_arrows_with_even_coeff()
         self.algebra=algebra
 
         dd=self.compute_dd()
