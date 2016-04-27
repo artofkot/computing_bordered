@@ -13,13 +13,21 @@ class DA_bimodule(object):
         #differentials are represented by bunch of arrows with coefficients 1
         self.arrows=arrows
         self.algebra=algebra
+
+        dd=self.compute_dd()
+        dd.delete_arrows_with_even_coeff()
+        if dd:
+            raise NameError("DA_bimodule " + self.name + " doesn't satisfy dd=0 !!!")
+
     
     def show(self):
-        print '========\nGenerators of ' + self.name + ' with their idempotents:'
+        print "=========="
+        print self.name + ':\n'
+        print 'Generators with their idempotents'
         for gen in self.genset:
             print str(gen.idem.left) + '___' + str(gen) + '___' + str(gen.idem.right)
 
-        print '\nActions of ' + self.name + ':'
+        print '\nActions'
         for generator1 in self.genset:
             for generator2 in self.genset:
                 arrows=[arrow for arrow in self.arrows if (in_mod_gen(arrow)==generator1 and out_mod_gen(arrow)==generator2)]
@@ -119,12 +127,12 @@ class DA_bimodule(object):
             print "Something is wrong with dd=0!"
         else: print "Everything is ok, dd=0!"
 
-    def differential_of_generator_and_a_tuple(self, gen1, alg_tuple): #gives element in AtensorM
-        s=Counter()
-        for arrow in self.arrows: 
-            if (in_mod_gen(arrow)==gen1 and in_alg_tuple(arrow)==alg_tuple):
-                s[GeneratorA_tensor_M( out_alg_gen(arrow),out_mod_gen(arrow) )]+=1
-        return s
+    # def differential_of_generator_and_a_tuple(self, gen1, alg_tuple): #gives element in AtensorM
+    #     s=Counter()
+    #     for arrow in self.arrows: 
+    #         if (in_mod_gen(arrow)==gen1 and in_alg_tuple(arrow)==alg_tuple):
+    #             s[GeneratorA_tensor_M( out_alg_gen(arrow),out_mod_gen(arrow) )]+=1
+    #     return s
 
 class GeneratorA_tensor_M(object):
     def __init__(self, alg_gen,mod_gen):
@@ -158,7 +166,11 @@ class Bunch_of_arrows(Counter):
             del self[ar]
 
 def arrow_to_str(tuplee):
-    return str(tuplee[0]) +'⊗'+ str(tuplee[1]) + "---->" + str(tuplee[2]) +'⊗'+ str(tuplee[3])
+    if len(tuplee)==4:
+        return str(tuplee[0]) +'⊗'+ str(tuplee[1]) + "---->" + str(tuplee[2]) +'⊗'+ str(tuplee[3])
+
+    if len(tuplee)==2:
+        return str(tuplee[0]) + "---->" + str(tuplee[1])    
 
 def in_mod_gen(arrow):
     return arrow[0]
@@ -226,6 +238,19 @@ def randomly_cancel_until_possible(DA1):
     if there_is_diff==0:
         return DA1
 
+def cancel_this_number_of_times(DA1,n):
+    if n==0: return DA1
+
+    there_is_diff=0
+    for arrow in DA1.arrows:
+        if (in_alg_tuple(arrow)==() and out_alg_gen(arrow)==1):
+            there_is_diff=1
+            canceled_DA=cancel_pure_differential(DA1,arrow)
+            return (cancel_this_number_of_times(canceled_DA,n-1))
+
+    if there_is_diff==0:
+        return DA1
+
 
 def are_equal(DA1,DA2):
     from morphism import check_df_is_0
@@ -242,37 +267,37 @@ def are_equal(DA1,DA2):
 
 
 
-
-def find_sequence_for_box_tensor_product(final_list_of_sequences_of_arrows,
-                                        needed_alg_tuple_to_finish_sequence,
-                                        current_gen,
-                                        arrows,
-                                        presequence_of_arrows_from_right):
-    # print 'loop starts, and this is needed sequence'
-    # print needed_alg_tuple_to_finish_sequence
-    # print len(needed_alg_tuple_to_finish_sequence)>0
-
-    if len(needed_alg_tuple_to_finish_sequence)>0:
-        arrows_to_continue=[arrow for arrow in arrows if (out_alg_gen(arrow)==needed_alg_tuple_to_finish_sequence[0] and current_gen==in_mod_gen(arrow))]
-        for arrow in arrows_to_continue:
-            # print 'presequence of arrows: '
-            # for ar in presequence_of_arrows_from_right:
-            #     print arrow_to_str(ar) + ', ',
-            # print '\n'
-            # print needed_alg_tuple_to_finish_sequence[1:]
-
-            find_sequence_for_box_tensor_product(final_list_of_sequences_of_arrows,
-                                                needed_alg_tuple_to_finish_sequence[1:],
-                                                out_mod_gen(arrow),
-                                                arrows,
-                                                presequence_of_arrows_from_right+[arrow])
-
-    if len(needed_alg_tuple_to_finish_sequence)==0:
-        final_list_of_sequences_of_arrows.append(presequence_of_arrows_from_right)
-
-
 #I assume that all 4 algebras here are the same
 def box_tensor_product(DAbimodule1,DAbimodule2):
+
+    def find_sequence_for_box_tensor_product(final_list_of_sequences_of_arrows,
+                                            needed_alg_tuple_to_finish_sequence,
+                                            current_gen,
+                                            arrows,
+                                            presequence_of_arrows_from_right):
+        # print 'loop starts, and this is needed sequence'
+        # print needed_alg_tuple_to_finish_sequence
+        # print len(needed_alg_tuple_to_finish_sequence)>0
+
+        if len(needed_alg_tuple_to_finish_sequence)>0:
+            arrows_to_continue=[arrow for arrow in arrows if (out_alg_gen(arrow)==needed_alg_tuple_to_finish_sequence[0] and current_gen==in_mod_gen(arrow))]
+            for arrow in arrows_to_continue:
+                # print 'presequence of arrows: '
+                # for ar in presequence_of_arrows_from_right:
+                #     print arrow_to_str(ar) + ', ',
+                # print '\n'
+                # print needed_alg_tuple_to_finish_sequence[1:]
+
+                find_sequence_for_box_tensor_product(final_list_of_sequences_of_arrows,
+                                                    needed_alg_tuple_to_finish_sequence[1:],
+                                                    out_mod_gen(arrow),
+                                                    arrows,
+                                                    presequence_of_arrows_from_right+[arrow])
+
+        if len(needed_alg_tuple_to_finish_sequence)==0:
+            final_list_of_sequences_of_arrows.append(presequence_of_arrows_from_right)
+
+
     #let's compute generators
     generators_of_tensor_product_by_name=AttrDict({})
     for generator_from_DA1 in DAbimodule1.genset:

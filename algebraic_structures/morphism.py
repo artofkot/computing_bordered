@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*- 
-from algebra import AttrDict, Generator, A
-from da_bimodule import  Bunch_of_arrows, DA_bimodule,cancel_pure_differential, box_tensor_product,arrow_to_str
+
 from da_bimodule import  out_mod_gen,in_mod_gen,in_alg_tuple,out_alg_gen
 
 # morphism is represented by bunch of arrows, where all coefficients are 1!
