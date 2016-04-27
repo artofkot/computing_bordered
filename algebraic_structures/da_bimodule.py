@@ -15,6 +15,8 @@ class DA_bimodule(object):
         self.arrows.delete_arrows_with_even_coeff()
         self.algebra=algebra
 
+        
+
         dd=self.compute_dd()
         dd.delete_arrows_with_even_coeff()
         if dd:
@@ -211,8 +213,8 @@ def cancel_pure_differential(DAbimodule_old,pure_differential):
     arrows_in_new_DA=Bunch_of_arrows(old_arrows_that_survive)
 
     #form new differentials
-    arrows_in_z2=[arrow for arrow in DAbimodule_old.arrows if (out_mod_gen(arrow)==z2 and pure_differential!=arrow)]
-    arrows_from_z1=[arrow for arrow in DAbimodule_old.arrows if (in_mod_gen(arrow)==z1 and pure_differential!=arrow)]
+    arrows_in_z2=[arrow for arrow in DAbimodule_old.arrows if (out_mod_gen(arrow)==z2 and in_mod_gen(arrow)!=z1 and in_mod_gen(arrow)!=z2)]
+    arrows_from_z1=[arrow for arrow in DAbimodule_old.arrows if (in_mod_gen(arrow)==z1 and out_mod_gen(arrow)!=z2 and out_mod_gen(arrow)!=z1)]
 
     for arrow_in_z2 in arrows_in_z2:
         for arrow_from_z1 in arrows_from_z1:
@@ -226,14 +228,16 @@ def cancel_pure_differential(DAbimodule_old,pure_differential):
 
     arrows_in_new_DA.delete_arrows_with_even_coeff()
 
-    return DA_bimodule(generators_of_new_DA,arrows_in_new_DA,DAbimodule_old.algebra,name= DAbimodule_old.name +'_unperturbed')
+    return DA_bimodule(generators_of_new_DA,arrows_in_new_DA,DAbimodule_old.algebra,name= DAbimodule_old.name +'_red')
 
 def randomly_cancel_until_possible(DA1):
     there_is_diff=0
     for arrow in DA1.arrows:
-        if (in_alg_tuple(arrow)==() and out_alg_gen(arrow)==1):
+        if (in_alg_tuple(arrow)==() and out_alg_gen(arrow)==1 and in_mod_gen(arrow)!=out_mod_gen(arrow)):
             there_is_diff=1
+
             canceled_DA=cancel_pure_differential(DA1,arrow)
+
             return (randomly_cancel_until_possible(canceled_DA))
 
     if there_is_diff==0:

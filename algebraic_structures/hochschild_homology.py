@@ -51,8 +51,8 @@ def cancel_differential(C,d):
     old_arrows_that_survive=[arrow for arrow in C.arrows if (arrow[0]!=z1 and arrow[1]!=z2  and arrow[1]!=z1 and arrow[0]!=z2 ) ]
     new_arrows=Bunch_of_arrows(old_arrows_that_survive)
     
-    arrows_in_z2=[arrow for arrow in C.arrows if (arrow[1]==z2 and d!=arrow)]
-    arrows_from_z1=[arrow for arrow in C.arrows if (arrow[0]==z1 and d!=arrow)]
+    arrows_in_z2=[arrow for arrow in C.arrows if (arrow[1]==z2 and arrow[0]!=z1 and arrow[0]!=z2)]
+    arrows_from_z1=[arrow for arrow in C.arrows if (arrow[0]==z1 and arrow[1]!=z1 and arrow[1]!=z2)]
 
     for arrow_in_z2 in arrows_in_z2:
         for arrow_from_z1 in arrows_from_z1:
@@ -60,7 +60,7 @@ def cancel_differential(C,d):
 
     new_arrows.delete_arrows_with_even_coeff()
 
-    C2=ChainComplex(new_generators,new_arrows, C.name + '_reduced')
+    C2=ChainComplex(new_generators,new_arrows, C.name + '_red')
     return C2
 
 
@@ -69,6 +69,7 @@ def homology_dim(C):
     C.arrows.delete_arrows_with_even_coeff()
     there_is_diff=0
     for arrow in C.arrows:
+        if arrow[0]==arrow[1]: continue
         there_is_diff=1
         canceled_C=cancel_differential(C,arrow)
         return (homology_dim(canceled_C))
@@ -154,6 +155,9 @@ def CH(DA1):
                     DA1=DA1,depth=1)
 
     return ChainComplex(generators, differentials, "CH("+DA1.name+")")
+
+def dimHH(DA1):
+    return homology_dim(CH(DA1))
 
 
 

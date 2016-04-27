@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*- 
-from algebra import AttrDict, Generator, A
-from da_bimodule import  Bunch_of_arrows, DA_bimodule,cancel_pure_differential, box_tensor,arrow_to_str
-from da_bimodule import  randomly_cancel_until_possible, are_equal, cancel_this_number_of_times
-from morphism import check_df_is_0, composition
-from hochschild_homology import is_bounded, CH, homology_dim, ChainComplex
+from algebraic_structures.algebra import AttrDict, Generator, A
+from algebraic_structures.da_bimodule import  Bunch_of_arrows, DA_bimodule,cancel_pure_differential, box_tensor,arrow_to_str
+from algebraic_structures.da_bimodule import  randomly_cancel_until_possible, are_equal, cancel_this_number_of_times
+from algebraic_structures.morphism import check_df_is_0, composition
+from algebraic_structures.hochschild_homology import is_bounded, CH, homology_dim, ChainComplex
 
 def init_ID1(A):
     gen_by_name=AttrDict({
@@ -269,6 +269,42 @@ def init_L_RHD(A):
 
     return DA_bimodule(gen_by_name,arrows,A,name="L_RHD")
 
+def init_L_LHD(A):
+    gen_by_name=AttrDict({
+                "p": Generator("p"),
+                "q": Generator("q"),
+                "s": Generator("s")
+                })
+    gen_by_name.p.add_idems(A.idem.i0,A.idem.i0)
+    gen_by_name.q.add_idems(A.idem.i1,A.idem.i1)
+    gen_by_name.s.add_idems(A.idem.i0,A.idem.i1)
+
+    arrows=Bunch_of_arrows([
+        # from q
+        (                         gen_by_name.q,(),
+                A.gen_by_name.r2,gen_by_name.s),
+        #from s
+        (              gen_by_name.s,(A.gen_by_name.r2,),
+                A.gen_by_name.r12,gen_by_name.p),
+        (              gen_by_name.s,(A.gen_by_name.r23,),
+                A.gen_by_name.r123,gen_by_name.q),
+        (              gen_by_name.s,(A.gen_by_name.r2,A.gen_by_name.r1),
+                A.gen_by_name.r1,gen_by_name.q),
+
+        #from p
+        (              gen_by_name.p,(A.gen_by_name.r1,),
+                1,gen_by_name.s),
+        (              gen_by_name.p,(A.gen_by_name.r123,),
+                A.gen_by_name.r123,gen_by_name.q),
+        (              gen_by_name.p,(A.gen_by_name.r3,),
+                A.gen_by_name.r3,gen_by_name.q),
+        (              gen_by_name.p,(A.gen_by_name.r12,A.gen_by_name.r1),
+                A.gen_by_name.r1,gen_by_name.q),
+        (              gen_by_name.p,(A.gen_by_name.r12,),
+                A.gen_by_name.r12,gen_by_name.p)
+    ])
+
+    return DA_bimodule(gen_by_name,arrows,A,name="L_LHD")
 
 # BIMODULES
 ID1=init_ID1(A) 
@@ -277,3 +313,4 @@ ID3=init_ID3(A)
 M_RHD=init_M_RHD(A)
 M_LHD=init_M_LHD(A)
 L_RHD=init_L_RHD(A)
+L_LHD=init_L_LHD(A)

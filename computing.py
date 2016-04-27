@@ -3,10 +3,10 @@ from algebraic_structures.algebra import AttrDict, Generator, A
 from algebraic_structures.da_bimodule import  Bunch_of_arrows, DA_bimodule,cancel_pure_differential, box_tensor,arrow_to_str
 from algebraic_structures.da_bimodule import  randomly_cancel_until_possible, are_equal, cancel_this_number_of_times
 from algebraic_structures.morphism import check_df_is_0, composition
-from algebraic_structures.hochschild_homology import is_bounded, CH, homology_dim, ChainComplex
-from visual import draw_DA_bimodule, draw_chain_complex
+from algebraic_structures.hochschild_homology import is_bounded, CH, homology_dim, ChainComplex, dimHH
+from algebraic_structures.visual import draw_DA_bimodule, draw_chain_complex
 
-from agebraic_structures.input_bimodules import ID1,ID2,ID3,M_RHD,M_LHD,L_RHD
+from input_bimodules import ID1,ID2,ID3,M_RHD,M_LHD,L_RHD,L_LHD
 
 # MORPHISMS
 F2=Bunch_of_arrows([
@@ -38,20 +38,28 @@ THETA=Bunch_of_arrows([
                 1,M_RHD.gen_by_name.q)
     ])
 
-# COMPUTATIONS
+########## COMPUTATIONS ##########
 
 # F2_THETA=composition(F2,THETA,A)
 # F2_THETA.show()
 # check_df_is_0(ID2,M_RHD,F2_THETA)
 
-X=box_tensor(ID2,L_RHD,M_RHD,ID3,ID3)
-# draw_DA_bimodule(X)
-C=CH(X)
-# draw_chain_complex(C)
-# C.show()
-print "\ndim(HH)=" + str(homology_dim(C))
+########### Pseudo_Anosov mapping class
+# PA=randomly_cancel_until_possible(box_tensor(M_RHD,L_RHD,L_RHD,L_RHD,L_RHD,L_RHD))
+# X=randomly_cancel_until_possible(box_tensor(PA))
+# X=box_tensor(ID3,X,ID3)
+# print "\ndim(HH)=" + str(dimHH(X))
 
-# C=ChainComplex([1,2,3,4],Bunch_of_arrows([(1,2),(2,3),(1,4),(4,3)]),'TEST')
-# C.show()
-# print "\ndim(H)=" + str(homology_dim(C))
 
+########### Boundary Dehn twist
+# AB=box_tensor(M_RHD,L_RHD)
+# BD=randomly_cancel_until_possible(box_tensor(AB,AB,AB))
+# BD=randomly_cancel_until_possible(box_tensor(BD,BD))
+# BD_bounded=box_tensor(ID3,BD,ID3)
+# # draw_DA_bimodule(BD)
+# print "\ndim(HH)=" + str(dimHH(BD_bounded))
+
+########### Any
+X=randomly_cancel_until_possible(box_tensor(M_RHD,M_RHD))
+X=box_tensor(ID3,X,ID3)
+print "\ndim(HH)=" + str(dimHH(X))

@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*- 
-from algebraic_structures.da_bimodule import  Bunch_of_arrows, DA_bimodule,cancel_pure_differential, box_tensor,arrow_to_str
-from algebraic_structures.da_bimodule import  randomly_cancel_until_possible, are_equal, cancel_this_number_of_times
-from algebraic_structures.da_bimodule  import in_mod_gen, out_mod_gen, in_alg_tuple, out_alg_gen
+from da_bimodule import  Bunch_of_arrows, DA_bimodule,cancel_pure_differential, box_tensor,arrow_to_str
+from da_bimodule import  randomly_cancel_until_possible, are_equal, cancel_this_number_of_times
+from da_bimodule  import in_mod_gen, out_mod_gen, in_alg_tuple, out_alg_gen
+import sys
 import networkx as nx
 import matplotlib.pyplot as plt
+import pygraphviz as gv
 
 def arrow_to_label(arrow):
     if len(arrow)==4:
@@ -17,24 +19,51 @@ def draw_DA_bimodule(DA1):
     for generator1 in DA1.genset:
         for generator2 in DA1.genset:
             arrows=[arrow for arrow in DA1.arrows if (in_mod_gen(arrow)==generator1 and out_mod_gen(arrow)==generator2)]
+
             if len(arrows)!=0:
                 x=''
                 for ind, arrow in enumerate(arrows):
                     x= x + str(out_alg_gen(arrow)) + '_' + str(in_alg_tuple(arrow))
-                    if ind+1!=len(arrows): x=x+'+'
-                    labels.append(x)
-                    graph.append((in_mod_gen(arrow),out_mod_gen(arrow)))
+                    if ind+1!=len(arrows): x=x+' + '
+                # print str(generator1) + '--' + x + '-->'+ str(generator2)
+                labels.append(x)
+                graph.append((in_mod_gen(arrow),out_mod_gen(arrow)))
 
 
     # labels=[arrow_to_label(arrow) for arrow in DA1.arrows]
     # graph=[(in_mod_gen(arrow),out_mod_gen(arrow)) for arrow in DA1.arrows]
 
+    # draw_graph_using_gv(graph, nodes=DA1.genset, labels=labels)
     draw_graph(graph, nodes=DA1.genset, labels=labels)
 
 def draw_chain_complex(C):
     graph=[(arrow[0],arrow[1]) for arrow in C.arrows]
+
+    # draw_graph_using_gv(graph, nodes=DA1.genset, labels=labels)
     draw_graph(graph,nodes=C.genset)
 
+
+
+# def draw_graph_using_gv(graph, nodes=None, labels=None, graph_layout='shell',
+#                node_size=0, node_color='blue', node_alpha=0.8,
+#                node_text_size=11,
+#                edge_label_text_size=7,
+#                edge_color='black', edge_alpha=1, edge_tickness=0.3,
+#                edge_text_pos=0.4,
+#                text_font='sans-serif'):
+#     G = gv.AGraph(strict=False,directed=True)
+
+#     for node in nodes:
+#         G.add_node(node,label=node.name)
+
+#     for i,edge in enumerate(graph):
+#         G.add_edge(edge,label=labels[i],
+#         arrowhead='open',
+#         fontname='Courier',
+#         fontsize='6')
+
+#     G.layout(prog='circo') # use dot
+#     G.draw('file.png')
 
 
 def draw_graph(graph, nodes=None, labels=None, graph_layout='shell',
@@ -46,7 +75,7 @@ def draw_graph(graph, nodes=None, labels=None, graph_layout='shell',
                text_font='sans-serif'):
 
     # create networkx graph
-    G=nx.DiGraph()
+    G=nx.MultiDiGraph()
 
     # add nodes
     if nodes!=None:
@@ -82,6 +111,7 @@ def draw_graph(graph, nodes=None, labels=None, graph_layout='shell',
     nx.draw_networkx_edge_labels(G, graph_pos, edge_labels=edge_labels, 
                                  label_pos=edge_text_pos,font_size=edge_label_text_size,
                                  font_color='red')
+    # A=nx.to_agraph(G)
 
     # show graph
     plt.show()
