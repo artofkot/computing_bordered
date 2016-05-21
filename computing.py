@@ -72,4 +72,8 @@ THETA=Bunch_of_arrows([
 ##### New algebra computations
 # g2_ID.show()
 # g2_M_RHD.show()
-g2_M_LHD.show()
+# g2_M_LHD.show()
+# g2_M_LHD.check()
+
+X=box_tensor_efficient(g2_M_RHD,g2_M_LHD)
+print are_equal(X,g2_ID)

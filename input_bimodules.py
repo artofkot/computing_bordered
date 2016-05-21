@@ -564,10 +564,9 @@ def init_g2_M_LHD(g2_A):
 
         ])
 
-    return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_M_RHD")
+    return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_M_LHD")
 
 
-g2_M_LHD
 
 # BIMODULES
 ID1=init_ID1(A) 
