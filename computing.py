@@ -6,7 +6,7 @@ from algebraic_structures.morphism import check_df_is_0, composition
 from algebraic_structures.hochschild_homology import is_bounded, CH, homology_dim, ChainComplex, dimHH
 from algebraic_structures.visual import draw_DA_bimodule, draw_chain_complex
 
-from input_bimodules import ID1,ID2,ID3,M_RHD,M_LHD,L_RHD,L_LHD, g2_ID , g2_M_RHD
+from input_bimodules import ID1,ID2,ID3,M_RHD,M_LHD,L_RHD,L_LHD, g2_ID , g2_M_RHD, g2_M_LHD
 
 # MORPHISMS
 F2=Bunch_of_arrows([
@@ -70,5 +70,6 @@ THETA=Bunch_of_arrows([
 
 
 ##### New algebra computations
-g2_ID.show()
-g2_M_RHD.show()
+# g2_ID.show()
+# g2_M_RHD.show()
+g2_M_LHD.show()
