@@ -19,7 +19,9 @@ class DA_bimodule(object):
 
         dd=self.compute_dd()
         dd.delete_arrows_with_even_coeff()
+
         if dd:
+            if name=="g2_M_RHD": dd.show()
             raise NameError("DA_bimodule " + self.name + " doesn't satisfy dd=0 !!!")
 
     
@@ -90,16 +92,18 @@ class DA_bimodule(object):
                     dd[ar]+=1
 
 
-
-
         #contribution of factorizing algebra elements        
         for arrow in self.arrows:
+
             for index, a in enumerate(in_alg_tuple(arrow)):
                 for factorization in getattr(a,'factorizations', []):
                     new_tuple=in_alg_tuple(arrow)[:index] + factorization + in_alg_tuple(arrow)[index+1:]
                     ar=(in_mod_gen(arrow), new_tuple,
                         out_alg_gen(arrow),out_mod_gen(arrow))
-                    # print_arrow_from_tuple(ar)
+                    # if arrow_to_str(arrow)=="x1⊗(r45,)---->r45⊗x3" and self.name=="g2_M_RHD": 
+                    #     print 'yo'
+                    #     print factorization
+                    #     print ar
                     dd[ar]+=1
 
         return dd
@@ -167,6 +171,8 @@ class Bunch_of_arrows(Counter):
 
         for ar in arrows_to_delete:
             del self[ar]
+
+
 
 def arrow_to_str(tuplee):
     if len(tuplee)==4:
@@ -357,4 +363,10 @@ def box_tensor(*args):
     tensor_prod=args[0]
     for bimodule_n in args[1:]:
         tensor_prod=box_tensor_product(tensor_prod,bimodule_n)
+    return tensor_prod
+
+def box_tensor_efficient(*args):
+    tensor_prod=args[0]
+    for bimodule_n in args[1:]:
+        tensor_prod=randomly_cancel_until_possible(box_tensor_product(tensor_prod,bimodule_n))
     return tensor_prod
