@@ -566,6 +566,420 @@ def init_g2_M_LHD(g2_A):
 
     return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_M_LHD")
 
+def init_g2_L_RHD(g2_A):
+    gen_by_name=AttrDict({
+                "x0": Generator("x0"),
+                "x1": Generator("x1"),
+                "x2": Generator("x2"),
+                "x3": Generator("x3"),
+                "s":Generator("s")
+                })
+    gen_by_name.x0.add_idems(g2_A.idem.i0,g2_A.idem.i0)
+    gen_by_name.x1.add_idems(g2_A.idem.i1,g2_A.idem.i1)
+    gen_by_name.x2.add_idems(g2_A.idem.i2,g2_A.idem.i2)
+    gen_by_name.x3.add_idems(g2_A.idem.i3,g2_A.idem.i3)
+    gen_by_name.s.add_idems(g2_A.idem.i0,g2_A.idem.i1)
+
+    arrows=Bunch_of_arrows([
+        (              gen_by_name.x2,(g2_A.gen_by_name.r56,),
+                g2_A.gen_by_name.r56,gen_by_name.x2),
+
+        (              gen_by_name.x3,(g2_A.gen_by_name.r67,),
+                g2_A.gen_by_name.r67,gen_by_name.x3),
+
+        (              gen_by_name.x2,(g2_A.gen_by_name.r5,),
+                g2_A.gen_by_name.r5,gen_by_name.x3),
+
+        (              gen_by_name.x3,(g2_A.gen_by_name.r6,),
+                g2_A.gen_by_name.r6,gen_by_name.x2),
+
+        (              gen_by_name.x2,(g2_A.gen_by_name.r567,),
+                g2_A.gen_by_name.r567,gen_by_name.x3),
+
+        (              gen_by_name.x2,(g2_A.gen_by_name.r7,),
+                g2_A.gen_by_name.r7,gen_by_name.x3),
+
+        # from x0
+        (                         gen_by_name.x0,(g2_A.gen_by_name.r3,),
+                g2_A.gen_by_name.r3,gen_by_name.x1),
+        (                           gen_by_name.x0,(g2_A.gen_by_name.r123,),
+                g2_A.gen_by_name.r123,gen_by_name.x1),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r1,),
+                g2_A.gen_by_name.r12,gen_by_name.s),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r12,),
+                g2_A.gen_by_name.r12,gen_by_name.x0),
+
+        (              gen_by_name.x0,(g2_A.gen_by_name.r12345,),
+                g2_A.gen_by_name.r12345,gen_by_name.x3),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r1234567,),
+                g2_A.gen_by_name.r1234567,gen_by_name.x3),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r345,),
+                g2_A.gen_by_name.r345,gen_by_name.x3),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r34567,),
+                g2_A.gen_by_name.r34567,gen_by_name.x3),
+
+        (              gen_by_name.x0,(g2_A.gen_by_name.r1234,),
+                g2_A.gen_by_name.r1234,gen_by_name.x2),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r123456,),
+                g2_A.gen_by_name.r123456,gen_by_name.x2),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r34,),
+                g2_A.gen_by_name.r34,gen_by_name.x2),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r3456,),
+                g2_A.gen_by_name.r3456,gen_by_name.x2),
+
+
+        #from x1
+        (              gen_by_name.x1,(g2_A.gen_by_name.r2,g2_A.gen_by_name.r1),
+                g2_A.gen_by_name.r2,gen_by_name.s),
+        (              gen_by_name.x1,(g2_A.gen_by_name.r2,g2_A.gen_by_name.r123),
+                g2_A.gen_by_name.r23,gen_by_name.x1),
+        (              gen_by_name.x1,(g2_A.gen_by_name.r2,g2_A.gen_by_name.r12),
+                g2_A.gen_by_name.r2,gen_by_name.x0),
+
+        (              gen_by_name.x1,(g2_A.gen_by_name.r45,),
+                g2_A.gen_by_name.r45,gen_by_name.x3),
+        (              gen_by_name.x1,(g2_A.gen_by_name.r4567,),
+                g2_A.gen_by_name.r4567,gen_by_name.x3),
+        (              gen_by_name.x1,(g2_A.gen_by_name.r2,g2_A.gen_by_name.r12345),
+                g2_A.gen_by_name.r2345,gen_by_name.x3),
+        (              gen_by_name.x1,(g2_A.gen_by_name.r2,g2_A.gen_by_name.r1234567),
+                g2_A.gen_by_name.r234567,gen_by_name.x3),
+
+        (              gen_by_name.x1,(g2_A.gen_by_name.r4,),
+                g2_A.gen_by_name.r4,gen_by_name.x2),
+        (              gen_by_name.x1,(g2_A.gen_by_name.r456,),
+                g2_A.gen_by_name.r456,gen_by_name.x2),
+        (              gen_by_name.x1,(g2_A.gen_by_name.r2,g2_A.gen_by_name.r1234),
+                g2_A.gen_by_name.r234,gen_by_name.x2),
+        (              gen_by_name.x1,(g2_A.gen_by_name.r2,g2_A.gen_by_name.r123456),
+                g2_A.gen_by_name.r23456,gen_by_name.x2),
+
+        #from s
+        (              gen_by_name.s,(g2_A.gen_by_name.r2,),
+                1,gen_by_name.x0),
+        (              gen_by_name.s,(),
+                g2_A.gen_by_name.r1,gen_by_name.x1),
+        (              gen_by_name.s,(g2_A.gen_by_name.r23,),
+                g2_A.gen_by_name.r3,gen_by_name.x1),
+
+        (              gen_by_name.s,(g2_A.gen_by_name.r234,),
+                g2_A.gen_by_name.r34,gen_by_name.x2),
+        (              gen_by_name.s,(g2_A.gen_by_name.r23456,),
+                g2_A.gen_by_name.r3456,gen_by_name.x2),
+
+        (              gen_by_name.s,(g2_A.gen_by_name.r2345,),
+                g2_A.gen_by_name.r345,gen_by_name.x3),
+        (              gen_by_name.s,(g2_A.gen_by_name.r234567,),
+                g2_A.gen_by_name.r34567,gen_by_name.x3)
+
+
+
+        ])
+
+    return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_L_RHD")
+
+
+def init_g2_L_LHD(g2_A):
+    gen_by_name=AttrDict({
+                "x0": Generator("x0"),
+                "x1": Generator("x1"),
+                "x2": Generator("x2"),
+                "x3": Generator("x3"),
+                "s":Generator("s")
+                })
+    gen_by_name.x0.add_idems(g2_A.idem.i0,g2_A.idem.i0)
+    gen_by_name.x1.add_idems(g2_A.idem.i1,g2_A.idem.i1)
+    gen_by_name.x2.add_idems(g2_A.idem.i2,g2_A.idem.i2)
+    gen_by_name.x3.add_idems(g2_A.idem.i3,g2_A.idem.i3)
+    gen_by_name.s.add_idems(g2_A.idem.i0,g2_A.idem.i1)
+
+    arrows=Bunch_of_arrows([
+        (              gen_by_name.x2,(g2_A.gen_by_name.r56,),
+                g2_A.gen_by_name.r56,gen_by_name.x2),
+
+        (              gen_by_name.x3,(g2_A.gen_by_name.r67,),
+                g2_A.gen_by_name.r67,gen_by_name.x3),
+
+        (              gen_by_name.x2,(g2_A.gen_by_name.r5,),
+                g2_A.gen_by_name.r5,gen_by_name.x3),
+
+        (              gen_by_name.x3,(g2_A.gen_by_name.r6,),
+                g2_A.gen_by_name.r6,gen_by_name.x2),
+
+        (              gen_by_name.x2,(g2_A.gen_by_name.r567,),
+                g2_A.gen_by_name.r567,gen_by_name.x3),
+
+        (              gen_by_name.x2,(g2_A.gen_by_name.r7,),
+                g2_A.gen_by_name.r7,gen_by_name.x3),
+
+        # from x0
+        (                         gen_by_name.x0,(g2_A.gen_by_name.r3,),
+                g2_A.gen_by_name.r3,gen_by_name.x1),
+        (                           gen_by_name.x0,(g2_A.gen_by_name.r123,),
+                g2_A.gen_by_name.r123,gen_by_name.x1),
+        (                           gen_by_name.x0,(g2_A.gen_by_name.r12,g2_A.gen_by_name.r1),
+                g2_A.gen_by_name.r1,gen_by_name.x1),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r1,),
+                1,gen_by_name.s),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r12,),
+                g2_A.gen_by_name.r12,gen_by_name.x0),
+
+        (              gen_by_name.x0,(g2_A.gen_by_name.r12345,),
+                g2_A.gen_by_name.r12345,gen_by_name.x3),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r1234567,),
+                g2_A.gen_by_name.r1234567,gen_by_name.x3),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r345,),
+                g2_A.gen_by_name.r345,gen_by_name.x3),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r34567,),
+                g2_A.gen_by_name.r34567,gen_by_name.x3),
+
+        (              gen_by_name.x0,(g2_A.gen_by_name.r1234,),
+                g2_A.gen_by_name.r1234,gen_by_name.x2),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r123456,),
+                g2_A.gen_by_name.r123456,gen_by_name.x2),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r34,),
+                g2_A.gen_by_name.r34,gen_by_name.x2),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r3456,),
+                g2_A.gen_by_name.r3456,gen_by_name.x2),
+
+
+        #from x1
+        (              gen_by_name.x1,(),
+                g2_A.gen_by_name.r2,gen_by_name.s),
+
+        (              gen_by_name.x1,(g2_A.gen_by_name.r45,),
+                g2_A.gen_by_name.r45,gen_by_name.x3),
+        (              gen_by_name.x1,(g2_A.gen_by_name.r4567,),
+                g2_A.gen_by_name.r4567,gen_by_name.x3),
+
+        (              gen_by_name.x1,(g2_A.gen_by_name.r4,),
+                g2_A.gen_by_name.r4,gen_by_name.x2),
+        (              gen_by_name.x1,(g2_A.gen_by_name.r456,),
+                g2_A.gen_by_name.r456,gen_by_name.x2),
+
+        #from s
+        (              gen_by_name.s,(g2_A.gen_by_name.r2,g2_A.gen_by_name.r1),
+                g2_A.gen_by_name.r1,gen_by_name.x1),
+        (              gen_by_name.s,(g2_A.gen_by_name.r23,),
+                g2_A.gen_by_name.r123,gen_by_name.x1),
+        (              gen_by_name.s,(g2_A.gen_by_name.r2,),
+                g2_A.gen_by_name.r12,gen_by_name.x0),
+
+        (              gen_by_name.s,(g2_A.gen_by_name.r234,),
+                g2_A.gen_by_name.r1234,gen_by_name.x2),
+        (              gen_by_name.s,(g2_A.gen_by_name.r23456,),
+                g2_A.gen_by_name.r123456,gen_by_name.x2),
+
+        (              gen_by_name.s,(g2_A.gen_by_name.r2345,),
+                g2_A.gen_by_name.r12345,gen_by_name.x3),
+        (              gen_by_name.s,(g2_A.gen_by_name.r234567,),
+                g2_A.gen_by_name.r1234567,gen_by_name.x3)
+
+
+
+        ])
+
+    return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_L_LHD")
+
+def init_g2_ID_bounded(g2_A):
+    gen_by_name=AttrDict({
+                "x0": Generator("x0"),
+                "x1": Generator("x1"),
+                "x2": Generator("x2"),
+                "x3": Generator("x3"),
+                "z1": Generator("z1"),
+                "z2": Generator("z2"),
+                "w1": Generator("w1"),
+                "w2": Generator("w2"),
+                "t1": Generator("t1"),
+                "t2": Generator("t2"),
+                "c1": Generator("c1"),
+                "c2": Generator("c2")
+
+                })
+    gen_by_name.x0.add_idems(g2_A.idem.i0,g2_A.idem.i0)
+    gen_by_name.x1.add_idems(g2_A.idem.i1,g2_A.idem.i1)
+    gen_by_name.x2.add_idems(g2_A.idem.i2,g2_A.idem.i2)
+    gen_by_name.x3.add_idems(g2_A.idem.i3,g2_A.idem.i3)
+    gen_by_name.z1.add_idems(g2_A.idem.i0,g2_A.idem.i1)
+    gen_by_name.z2.add_idems(g2_A.idem.i0,g2_A.idem.i1)
+    gen_by_name.w1.add_idems(g2_A.idem.i1,g2_A.idem.i0)
+    gen_by_name.w2.add_idems(g2_A.idem.i1,g2_A.idem.i0)
+    gen_by_name.t1.add_idems(g2_A.idem.i2,g2_A.idem.i3)
+    gen_by_name.t2.add_idems(g2_A.idem.i2,g2_A.idem.i3)
+    gen_by_name.c1.add_idems(g2_A.idem.i3,g2_A.idem.i2)
+    gen_by_name.c2.add_idems(g2_A.idem.i3,g2_A.idem.i2)
+
+    arrows=Bunch_of_arrows([
+        # higher torus
+        (              gen_by_name.x3,(g2_A.gen_by_name.r6,),
+                g2_A.gen_by_name.r6,gen_by_name.x2),
+        (              gen_by_name.t1,(),
+                1,gen_by_name.t2),
+        (              gen_by_name.t1,(),
+                g2_A.gen_by_name.r7,gen_by_name.x3),
+        (               gen_by_name.x3,(g2_A.gen_by_name.r67,),
+                g2_A.gen_by_name.r6,gen_by_name.t2),
+
+        (               gen_by_name.x2,(),
+                g2_A.gen_by_name.r5,gen_by_name.c2),
+
+        (               gen_by_name.x2,(g2_A.gen_by_name.r7,),
+                1,gen_by_name.t2),
+
+        (               gen_by_name.c1,(g2_A.gen_by_name.r56,),
+                g2_A.gen_by_name.r6,gen_by_name.x2),
+
+        (               gen_by_name.c1,(),
+                    1,gen_by_name.c2),
+        (               gen_by_name.c1,(g2_A.gen_by_name.r567,),
+                g2_A.gen_by_name.r6,gen_by_name.t2),
+        (               gen_by_name.c1,(g2_A.gen_by_name.r5,),
+                1,gen_by_name.x3),
+        
+        # higher torus
+        # (              gen_by_name.x3,(g2_A.gen_by_name.r6,),
+        #         g2_A.gen_by_name.r6,gen_by_name.x2),
+        # (               gen_by_name.t1,(),
+        #         g2_A.gen_by_name.r7,gen_by_name.x3),
+        # (               gen_by_name.t1,(),
+        #         1,gen_by_name.t2),
+        # (               gen_by_name.x3,(g2_A.gen_by_name.r67,),
+        #         g2_A.gen_by_name.r6,gen_by_name.t2),
+        # (               gen_by_name.x2,(g2_A.gen_by_name.r567,),
+        #         g2_A.gen_by_name.r56,gen_by_name.t2),
+        # (               gen_by_name.x2,(g2_A.gen_by_name.r7,),
+        #         1,gen_by_name.t2),
+
+        #lower torus
+        (              gen_by_name.x1,(g2_A.gen_by_name.r2,),
+                g2_A.gen_by_name.r2,gen_by_name.x0),
+        (              gen_by_name.z1,(),
+                1,gen_by_name.z2),
+        (              gen_by_name.z1,(),
+                g2_A.gen_by_name.r3,gen_by_name.x1),
+        (               gen_by_name.x1,(g2_A.gen_by_name.r23,),
+                g2_A.gen_by_name.r2,gen_by_name.z2),
+
+        (               gen_by_name.x0,(),
+                g2_A.gen_by_name.r1,gen_by_name.w2),
+        (               gen_by_name.x0,(g2_A.gen_by_name.r3,),
+                1,gen_by_name.z2),
+        (               gen_by_name.w1,(g2_A.gen_by_name.r12,),
+                g2_A.gen_by_name.r2,gen_by_name.x0),
+        (               gen_by_name.w1,(),
+                    1,gen_by_name.w2),
+        (               gen_by_name.w1,(g2_A.gen_by_name.r1,),
+                1,gen_by_name.x1),
+        (               gen_by_name.w1,(g2_A.gen_by_name.r123,),
+                g2_A.gen_by_name.r2,gen_by_name.z2),
+
+
+        # from x0
+        (              gen_by_name.x0,(g2_A.gen_by_name.r34,g2_A.gen_by_name.r7),
+                g2_A.gen_by_name.r34,gen_by_name.t1),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r34567,),
+                g2_A.gen_by_name.r3456,gen_by_name.t2),
+
+        (              gen_by_name.x0,(g2_A.gen_by_name.r34,),
+                g2_A.gen_by_name.r34,gen_by_name.x2),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r3456,),
+                g2_A.gen_by_name.r3456,gen_by_name.x2),
+        (              gen_by_name.x0,(g2_A.gen_by_name.r34,),
+                g2_A.gen_by_name.r345,gen_by_name.c1),
+
+            (              gen_by_name.x0,(g2_A.gen_by_name.r345,),
+                    g2_A.gen_by_name.r345,gen_by_name.x3),
+
+        #from x1
+
+            (              gen_by_name.x1,(g2_A.gen_by_name.r45,),
+                    g2_A.gen_by_name.r45,gen_by_name.x3),
+            (              gen_by_name.x1,(g2_A.gen_by_name.r2345,),
+                    g2_A.gen_by_name.r2345,gen_by_name.x3),
+        
+        (              gen_by_name.x1,(g2_A.gen_by_name.r234,),
+                g2_A.gen_by_name.r2345,gen_by_name.c1),
+
+        (              gen_by_name.x1,(g2_A.gen_by_name.r4,g2_A.gen_by_name.r7),
+                g2_A.gen_by_name.r4,gen_by_name.t1),
+        (              gen_by_name.x1,(g2_A.gen_by_name.r234,g2_A.gen_by_name.r7),
+                g2_A.gen_by_name.r234,gen_by_name.t1),
+        (              gen_by_name.x1,(g2_A.gen_by_name.r4567,),
+                g2_A.gen_by_name.r456,gen_by_name.t2),
+        (              gen_by_name.x1,(g2_A.gen_by_name.r234567,),
+                g2_A.gen_by_name.r23456,gen_by_name.t2),
+
+        (              gen_by_name.x1,(g2_A.gen_by_name.r4,),
+                g2_A.gen_by_name.r4,gen_by_name.x2),
+        (              gen_by_name.x1,(g2_A.gen_by_name.r456,),
+                g2_A.gen_by_name.r456,gen_by_name.x2),
+        (              gen_by_name.x1,(g2_A.gen_by_name.r234,),
+                g2_A.gen_by_name.r234,gen_by_name.x2),
+        (              gen_by_name.x1,(g2_A.gen_by_name.r23456,),
+                g2_A.gen_by_name.r23456,gen_by_name.x2),
+        (              gen_by_name.x1,(g2_A.gen_by_name.r4,),
+                g2_A.gen_by_name.r45,gen_by_name.c1),
+
+        # added after perturbation z1 and z2, w1 and w2, t1 and t2
+
+        (              gen_by_name.z2,(g2_A.gen_by_name.r4,),
+                g2_A.gen_by_name.r34,gen_by_name.x2),
+        (              gen_by_name.z2,(g2_A.gen_by_name.r456,),
+                g2_A.gen_by_name.r3456,gen_by_name.x2),
+            (              gen_by_name.z2,(g2_A.gen_by_name.r45,),
+                    g2_A.gen_by_name.r345,gen_by_name.x3),
+        
+
+        (               gen_by_name.w1,(g2_A.gen_by_name.r1234,),
+                g2_A.gen_by_name.r234,gen_by_name.x2),
+        (               gen_by_name.w1,(g2_A.gen_by_name.r123456,),
+                g2_A.gen_by_name.r23456,gen_by_name.x2),
+            (               gen_by_name.w1,(g2_A.gen_by_name.r12345,),
+                    g2_A.gen_by_name.r2345,gen_by_name.x3),
+
+        (               gen_by_name.w1,(g2_A.gen_by_name.r1234,),
+                g2_A.gen_by_name.r2345,gen_by_name.c1),    
+        (               gen_by_name.w1,(g2_A.gen_by_name.r1234,g2_A.gen_by_name.r7),
+                g2_A.gen_by_name.r234,gen_by_name.t1),
+        (               gen_by_name.w1,(g2_A.gen_by_name.r1234567,),
+                g2_A.gen_by_name.r23456,gen_by_name.t2),
+
+
+        (               gen_by_name.w2,(g2_A.gen_by_name.r1,g2_A.gen_by_name.r4),
+                g2_A.gen_by_name.r4,gen_by_name.x2),
+        (               gen_by_name.w2,(g2_A.gen_by_name.r1,g2_A.gen_by_name.r4),
+                g2_A.gen_by_name.r45,gen_by_name.c1),
+        (               gen_by_name.w2,(g2_A.gen_by_name.r1,g2_A.gen_by_name.r456),
+                g2_A.gen_by_name.r456,gen_by_name.x2),
+
+        (               gen_by_name.w2,(g2_A.gen_by_name.r1,g2_A.gen_by_name.r4,g2_A.gen_by_name.r7),
+                g2_A.gen_by_name.r4,gen_by_name.t1),
+        (               gen_by_name.w2,(g2_A.gen_by_name.r1,g2_A.gen_by_name.r4567),
+                g2_A.gen_by_name.r456,gen_by_name.t2),
+
+
+            (               gen_by_name.w2,(g2_A.gen_by_name.r1,g2_A.gen_by_name.r45),
+                    g2_A.gen_by_name.r45,gen_by_name.x3),
+
+
+        (              gen_by_name.z2,(g2_A.gen_by_name.r4,g2_A.gen_by_name.r7),
+                g2_A.gen_by_name.r34,gen_by_name.t1),
+        (              gen_by_name.z2,(g2_A.gen_by_name.r4,),
+                g2_A.gen_by_name.r345,gen_by_name.c1),
+        (              gen_by_name.z2,(g2_A.gen_by_name.r4567,),
+                g2_A.gen_by_name.r3456,gen_by_name.t2),
+
+
+        
+
+
+
+        ])
+    
+
+    return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_ID_bounded")
+
 
 
 # BIMODULES
@@ -577,7 +991,12 @@ M_LHD=init_M_LHD(A)
 L_RHD=init_L_RHD(A)
 L_LHD=init_L_LHD(A)
 
+
 g2_ID=init_g2_ID(g2_A)
+g2_ID_bounded=init_g2_ID_bounded(g2_A)
 g2_M_RHD=init_g2_M_RHD(g2_A)
 g2_M_LHD=init_g2_M_LHD(g2_A)
+g2_L_RHD=init_g2_L_RHD(g2_A)
+g2_L_LHD=init_g2_L_LHD(g2_A)
+
 

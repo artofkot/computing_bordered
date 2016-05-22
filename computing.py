@@ -6,7 +6,8 @@ from algebraic_structures.morphism import check_df_is_0, composition
 from algebraic_structures.hochschild_homology import is_bounded, CH, homology_dim, ChainComplex, dimHH
 from algebraic_structures.visual import draw_DA_bimodule, draw_chain_complex
 
-from input_bimodules import ID1,ID2,ID3,M_RHD,M_LHD,L_RHD,L_LHD, g2_ID , g2_M_RHD, g2_M_LHD
+from input_bimodules import ID1,ID2,ID3,M_RHD,M_LHD,L_RHD,L_LHD  
+from input_bimodules import g2_ID, g2_ID_bounded, g2_M_RHD, g2_M_LHD, g2_L_RHD,g2_L_LHD
 
 # MORPHISMS
 F2=Bunch_of_arrows([
@@ -74,6 +75,16 @@ THETA=Bunch_of_arrows([
 # g2_M_RHD.show()
 # g2_M_LHD.show()
 # g2_M_LHD.check()
+# g2_L_RHD.show()
+# g2_L_LHD.show()
+X=box_tensor_efficient(g2_M_RHD)
+X=box_tensor_efficient(X)
+X=box_tensor(g2_ID_bounded,X,g2_ID_bounded)
+# HC=CH(X)
+# HC.show()
+print "\ndim(HH)=" + str(dimHH(X))
 
-X=box_tensor_efficient(g2_M_RHD,g2_M_LHD)
-print are_equal(X,g2_ID)
+
+
+# X=box_tensor_efficient(g2_L_RHD,g2_L_LHD)
+# print are_equal(X,g2_ID)

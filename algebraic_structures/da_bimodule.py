@@ -21,7 +21,8 @@ class DA_bimodule(object):
         dd.delete_arrows_with_even_coeff()
 
         if dd:
-            if name=="g2_M_RHD": dd.show()
+            
+            dd.show()
             raise NameError("DA_bimodule " + self.name + " doesn't satisfy dd=0 !!!")
 
     
@@ -85,7 +86,9 @@ class DA_bimodule(object):
         #contribution of double arrows
         for arrow1 in self.arrows:
             for arrow2 in self.arrows:
+                
                 if not out_mod_gen(arrow1)==in_mod_gen(arrow2): continue
+
                 a1a2=self.algebra.multiply(out_alg_gen(arrow1),out_alg_gen(arrow2))
                 if a1a2:
                     ar=(in_mod_gen(arrow1), in_alg_tuple(arrow1) + in_alg_tuple(arrow2),a1a2,out_mod_gen(arrow2))
@@ -97,10 +100,12 @@ class DA_bimodule(object):
 
             for index, a in enumerate(in_alg_tuple(arrow)):
                 for factorization in getattr(a,'factorizations', []):
+                    
+
                     new_tuple=in_alg_tuple(arrow)[:index] + factorization + in_alg_tuple(arrow)[index+1:]
                     ar=(in_mod_gen(arrow), new_tuple,
                         out_alg_gen(arrow),out_mod_gen(arrow))
-                    # if arrow_to_str(arrow)=="x1⊗(r45,)---->r45⊗x3" and self.name=="g2_M_RHD": 
+                    # if arrow_to_str(arrow)=="w2⊗(r1, r456)---->r456⊗x2" and self.name=="g2_ID_bounded": 
                     #     print 'yo'
                     #     print factorization
                     #     print ar
