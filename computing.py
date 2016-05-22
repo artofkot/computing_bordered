@@ -77,7 +77,7 @@ THETA=Bunch_of_arrows([
 # g2_M_LHD.check()
 # g2_L_RHD.show()
 # g2_L_LHD.show()
-X=box_tensor_efficient(g2_M_RHD)
+X=box_tensor_efficient(g2_ID)
 X=box_tensor_efficient(X)
 X=box_tensor(g2_ID_bounded,X,g2_ID_bounded)
 # HC=CH(X)
