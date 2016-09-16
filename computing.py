@@ -92,15 +92,20 @@ C_inv=g2_T_LHD
 D_inv=g2_L_LHD
 E_inv=g2_M_LHD
 
-# This is example of something when two bimodules are homotopic but can't be canceled to be identical
+##### This is example of something when two bimodules are homotopic but can't be canceled to be identical
 # X=box_tensor_efficient(B_,C_,C_inv,B_inv)
 # Y=g2_ID
 # X.show()
 # Y.show_short()
 # print are_equal(X,Y)
 
-X=box_tensor_efficient(B_,C_,B_)
-Y=box_tensor_efficient(C_,B_,C_)
+
+##### checking relations
+# X=box_tensor_efficient(B_,C_,B_)
+# Y=box_tensor_efficient(C_,B_,C_)
+
+X=box_tensor_efficient(A_,C_)
+Y=box_tensor_efficient(C_,A_)
 X.show_short()
 Y.show_short()
 print are_equal(X,Y)
