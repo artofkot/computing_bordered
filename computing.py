@@ -7,7 +7,8 @@ from algebraic_structures.hochschild_homology import is_bounded, CH, homology_di
 from algebraic_structures.visual import draw_DA_bimodule, draw_chain_complex
 
 from input_bimodules import ID1,ID2,ID3,M_RHD,M_LHD,L_RHD,L_LHD  
-from input_bimodules import g2_ID, g2_ID_bounded, g2_M_RHD, g2_M_LHD, g2_L_RHD,g2_L_LHD
+from input_bimodules import g2_ID, g2_ID_bounded, g2_M_RHD, g2_M_LHD, g2_L_RHD,g2_L_LHD, g2_K_LHD, g2_K_RHD, g2_N_LHD, g2_N_RHD
+from input_bimodules import g2_T_RHD, g2_T_LHD
 
 # MORPHISMS
 F2=Bunch_of_arrows([
@@ -70,21 +71,46 @@ THETA=Bunch_of_arrows([
 # print "\ndim(HH)=" + str(dimHH(X))
 
 
-##### New algebra computations
-# g2_ID.show()
-# g2_M_RHD.show()
-# g2_M_LHD.show()
-# g2_M_LHD.check()
-# g2_L_RHD.show()
-# g2_L_LHD.show()
-X=box_tensor_efficient(g2_ID)
-X=box_tensor_efficient(X)
-X=box_tensor(g2_ID_bounded,X,g2_ID_bounded)
+##### New algebra computations 
+# Bimodules: 
+# g2_ID, g2_ID_bounded
+# g2_K_RHD,g2_K_LHD
+# g2_N_RHD,g2_N_LHD
+# g2_T_RHD,g2_T_LHD
+# g2_M_RHD,g2_M_LHD
+# g2_L_RHD,g2_L_LHD
+# g2_T_RHD.show() #-- stopped on this, cause could't compute it. But the other 8 should suffice for computations.
+
+A_=g2_K_RHD
+B_=g2_N_RHD
+C_=g2_T_RHD
+D_=g2_L_RHD
+E_=g2_M_RHD
+A_inv=g2_K_LHD
+B_inv=g2_N_LHD
+C_inv=g2_T_LHD
+D_inv=g2_L_LHD
+E_inv=g2_M_LHD
+
+# This is example of something when two bimodules are homotopic but can't be canceled to be identical
+# X=box_tensor_efficient(B_,C_,C_inv,B_inv)
+# Y=g2_ID
+# X.show()
+# Y.show_short()
+# print are_equal(X,Y)
+
+X=box_tensor_efficient(B_,C_,B_)
+Y=box_tensor_efficient(C_,B_,C_)
+X.show_short()
+Y.show_short()
+print are_equal(X,Y)
+
+
+# X=box_tensor(g2_ID_bounded,X,g2_ID_bounded)
+# print "\ndim(HH)=" + str(dimHH(X))
 # HC=CH(X)
 # HC.show()
-print "\ndim(HH)=" + str(dimHH(X))
 
 
 
-# X=box_tensor_efficient(g2_L_RHD,g2_L_LHD)
-# print are_equal(X,g2_ID)
+

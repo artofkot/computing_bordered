@@ -3,6 +3,7 @@ from utility import AttrDict
 from algebra import Generator, torus_algebra, check_idempotents_match_left_left, check_idempotents_match_left_right,check_idempotents_match_right_right
 from collections import Counter
 from itertools import permutations
+from random import shuffle
 
 # conventions: D side is left, A side is right
 class DA_bimodule(object):
@@ -21,15 +22,15 @@ class DA_bimodule(object):
         dd.delete_arrows_with_even_coeff()
 
         if dd:
-            
+            print "dd is not 0! the terms that are not canceled:"
             dd.show()
-            raise NameError("DA_bimodule " + self.name + " doesn't satisfy dd=0 !!!")
+            raise NameError("DA_bimodule " + self.name + " doesn't satisfy dd=0.")
 
     
     def show(self):
         print "=========="
         print self.name + ':\n'
-        print 'Generators with their idempotents'
+        print 'Generators with their idempotents (' + str(len(self.genset))+ ' generators)'
         for gen in self.genset:
             print str(gen.idem.left) + '___' + str(gen) + '___' + str(gen.idem.right)
 
@@ -47,6 +48,11 @@ class DA_bimodule(object):
                 
         # for arrow in self.arrows:
         #     print arrow_to_str(arrow)
+
+    def show_short(self):
+        print "=========="
+        print self.name
+        print str(len(self.genset))+ ' generators'
 
     def check_matching_of_idempotents_in_action(self): 
         count_of_mismatches=0
@@ -105,10 +111,10 @@ class DA_bimodule(object):
                     new_tuple=in_alg_tuple(arrow)[:index] + factorization + in_alg_tuple(arrow)[index+1:]
                     ar=(in_mod_gen(arrow), new_tuple,
                         out_alg_gen(arrow),out_mod_gen(arrow))
-                    # if arrow_to_str(arrow)=="w2⊗(r1, r456)---->r456⊗x2" and self.name=="g2_ID_bounded": 
-                    #     print 'yo'
-                    #     print factorization
-                    #     print ar
+                    if arrow_to_str(arrow)=="x0⊗(r3, r4)---->r3⊗t11" and self.name=="g2_T_RHD": 
+                        print 'yo'
+                        print factorization
+                        print ar
                     dd[ar]+=1
 
         return dd
@@ -243,7 +249,10 @@ def cancel_pure_differential(DAbimodule_old,pure_differential):
 
 def randomly_cancel_until_possible(DA1):
     there_is_diff=0
-    for arrow in DA1.arrows:
+    # arrs=DA1.arrows
+    arrs=list(DA1.arrows)
+    shuffle(arrs)
+    for arrow in arrs:
         if (in_alg_tuple(arrow)==() and out_alg_gen(arrow)==1 and in_mod_gen(arrow)!=out_mod_gen(arrow)):
             there_is_diff=1
 

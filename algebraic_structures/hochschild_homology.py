@@ -134,6 +134,8 @@ def CH(DA1):
                         first_gen=first_gen,
                         DA1=DA1,depth=depth+1)
 
+
+    # для убыстрения закоменть след две строки, если уверен что бимодули ограниченные.
     if not is_bounded(DA1):
         raise NameError("Bimodule " + DA1.name + " is not bounded, so can't take HH of it!")
     
