@@ -1,29 +1,14 @@
 # -*- coding: utf-8 -*- 
-from utility import AttrDict
+from basics import AttrDict
 from sets import Set
-
-class Generator(object):
-    def __init__(self, name):
-        self.name = name
-
-    def add_idems(self,idem1,idem2):
-        self.idem=AttrDict({"left":idem1, "right":idem2})
-
-    def add_factorizations(self,*factorizations): #for algebra generators only!
-        self.factorizations=getattr(self,'factorizations', [])
-        for factorization in factorizations:
-            self.factorizations.append(factorization)
-
-    def __str__(self):
-        return self.name
-
-    def __repr__(self):
-        return self.name
+from basics import Generator
+from basics import check_idempotents_match_right_left, check_idempotents_match_right_right, check_idempotents_match_left_left
 
 # I will assume that algebra is vector space over F2, and does not have differentials, 
 # which happens in the first symmetric product
 class DGAlgebra(object):
-    def __init__(self,gen_by_name,idem,multiplication_table):
+    def __init__(self,gen_by_name,idem,multiplication_table,name):
+        self.name=name
         self.gen_by_name=gen_by_name #dictionary of generators, where keys are their names
         self.genset=self.gen_by_name.values() #list of generators
         self.idem=idem #dictionary with idempotents, where keys are their names
@@ -35,7 +20,6 @@ class DGAlgebra(object):
                 for idem2 in self.idemset:
                     if (self.multiplication_table.get((gen,idem2))==gen) and (self.multiplication_table.get((idem1,gen))==gen):
                         gen.add_idems(idem1,idem2)
-
 
     def mult2(self, gen1, gen2):
         if gen1==1: return gen2
@@ -57,30 +41,6 @@ class DGAlgebra(object):
         print('Multiplications in algebra:')
         for k in self.multiplication_table:
             print str(k[0]) + '*' + str(k[1]) + '=' + str(self.multiplication_table[k])
- 
-
-def check_idempotents_match_left_right(l,m):
-    if l==1: return True
-    if m==1: return True
-    if not (l.idem.right==m.idem.left): 
-        print "These elements idempotents don't match! " + str((l,m))
-    return (l.idem.right==m.idem.left)
-
-def check_idempotents_match_right_right(l,m):
-    if l==1: return True
-    if m==1: return True
-    if not (l.idem.right==m.idem.right): 
-        print "These elements idempotents don't match! " + str((l,m))
-    return (l.idem.right==m.idem.right)
-
-
-def check_idempotents_match_left_left(l,m):
-    if l==1: return True
-    if m==1: return True
-    if not (l.idem.left==m.idem.left): 
-        print "These elements idempotents don't match! " + str((l,m))
-    return (l.idem.left==m.idem.left)
-
 
 #########################################################################################################
 #########################################################################################################
@@ -124,7 +84,7 @@ def init_torus_algebra():
                         (gen_by_name.r123,gen_by_name.i1):gen_by_name.r123,
                                     }
 
-    return DGAlgebra(gen_by_name=gen_by_name,idem=idem,multiplication_table=multiplication_table)
+    return DGAlgebra(gen_by_name=gen_by_name,idem=idem,multiplication_table=multiplication_table,name='torus_A')
 
 def init_genus2_algebra():
     gen_by_name=AttrDict({
@@ -354,13 +314,107 @@ def init_genus2_algebra():
                 
                                     }
 
-    return DGAlgebra(gen_by_name=gen_by_name,idem=idem,multiplication_table=multiplication_table)
+    return DGAlgebra(gen_by_name=gen_by_name,idem=idem,multiplication_table=multiplication_table,name='g2_A')
 
 
+def init_pillowcase_algebra():
+    gen_by_name=AttrDict({
+                "i0": Generator("i0"),
+                "i1": Generator("i1"),
+                "i2": Generator("i2"),
+                "j0": Generator("j0"),
+                "j1": Generator("j1"),
+                "j2": Generator("j2"),
 
-torus_algebra=init_torus_algebra()
-A=torus_algebra
+                "r0": Generator("r0"),
+                "r2": Generator("r2"),
+
+                "et1": Generator("et1"),
+                "et2": Generator("et2"),
+                "et3": Generator("et3"),
+                "et12": Generator("et12"),
+                "et23": Generator("et23"),
+                "et123": Generator("et123"),
+
+                "ks1": Generator("ks1"),
+                "ks2": Generator("ks2"),
+                "ks3": Generator("ks3"),
+                "ks12": Generator("ks12"),
+                "ks23": Generator("ks23"),
+                "ks123": Generator("ks123"),
+                })
+    gen_by_name.et12.add_factorizations((gen_by_name.et1,gen_by_name.et2))
+    gen_by_name.et23.add_factorizations((gen_by_name.et2,gen_by_name.et3))
+    gen_by_name.et123.add_factorizations((gen_by_name.et1,gen_by_name.et23),(gen_by_name.et12,gen_by_name.et3))
+    gen_by_name.ks12.add_factorizations((gen_by_name.ks1,gen_by_name.ks2))
+    gen_by_name.ks23.add_factorizations((gen_by_name.ks2,gen_by_name.ks3))
+    gen_by_name.ks123.add_factorizations((gen_by_name.ks1,gen_by_name.ks23),(gen_by_name.ks12,gen_by_name.ks3))
+
+    idem=AttrDict({
+                    "i0": gen_by_name.i0,
+                    "i1": gen_by_name.i1,
+                    "i2": gen_by_name.i2,
+                    "j0": gen_by_name.j0,
+                    "j1": gen_by_name.j1,
+                    "j2": gen_by_name.j2
+                    })
+
+    multiplication_table={(gen_by_name.et1,gen_by_name.et2):gen_by_name.et12,
+                        (gen_by_name.et2,gen_by_name.et3):gen_by_name.et23,
+                        (gen_by_name.et1,gen_by_name.et23):gen_by_name.et123,
+                        (gen_by_name.et12,gen_by_name.et3):gen_by_name.et123,
+
+                        (gen_by_name.ks1,gen_by_name.ks2):gen_by_name.ks12,
+                        (gen_by_name.ks2,gen_by_name.ks3):gen_by_name.ks23,
+                        (gen_by_name.ks1,gen_by_name.ks23):gen_by_name.ks123,
+                        (gen_by_name.ks12,gen_by_name.ks3):gen_by_name.ks123,
+
+                        (gen_by_name.i0,gen_by_name.r0):gen_by_name.r0,
+                        (gen_by_name.i0,gen_by_name.i0):gen_by_name.i0,
+                        (gen_by_name.i0,gen_by_name.et1):gen_by_name.et1,
+                        (gen_by_name.i0,gen_by_name.et12):gen_by_name.et12,
+                        (gen_by_name.i0,gen_by_name.et123):gen_by_name.et123,
+
+                        (gen_by_name.r0,gen_by_name.j0):gen_by_name.r0,
+                        (gen_by_name.j0,gen_by_name.j0):gen_by_name.j0,
+                        (gen_by_name.et3,gen_by_name.j0):gen_by_name.et3,
+                        (gen_by_name.et23,gen_by_name.j0):gen_by_name.et23,
+                        (gen_by_name.et123,gen_by_name.j0):gen_by_name.et123,
+
+                        (gen_by_name.r2,gen_by_name.j2):gen_by_name.r2,
+                        (gen_by_name.j2,gen_by_name.j2):gen_by_name.j2,
+                        (gen_by_name.j2,gen_by_name.ks3):gen_by_name.ks3,
+                        (gen_by_name.ks2,gen_by_name.j2):gen_by_name.ks2,
+                        (gen_by_name.ks12,gen_by_name.j2):gen_by_name.ks12,
+
+                        (gen_by_name.i2,gen_by_name.r2):gen_by_name.r2,
+                        (gen_by_name.i2,gen_by_name.i2):gen_by_name.i2,
+                        (gen_by_name.i2,gen_by_name.ks2):gen_by_name.ks2,
+                        (gen_by_name.i2,gen_by_name.ks23):gen_by_name.ks23,
+                        (gen_by_name.ks1,gen_by_name.i2):gen_by_name.ks1,
+
+                        (gen_by_name.i1,gen_by_name.i1):gen_by_name.i1,
+                        (gen_by_name.i1,gen_by_name.ks1):gen_by_name.ks1,
+                        (gen_by_name.i1,gen_by_name.ks12):gen_by_name.ks12,
+                        (gen_by_name.i1,gen_by_name.ks123):gen_by_name.ks123,
+                        (gen_by_name.i1,gen_by_name.et2):gen_by_name.et2,
+                        (gen_by_name.i1,gen_by_name.et23):gen_by_name.et23,
+                        (gen_by_name.et1,gen_by_name.i1):gen_by_name.et1,
+
+                        (gen_by_name.j1,gen_by_name.j1):gen_by_name.j1,
+                        (gen_by_name.j1,gen_by_name.et3):gen_by_name.et3,
+                        (gen_by_name.et12,gen_by_name.j1):gen_by_name.et12,
+                        (gen_by_name.et2,gen_by_name.j1):gen_by_name.et2,
+                        (gen_by_name.ks3,gen_by_name.j1):gen_by_name.ks3,
+                        (gen_by_name.ks23,gen_by_name.j1):gen_by_name.ks23,
+                        (gen_by_name.ks123,gen_by_name.j1):gen_by_name.ks123,
+                                    }
+
+    return DGAlgebra(gen_by_name=gen_by_name,idem=idem,multiplication_table=multiplication_table,name='pil_A')
+
+torus_A=init_torus_algebra()
 g2_A=init_genus2_algebra()
+pil_A=init_pillowcase_algebra()
 # g2_A.show()
 # A.show()
 # Identity_DA_bimodule.show()

@@ -1,32 +1,57 @@
 # -*- coding: utf-8 -*- 
-from utility import AttrDict 
-from algebra import Generator, torus_algebra, check_idempotents_match_left_left, check_idempotents_match_left_right,check_idempotents_match_right_right
+import time
+from basics import AttrDict 
+from algebra import Generator, torus_A, check_idempotents_match_left_left, check_idempotents_match_right_left,check_idempotents_match_right_right
 from collections import Counter
 from itertools import permutations
 from random import shuffle
+from basics import Bunch_of_arrows
+
+
+def da_arrow_to_str(tuplee): #works only for DA arrows
+    if len(tuplee)==4:
+        return str(tuplee[0]) +'⊗'+ str(tuplee[1]) + "---->" + str(tuplee[2]) +'⊗'+ str(tuplee[3])  
+
+def da_in_mod_gen(da_arrow):
+    return da_arrow[0]
+
+def da_in_alg_tuple(da_arrow):
+    return da_arrow[1]
+
+def da_out_alg_gen(da_arrow):
+    return da_arrow[2]
+
+def da_out_mod_gen(da_arrow):
+    return da_arrow[3]
 
 # conventions: D side is left, A side is right
 class DA_bimodule(object):
-    def __init__(self,gen_by_name,arrows,algebra,name):
+    def __init__(self,gen_by_name,da_arrows,algebra,name):
         self.name=name
         self.gen_by_name=gen_by_name
         self.genset=self.gen_by_name.values()
         #differentials are represented by bunch of arrows with coefficients 1
-        self.arrows=arrows
+        self.arrows=da_arrows
         self.arrows.delete_arrows_with_even_coeff()
         self.algebra=algebra
 
+        self.check()
+
+    def check(self):
+        ##Here we check that our " + self.name + " has all idempotents matching and d_squared=0:
         
+        if not self.check_matching_of_idempotents_in_action():
+            print "\nSomething is wrong with idempotents!"
+            raise NameError("DA_bimodule " + self.name + " has problems with idempotents")
+        
+        d_squared=self.compute_d_squared()
+        d_squared.delete_arrows_with_even_coeff()
+        if d_squared:
+            print "d_squared is not 0! the terms that are not canceled:"
+            d_squared.show()
+            raise NameError("DA_bimodule " + self.name + " doesn't satisfy d_squared=0.")
 
-        dd=self.compute_dd()
-        dd.delete_arrows_with_even_coeff()
 
-        if dd:
-            print "dd is not 0! the terms that are not canceled:"
-            dd.show()
-            raise NameError("DA_bimodule " + self.name + " doesn't satisfy dd=0.")
-
-    
     def show(self):
         print "=========="
         print self.name + ':\n'
@@ -37,188 +62,108 @@ class DA_bimodule(object):
         print '\nActions'
         for generator1 in self.genset:
             for generator2 in self.genset:
-                arrows=[arrow for arrow in self.arrows if (in_mod_gen(arrow)==generator1 and out_mod_gen(arrow)==generator2)]
+                arrows=[arrow for arrow in self.arrows if (da_in_mod_gen(arrow)==generator1 and da_out_mod_gen(arrow)==generator2)]
                 if len(arrows)!=0:
                     print generator1
                     print "↓",
                     for ind, arrow in enumerate(arrows):
-                        print str(out_alg_gen(arrow)) + '⊗' + str(in_alg_tuple(arrow)),
+                        print str(da_out_alg_gen(arrow)) + '⊗' + str(da_in_alg_tuple(arrow)),
                         if ind+1!=len(arrows): print '+',
                     print '\n' + str(generator2) + '\n'
                 
         # for arrow in self.arrows:
-        #     print arrow_to_str(arrow)
+        #     print da_arrow_to_str(arrow)
+
+
+
+    def show_for_tex(self):
+        print '============='
+        print self.name + ':\n'
+        print str(len(self.genset)) + ' generators with their idempotents: \n'
+        for gen in self.genset:
+            # _{i_2}{(t_{12})}_{i_2}
+            print '$_{' + str(gen.idem.left) + '}{(' + str(gen) + ')}_{' + str(gen.idem.right) +'}$,'
+
+        print '\nActions:\n'
+        for generator1 in self.genset:
+            for generator2 in self.genset:
+                arrows=[arrow for arrow in self.arrows if (da_in_mod_gen(arrow)==generator1 and da_out_mod_gen(arrow)==generator2)]
+                if len(arrows)!=0:
+                    for arrow in arrows:
+                        print '$'+str(da_in_mod_gen(arrow)) +'\\otimes ' + str(da_in_alg_tuple(arrow)) + '\\rightarrow ' + str(da_out_alg_gen(arrow)) +'\\otimes '+ str(da_out_mod_gen(arrow)) + '$, '
+                
+                
+        # for arrow in self.arrows:
+        #     print da_arrow_to_str(arrow)
 
     def show_short(self):
         print "=========="
         print self.name
-        print str(len(self.genset))+ ' generators'
+        print str(len(self.genset))+ ' generators with their idempotents (' + str(len(self.genset))+ ' generators)'
+        for gen in self.genset:
+            print str(gen.idem.left) + '___' + str(gen) + '___' + str(gen.idem.right)
+
 
     def check_matching_of_idempotents_in_action(self): 
         count_of_mismatches=0
-        for arrow in self.arrows:
+        for da_arrow in self.arrows:
 
             # matching out algebra and out gen
-            if not check_idempotents_match_left_right( out_alg_gen(arrow),out_mod_gen(arrow) ): 
-                print arrow 
+            if not check_idempotents_match_right_left( da_out_alg_gen(da_arrow),da_out_mod_gen(da_arrow) ): 
+                print da_arrow 
                 count_of_mismatches+=1
 
             # matching out algebra and in gen
-            if not check_idempotents_match_left_left( in_mod_gen(arrow),out_alg_gen(arrow) ): 
-                print arrow_to_str(arrow) + '   idempotents are messed up in this arrow!1'
+            if not check_idempotents_match_left_left( da_in_mod_gen(da_arrow),da_out_alg_gen(da_arrow) ): 
+                print da_arrow_to_str(da_arrow) + '   idempotents are messed up in this da_arrow!1'
                 count_of_mismatches+=1
 
             # matching in last element of algebra and out gen
-            if len(in_alg_tuple(arrow))!=0:
-                if not check_idempotents_match_right_right( in_alg_tuple(arrow)[-1],out_mod_gen(arrow) ): 
-                    print arrow_to_str(arrow) + '   idempotents are messed up in this arrow!2'
+            if len(da_in_alg_tuple(da_arrow))!=0:
+                if not check_idempotents_match_right_right( da_in_alg_tuple(da_arrow)[-1],da_out_mod_gen(da_arrow) ): 
+                    print da_arrow_to_str(da_arrow) + '   idempotents are messed up in this da_arrow!2'
                     count_of_mismatches+=1
             
-            for i in range(len(in_alg_tuple(arrow))):
+            for i in range(len(da_in_alg_tuple(da_arrow))):
                 if (i==0):
                     #matching in algebra and gen
-                    if not check_idempotents_match_left_right(in_mod_gen(arrow),in_alg_tuple(arrow)[0]): 
-                        print arrow_to_str(arrow) + '   idempotents are messed up in this arrow!3'
+                    if not check_idempotents_match_right_left(da_in_mod_gen(da_arrow),da_in_alg_tuple(da_arrow)[0]): 
+                        print da_arrow_to_str(da_arrow) + '   idempotents are messed up in this da_arrow!3'
                         count_of_mismatches+=1
                 else:
                     #matching in algebras
-                    if not check_idempotents_match_left_right(in_alg_tuple(arrow)[i-1],in_alg_tuple(arrow)[i]): 
-                        print arrow
+                    if not check_idempotents_match_right_left(da_in_alg_tuple(da_arrow)[i-1],da_in_alg_tuple(da_arrow)[i]): 
+                        print da_arrow
                         count_of_mismatches+=1
         return count_of_mismatches==0
 
-    def compute_dd(self):
-        dd=Bunch_of_arrows()
+    def compute_d_squared(self):
+        d_squared=Bunch_of_arrows()
         #contribution of double arrows
         for arrow1 in self.arrows:
             for arrow2 in self.arrows:
-                
-                if not out_mod_gen(arrow1)==in_mod_gen(arrow2): continue
-
-                a1a2=self.algebra.multiply(out_alg_gen(arrow1),out_alg_gen(arrow2))
+                if not da_out_mod_gen(arrow1)==da_in_mod_gen(arrow2): continue
+                a1a2=self.algebra.multiply(da_out_alg_gen(arrow1),da_out_alg_gen(arrow2))
                 if a1a2:
-                    ar=(in_mod_gen(arrow1), in_alg_tuple(arrow1) + in_alg_tuple(arrow2),a1a2,out_mod_gen(arrow2))
-                    dd[ar]+=1
+                    ar=(da_in_mod_gen(arrow1), da_in_alg_tuple(arrow1) + da_in_alg_tuple(arrow2),a1a2,da_out_mod_gen(arrow2))
+                    d_squared[ar]+=1
 
 
         #contribution of factorizing algebra elements        
         for arrow in self.arrows:
-
-            for index, a in enumerate(in_alg_tuple(arrow)):
+            for index, a in enumerate(da_in_alg_tuple(arrow)):
                 for factorization in getattr(a,'factorizations', []):
-                    
+                    new_tuple=da_in_alg_tuple(arrow)[:index] + factorization + da_in_alg_tuple(arrow)[index+1:]
+                    ar=(da_in_mod_gen(arrow), new_tuple,
+                        da_out_alg_gen(arrow),da_out_mod_gen(arrow))
+                    d_squared[ar]+=1
 
-                    new_tuple=in_alg_tuple(arrow)[:index] + factorization + in_alg_tuple(arrow)[index+1:]
-                    ar=(in_mod_gen(arrow), new_tuple,
-                        out_alg_gen(arrow),out_mod_gen(arrow))
-                    if arrow_to_str(arrow)=="x0⊗(r3, r4)---->r3⊗t11" and self.name=="g2_T_RHD": 
-                        print 'yo'
-                        print factorization
-                        print ar
-                    dd[ar]+=1
-
-        return dd
-
-    def check_dd_is_0(self):
-        dd=self.compute_dd()
-
-        # print '\n{\nHere are all the arrows in dd'
-        # dd.show()
-        # print '}'
-
-
-
-        for arrow in dd:
-            if dd[arrow] % 2 != 0:
-                return False
-        return True
-
-    def check(self):
-        print "========\nHere we check that our " + self.name + " has all idempotents matching and dd=0:"
-        t=self.check_matching_of_idempotents_in_action()
-
-        if not t:
-            print "\nSomething is wrong with idempotents!"
-        else: print "\nEverything is ok, idempotents match!"
-        
-        if not self.check_dd_is_0():
-            print "Something is wrong with dd=0!"
-        else: print "Everything is ok, dd=0!"
-
-    # def differential_of_generator_and_a_tuple(self, gen1, alg_tuple): #gives element in AtensorM
-    #     s=Counter()
-    #     for arrow in self.arrows: 
-    #         if (in_mod_gen(arrow)==gen1 and in_alg_tuple(arrow)==alg_tuple):
-    #             s[GeneratorA_tensor_M( out_alg_gen(arrow),out_mod_gen(arrow) )]+=1
-    #     return s
-
-class GeneratorA_tensor_M(object):
-    def __init__(self, alg_gen,mod_gen):
-        self.name=(alg_gen,mod_gen)
-        self.alg_gen = alg_gen
-        self.mod_gen = mod_gen
-
-    def add_idems(self,idem1,idem2):
-        self.idem=AttrDict({"left":idem1, "right":idem2})
-
-    def __str__(self):
-        return str(self.name)
-
-    def __repr__(self):
-        return str(self.name)
-
-class Bunch_of_arrows(Counter):
-    def show(self):
-        for arrow_as_a_tuple in self:
-            print arrow_to_str(arrow_as_a_tuple) + '     *' + str(self[arrow_as_a_tuple])
-
-    def delete_arrows_with_even_coeff(self): 
-        arrows_to_delete=[]
-        for arrow in self:
-            if self[arrow] % 2 ==0:
-                arrows_to_delete.append(arrow)
-            else:
-                self[arrow]=1
-
-        for ar in arrows_to_delete:
-            del self[ar]
-
-
-
-def arrow_to_str(tuplee):
-    if len(tuplee)==4:
-        return str(tuplee[0]) +'⊗'+ str(tuplee[1]) + "---->" + str(tuplee[2]) +'⊗'+ str(tuplee[3])
-
-    if len(tuplee)==2:
-        return str(tuplee[0]) + "---->" + str(tuplee[1])    
-
-def in_mod_gen(arrow):
-    return arrow[0]
-
-def in_alg_tuple(arrow):
-    return arrow[1]
-
-def out_alg_gen(arrow):
-    return arrow[2]
-
-def out_mod_gen(arrow):
-    return arrow[3]
-
-# def delete_arrows_with_even_coeff(arrows):
-#     arrows_to_delete=[]
-#     for arrow in arrows:
-#         if arrows[arrow] % 2 ==0:
-#             arrows_to_delete.append(arrow)
-#         else:
-#             arrows[arrow]=1
-
-#     for ar in arrows_to_delete:
-#         del arrows[ar]
+        return d_squared
 
 def cancel_pure_differential(DAbimodule_old,pure_differential):
     #z1--->z2
-    z1=in_mod_gen(pure_differential)
-    z2=out_mod_gen(pure_differential)
+    z1=da_in_mod_gen(pure_differential)
+    z2=da_out_mod_gen(pure_differential)
 
     #form generators
     generators_of_new_DA=DAbimodule_old.gen_by_name
@@ -226,20 +171,20 @@ def cancel_pure_differential(DAbimodule_old,pure_differential):
     del generators_of_new_DA[z2.name]
 
     #form old differentials
-    old_arrows_that_survive=[arrow for arrow in DAbimodule_old.arrows if (out_mod_gen(arrow)!=z1 and out_mod_gen(arrow)!=z2  and in_mod_gen(arrow)!=z1 and in_mod_gen(arrow)!=z2 ) ]
+    old_arrows_that_survive=[arrow for arrow in DAbimodule_old.arrows if (da_out_mod_gen(arrow)!=z1 and da_out_mod_gen(arrow)!=z2  and da_in_mod_gen(arrow)!=z1 and da_in_mod_gen(arrow)!=z2 ) ]
     arrows_in_new_DA=Bunch_of_arrows(old_arrows_that_survive)
 
     #form new differentials
-    arrows_in_z2=[arrow for arrow in DAbimodule_old.arrows if (out_mod_gen(arrow)==z2 and in_mod_gen(arrow)!=z1 and in_mod_gen(arrow)!=z2)]
-    arrows_from_z1=[arrow for arrow in DAbimodule_old.arrows if (in_mod_gen(arrow)==z1 and out_mod_gen(arrow)!=z2 and out_mod_gen(arrow)!=z1)]
+    arrows_in_z2=[arrow for arrow in DAbimodule_old.arrows if (da_out_mod_gen(arrow)==z2 and da_in_mod_gen(arrow)!=z1 and da_in_mod_gen(arrow)!=z2)]
+    arrows_from_z1=[arrow for arrow in DAbimodule_old.arrows if (da_in_mod_gen(arrow)==z1 and da_out_mod_gen(arrow)!=z2 and da_out_mod_gen(arrow)!=z1)]
 
     for arrow_in_z2 in arrows_in_z2:
         for arrow_from_z1 in arrows_from_z1:
-            new_out_alg_gen=DAbimodule_old.algebra.multiply(out_alg_gen(arrow_in_z2),out_alg_gen(arrow_from_z1))
+            new_out_alg_gen=DAbimodule_old.algebra.multiply(da_out_alg_gen(arrow_in_z2),da_out_alg_gen(arrow_from_z1))
 
             if new_out_alg_gen:
-                new_arrow=(in_mod_gen(arrow_in_z2), in_alg_tuple(arrow_in_z2)+in_alg_tuple(arrow_from_z1),
-                    new_out_alg_gen,out_mod_gen(arrow_from_z1) )
+                new_arrow=(da_in_mod_gen(arrow_in_z2), da_in_alg_tuple(arrow_in_z2)+da_in_alg_tuple(arrow_from_z1),
+                    new_out_alg_gen,da_out_mod_gen(arrow_from_z1) )
                 arrows_in_new_DA[new_arrow]+=1
 
 
@@ -253,7 +198,7 @@ def randomly_cancel_until_possible(DA1):
     arrs=list(DA1.arrows)
     shuffle(arrs)
     for arrow in arrs:
-        if (in_alg_tuple(arrow)==() and out_alg_gen(arrow)==1 and in_mod_gen(arrow)!=out_mod_gen(arrow)):
+        if (da_in_alg_tuple(arrow)==() and da_out_alg_gen(arrow)==1 and da_in_mod_gen(arrow)!=da_out_mod_gen(arrow)):
             there_is_diff=1
 
             canceled_DA=cancel_pure_differential(DA1,arrow)
@@ -268,7 +213,7 @@ def cancel_this_number_of_times(DA1,n):
 
     there_is_diff=0
     for arrow in DA1.arrows:
-        if (in_alg_tuple(arrow)==() and out_alg_gen(arrow)==1):
+        if (da_in_alg_tuple(arrow)==() and da_out_alg_gen(arrow)==1):
             there_is_diff=1
             canceled_DA=cancel_pure_differential(DA1,arrow)
             return (cancel_this_number_of_times(canceled_DA,n-1))
@@ -276,111 +221,62 @@ def cancel_this_number_of_times(DA1,n):
     if there_is_diff==0:
         return DA1
 
+# bijection = list of pairs (tuples)
+# set of bijections= list of lists of pairs
+def find_bijections(genset1,possible_images_of_generators,genset2):
+    # print genset1
 
-def are_equal(DA1,DA2):
+    if len(genset1)!=len(genset2): raise NameError("tried to find bijections between different size sets")
+    if len(genset1)==1:
+        gen1=genset1[0]
+        gen2=genset2[0]
+        if gen2 in possible_images_of_generators[gen1]: 
+            all_bijections=[[(gen1,gen2)]]
+        else: all_bijections=[]
+    else:
+        all_bijections=[]
+        gen1=genset1[0]
+        # if len(genset1)==10:
+        #     print gen1
+        for gen2 in possible_images_of_generators[gen1]:
+            if not gen2 in genset2:continue
+            # print possible_images_of_generators[gen1]
+            # print str(gen1) +' '+ str(gen2)
+            a1=list(genset1)
+            a2=list(genset2)
+            a1.remove(gen1)
+            a2.remove(gen2)
+            bijections_in_the_rest=find_bijections(a1,possible_images_of_generators,a2)
+            bijections_with_fixed_first_pair=[bij+[(gen1,gen2)] for bij in bijections_in_the_rest]
+            all_bijections=all_bijections+bijections_with_fixed_first_pair
+    return all_bijections
+    
+def are_equal_smart(DA1,DA2):
     from morphism import check_df_is_0
     if len(DA1.genset)!=len(DA2.genset): return False
-
-    perms=permutations(DA1.genset,len(DA1.genset))
-    for perm in perms:
+    print 'number of generators in bimodules we compare is ' + str(len(DA1.genset))
+    
+    # next we compute all the possible module homos w.r.t. idempotent ring
+    possible_images_of_generators={}
+    for gen1 in DA1.genset:
+        possible_images_of_generators[gen1]=[]
+        for gen2 in DA2.genset:
+            if gen1.idem.left==gen2.idem.left and gen1.idem.right==gen2.idem.right: 
+                possible_images_of_generators[gen1].append(gen2)
+    # now, let us check any of module homos satisfy df=0
+    
+    # print find_bijections(['x','z'],{'x':['y','t'],'z':['y','t']},['y','t'])
+    module_homos=find_bijections(DA1.genset,possible_images_of_generators,DA2.genset)
+    
+    for bijection in module_homos:
         f=Bunch_of_arrows()
-        for ind,gen in enumerate(perm):
-            f[(gen,(),
-                1,DA2.genset[ind])]+=1
-        if check_df_is_0: return True
+        for pair in bijection:
+            f[(pair[0],(),
+                1,pair[1])]+=1
+        if check_df_is_0(DA1,DA2,f): return True
+    print 'there is no bijective isomorphism'
     return False
 
 
 
-#I assume that all 4 algebras here are the same
-def box_tensor_product(DAbimodule1,DAbimodule2):
 
-    def find_sequence_for_box_tensor_product(final_list_of_sequences_of_arrows,
-                                            needed_alg_tuple_to_finish_sequence,
-                                            current_gen,
-                                            arrows,
-                                            presequence_of_arrows_from_right):
-        # print 'loop starts, and this is needed sequence'
-        # print needed_alg_tuple_to_finish_sequence
-        # print len(needed_alg_tuple_to_finish_sequence)>0
-
-        if len(needed_alg_tuple_to_finish_sequence)>0:
-            arrows_to_continue=[arrow for arrow in arrows if (out_alg_gen(arrow)==needed_alg_tuple_to_finish_sequence[0] and current_gen==in_mod_gen(arrow))]
-            for arrow in arrows_to_continue:
-                # print 'presequence of arrows: '
-                # for ar in presequence_of_arrows_from_right:
-                #     print arrow_to_str(ar) + ', ',
-                # print '\n'
-                # print needed_alg_tuple_to_finish_sequence[1:]
-
-                find_sequence_for_box_tensor_product(final_list_of_sequences_of_arrows,
-                                                    needed_alg_tuple_to_finish_sequence[1:],
-                                                    out_mod_gen(arrow),
-                                                    arrows,
-                                                    presequence_of_arrows_from_right+[arrow])
-
-        if len(needed_alg_tuple_to_finish_sequence)==0:
-            final_list_of_sequences_of_arrows.append(presequence_of_arrows_from_right)
-
-
-    #let's compute generators
-    generators_of_tensor_product_by_name=AttrDict({})
-    for generator_from_DA1 in DAbimodule1.genset:
-        for generator_from_DA2 in DAbimodule2.genset:
-            if generator_from_DA1.idem.right!=generator_from_DA2.idem.left:
-                continue
-            else:
-                generators_of_tensor_product_by_name[generator_from_DA1.name+'_'+generator_from_DA2.name]=Generator(generator_from_DA1.name+'_'+generator_from_DA2.name)
-                generators_of_tensor_product_by_name[generator_from_DA1.name+'_'+generator_from_DA2.name].add_idems(generator_from_DA1.idem.left,generator_from_DA2.idem.right)
-
-    #we want to compute differential now
-    arrows_in_tensor_product=Bunch_of_arrows()
-
-    for generator_from_DA1 in DAbimodule1.genset:
-        for generator_from_DA2 in DAbimodule2.genset:
-            in_generator_of_tensor_product=generators_of_tensor_product_by_name.get(generator_from_DA1.name+'_'+generator_from_DA2.name, None)
-            if not in_generator_of_tensor_product: continue
-            # print 'FROM this generator:' + str((generator_from_DA1,generator_from_DA2))
-             
-            #here we compute differentials with one action on right DAbimodule2
-            arrows_inDA2_without_out_alg_gen=[arrow for arrow in DAbimodule2.arrows if (in_mod_gen(arrow)==generator_from_DA2 and out_alg_gen(arrow)==1)]
-            for ar in arrows_inDA2_without_out_alg_gen:
-                #add differential
-                arrows_in_tensor_product[(in_generator_of_tensor_product,in_alg_tuple(ar),
-                    1,generators_of_tensor_product_by_name[generator_from_DA1.name+'_'+out_mod_gen(ar).name]) ]+=1
-
-            #differentials with one action on the left DAbimodule1 and multiple on the right DAbimodule2
-            for arrow_on_DA1_side in [arrow for arrow in DAbimodule1.arrows if (in_mod_gen(arrow)==generator_from_DA1)]:
-                # print 'matching this arrow on the DA1 side: ' + arrow_to_str(arrow_on_DA1_side)
-                final_list_of_sequences_of_arrows=[]
-                find_sequence_for_box_tensor_product(final_list_of_sequences_of_arrows,
-                                                    in_alg_tuple(arrow_on_DA1_side),
-                                                    generator_from_DA2,
-                                                    DAbimodule2.arrows,
-                                                    presequence_of_arrows_from_right=[])
-
-                for sequence in final_list_of_sequences_of_arrows:
-                    final_right_action=()
-                    final_gen_on_DA2_side=generator_from_DA2
-                    for ind,arrow in enumerate(sequence): 
-                        final_right_action=final_right_action+in_alg_tuple(arrow)
-                        if ind+1==len(sequence): final_gen_on_DA2_side=out_mod_gen(arrow)
-                    #add differential
-                    arrows_in_tensor_product[(in_generator_of_tensor_product,final_right_action,
-                    out_alg_gen(arrow_on_DA1_side),generators_of_tensor_product_by_name[out_mod_gen(arrow_on_DA1_side).name+'_'+final_gen_on_DA2_side.name]) ]+=1
-
-    arrows_in_tensor_product.delete_arrows_with_even_coeff()
-
-    return DA_bimodule(generators_of_tensor_product_by_name,arrows_in_tensor_product,DAbimodule1.algebra,name= DAbimodule1.name +'⊠'+DAbimodule2.name)
-
-def box_tensor(*args):
-    tensor_prod=args[0]
-    for bimodule_n in args[1:]:
-        tensor_prod=box_tensor_product(tensor_prod,bimodule_n)
-    return tensor_prod
-
-def box_tensor_efficient(*args):
-    tensor_prod=args[0]
-    for bimodule_n in args[1:]:
-        tensor_prod=randomly_cancel_until_possible(box_tensor_product(tensor_prod,bimodule_n))
-    return tensor_prod

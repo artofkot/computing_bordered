@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*- 
-from da_bimodule import  Bunch_of_arrows, DA_bimodule,cancel_pure_differential, box_tensor,arrow_to_str
-from da_bimodule import  randomly_cancel_until_possible, are_equal, cancel_this_number_of_times
-from da_bimodule  import in_mod_gen, out_mod_gen, in_alg_tuple, out_alg_gen
+from da_bimodule import  Bunch_of_arrows, DA_bimodule,cancel_pure_differential,da_arrow_to_str
+from da_bimodule import  randomly_cancel_until_possible, cancel_this_number_of_times
+from da_bimodule  import da_in_mod_gen, da_out_mod_gen, da_in_alg_tuple, da_out_alg_gen
 import sys
 import networkx as nx
 import matplotlib.pyplot as plt
 import pygraphviz as gv
+from networkx.drawing.nx_agraph import write_dot
 
 def arrow_to_label(arrow):
     if len(arrow)==4:
-        return str(out_alg_gen(arrow)) + '-' + str(in_alg_tuple(arrow))
+        return str(da_out_alg_gen(arrow)) + '-' + str(da_in_alg_tuple(arrow))
         
 
 def draw_DA_bimodule(DA1):
@@ -18,20 +19,20 @@ def draw_DA_bimodule(DA1):
 
     for generator1 in DA1.genset:
         for generator2 in DA1.genset:
-            arrows=[arrow for arrow in DA1.arrows if (in_mod_gen(arrow)==generator1 and out_mod_gen(arrow)==generator2)]
+            arrows=[arrow for arrow in DA1.arrows if (da_in_mod_gen(arrow)==generator1 and da_out_mod_gen(arrow)==generator2)]
 
             if len(arrows)!=0:
                 x=''
                 for ind, arrow in enumerate(arrows):
-                    x= x + str(out_alg_gen(arrow)) + '_' + str(in_alg_tuple(arrow))
+                    x= x + str(da_out_alg_gen(arrow)) + '_' + str(da_in_alg_tuple(arrow))
                     if ind+1!=len(arrows): x=x+' + '
                 # print str(generator1) + '--' + x + '-->'+ str(generator2)
                 labels.append(x)
-                graph.append((in_mod_gen(arrow),out_mod_gen(arrow)))
+                graph.append((da_in_mod_gen(arrow),da_out_mod_gen(arrow)))
 
 
     # labels=[arrow_to_label(arrow) for arrow in DA1.arrows]
-    # graph=[(in_mod_gen(arrow),out_mod_gen(arrow)) for arrow in DA1.arrows]
+    # graph=[(da_in_mod_gen(arrow),da_out_mod_gen(arrow)) for arrow in DA1.arrows]
 
     # draw_graph_using_gv(graph, nodes=DA1.genset, labels=labels)
     draw_graph(graph, nodes=DA1.genset, labels=labels)
@@ -96,6 +97,7 @@ def draw_graph(graph, nodes=None, labels=None, graph_layout='shell',
     else:
         graph_pos=nx.shell_layout(G)
 
+
     # draw graph
     nx.draw_networkx_nodes(G,graph_pos,node_size=node_size, 
                            alpha=node_alpha, node_color=node_color)
@@ -111,6 +113,7 @@ def draw_graph(graph, nodes=None, labels=None, graph_layout='shell',
     nx.draw_networkx_edge_labels(G, graph_pos, edge_labels=edge_labels, 
                                  label_pos=edge_text_pos,font_size=edge_label_text_size,
                                  font_color='red')
+    write_dot(G,'multi.dot')
     # A=nx.to_agraph(G)
 
     # show graph
