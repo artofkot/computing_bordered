@@ -1,0 +1,100 @@
+# -*- coding: utf-8 -*- 
+from algebra import  check_idempotents_match_left_left, check_idempotents_match_right_left,check_idempotents_match_right_right
+from da_bimodule import Bunch_of_arrows
+
+def right_a_in_mod_gen(right_a_arrow):
+    return right_a_arrow[0]
+
+def right_a_in_alg_tuple(right_a_arrow):
+    return right_a_arrow[1]
+
+def right_a_out_mod_gen(right_a_arrow):
+    return right_a_arrow[2]
+
+
+class Right_A_module(object):
+    def __init__(self,gen_by_name,right_a_arrows,algebra,name):
+        self.name=name
+        self.gen_by_name=gen_by_name
+        self.genset=self.gen_by_name.values()
+        #differentials are represented by bunch of right_a_arrows with coefficients 1
+        self.right_a_arrows=right_a_arrows
+        self.right_a_arrows.delete_arrows_with_even_coeff()
+        self.algebra=algebra
+
+        self.check()
+
+    def check(self):
+        ##Here we check that our " + self.name + " has all idempotents matching and d_squared=0:
+        if not self.check_matching_of_idempotents_in_action():
+            print "\nSomething is wrong with idempotents!"
+            raise NameError("Right_A_module " + self.name + " has problems with idempotents")
+        
+        d_squared=self.compute_d_squared()
+        d_squared.delete_arrows_with_even_coeff()
+        if d_squared:
+            print "d_squared is not 0! the terms that are not canceled:"
+            d_squared.show()
+            raise NameError("Right_A_module " + self.name + " doesn't satisfy d_squared=0.")
+
+    def show(self):
+        print "=========="
+        print self.name + ':\n'
+        print 'Generators with their idempotents (' + str(len(self.genset))+ ' generators)'
+        for gen in self.genset:
+            print str(gen) + '___' + str(gen.idem.right)
+
+        print '\nActions:'
+        for right_a_arrow in self.right_a_arrows:
+            print str(right_a_arrow)
+
+
+    def check_matching_of_idempotents_in_action(self): 
+        count_of_mismatches=0
+        for right_a_arrow in self.right_a_arrows:
+            # matching in last element of algebra and out gen
+            if len(right_a_in_alg_tuple(right_a_arrow))!=0:
+                if not check_idempotents_match_right_right(right_a_in_alg_tuple(right_a_arrow)[-1],right_a_out_mod_gen(right_a_arrow)): 
+                    print str(right_a_arrow) + '   idempotents are messed up in this right_a_arrow!1'
+                    count_of_mismatches+=1
+            
+            # matching algebra elements between themselves, and with in generator
+            for i in range(len(right_a_in_alg_tuple(right_a_arrow))):
+                if (i==0):
+                    #matching in algebra and gen
+                    if not check_idempotents_match_right_left(right_a_in_mod_gen(right_a_arrow),right_a_in_alg_tuple(right_a_arrow)[0]): 
+                        print str(right_a_arrow) + '   idempotents are messed up in this right_a_arrow!1'
+                        count_of_mismatches+=1  
+                else:
+                    #matching in algebras
+                    if not check_idempotents_match_right_left(right_a_in_alg_tuple(right_a_arrow)[i-1],right_a_in_alg_tuple(right_a_arrow)[i]): 
+                        print right_a_arrow
+                        count_of_mismatches+=1
+            
+        return count_of_mismatches==0
+
+    def compute_d_squared(self):
+        d_squared=Bunch_of_arrows()
+
+        #contribution of double right_a_arrows
+        for arrow1 in self.right_a_arrows:
+            for arrow2 in self.right_a_arrows:
+                if not right_a_out_mod_gen(arrow1)==right_a_in_mod_gen(arrow2): continue
+                ar=(right_a_in_mod_gen(arrow1), right_a_in_alg_tuple(arrow1) + right_a_in_alg_tuple(arrow2)
+                                ,right_a_out_mod_gen(arrow2))
+                d_squared[ar]+=1
+
+
+        #contribution of factorizing algebra elements        
+        for arrow in self.right_a_arrows:
+            for index, a in enumerate(right_a_in_alg_tuple(arrow)):
+                for factorization in getattr(a,'factorizations', []):
+                    new_tuple=right_a_in_alg_tuple(arrow)[:index] + factorization + right_a_in_alg_tuple(arrow)[index+1:]
+                    ar=(right_a_in_mod_gen(arrow), new_tuple,
+                        right_a_out_mod_gen(arrow))
+                    d_squared[ar]+=1
+
+        return d_squared
+
+
+

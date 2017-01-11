@@ -2,9 +2,10 @@
 from basics import Bunch_of_arrows
 
 class ChainComplex(object):
-    def __init__(self,genset,arrows,name):
+    def __init__(self,gen_by_name,arrows,name):
         self.name=name
-        self.genset=genset
+        self.gen_by_name=gen_by_name
+        self.genset=self.gen_by_name.values()
         #differentials are represented by bunch of arrows with coefficients 1
         self.arrows=arrows
         self.arrows.delete_arrows_with_even_coeff()
@@ -30,8 +31,9 @@ class ChainComplex(object):
     def show(self):
         print "=========="
         print self.name + ':\n'
-        print "Generators"
-        print self.genset
+        print "Generators:"
+        for gen in self.genset:
+            print str(gen)
         print "\nDifferentials"
         self.arrows.show()
 
@@ -39,9 +41,9 @@ def cancel_differential(C,d):
     z1=d[0]
     z2=d[1]
     
-    new_generators=C.genset
-    new_generators.remove(z1)
-    new_generators.remove(z2)
+    new_generators_by_name=C.gen_by_name.copy()
+    del new_generators_by_name[z1.name]
+    del new_generators_by_name[z2.name]
     
     old_arrows_that_survive=[arrow for arrow in C.arrows if (arrow[0]!=z1 and arrow[1]!=z2  and arrow[1]!=z1 and arrow[0]!=z2 ) ]
     new_arrows=Bunch_of_arrows(old_arrows_that_survive)
@@ -55,7 +57,7 @@ def cancel_differential(C,d):
 
     new_arrows.delete_arrows_with_even_coeff()
 
-    C2=ChainComplex(new_generators,new_arrows, C.name + '_red')
+    C2=ChainComplex(new_generators_by_name,new_arrows, C.name + '_red')
     return C2
 
 def homology_dim(C):
@@ -68,7 +70,8 @@ def homology_dim(C):
         return (homology_dim(canceled_C))
 
     if there_is_diff==0:
-        print "\n generators of HH are:"
+        print "\ngenerators of H(" + C.name + ") are:"
         print C.genset
+        print 'homology has dimension ' + str(len(C.genset))
         return len(C.genset)
 

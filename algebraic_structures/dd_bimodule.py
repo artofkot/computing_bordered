@@ -1,10 +1,5 @@
 # -*- coding: utf-8 -*- 
-import time
-from basics import AttrDict 
-from algebra import Generator, torus_A, check_idempotents_match_left_left, check_idempotents_match_right_left,check_idempotents_match_right_right
-from collections import Counter
-from itertools import permutations
-from random import shuffle
+from algebra import check_idempotents_match_left_left, check_idempotents_match_right_left,check_idempotents_match_right_right
 from da_bimodule import Bunch_of_arrows
 
 # def dd_arrow_to_str(tuplee): #works only for DD arrows
@@ -47,7 +42,7 @@ class DD_bimodule(object):
         if d_squared:
             print "d_squared is not 0! the terms that are not canceled:"
             d_squared.show()
-            raise NameError("DA_bimodule " + self.name + " doesn't satisfy d_squared=0.")
+            raise NameError("DD_bimodule " + self.name + " doesn't satisfy d_squared=0.")
 
     def show(self):
         print "=========="
@@ -84,7 +79,6 @@ class DD_bimodule(object):
             if not check_idempotents_match_right_right(dd_in_mod_gen(dd_arrow),dd_out_alg_right_gen(dd_arrow)): 
                 print str(dd_arrow) + '   idempotents are messed up in this dd_arrow!1'
                 count_of_mismatches+=1
-            
         return count_of_mismatches==0
 
     def compute_d_squared(self):
@@ -98,12 +92,6 @@ class DD_bimodule(object):
                 if a1a2_left and a1a2_right:
                     ar=(dd_in_mod_gen(dd_arrow1),a1a2_left,dd_out_mod_gen(dd_arrow2),a1a2_right)
                     d_squared[ar]+=1
-                    if str(ar)=='(a(et1, ks1), ks23, a(et1, ks123), 1)':
-                        print str(dd_arrow1)
-                        print str(dd_arrow2)
-                        # print dd_out_alg_right_gen(dd_arrow2)
-                        # print dd_out_alg_right_gen(dd_arrow1)
-                        # print self.algebra.multiply(dd_out_alg_right_gen(dd_arrow2),dd_out_alg_right_gen(dd_arrow1))
         return d_squared
 
 

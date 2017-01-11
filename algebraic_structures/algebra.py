@@ -35,7 +35,8 @@ class DGAlgebra(object):
         return x
 
     def show(self):
-        print('========\nGenerators of algebra with their idempotents:')
+        print ('========\n'+ self.name +':\n')
+        print('Generators of algebra with their idempotents:')
         for gen in self.genset:
             print str(gen.idem.left) + ' ' + str(gen) + ' ' + str(gen.idem.right)
         print('Multiplications in algebra:')

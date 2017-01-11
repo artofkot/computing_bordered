@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*- 
 from collections import Counter
 
+# turns printing in red:
+def debug(whatever):
+    return '\033[91m' + str(whatever) + '\033[0m'
+
 class AttrDict(dict):
     def __init__(self, *args, **kwargs):
         super(AttrDict, self).__init__(*args, **kwargs)

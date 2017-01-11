@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*- 
 from algebraic_structures.algebra import AttrDict, Generator, torus_A, g2_A
-from algebraic_structures.da_bimodule import  Bunch_of_arrows, DA_bimodule,cancel_pure_differential,da_arrow_to_str
-from algebraic_structures.da_bimodule import  randomly_cancel_until_possible, cancel_this_number_of_times
-from algebraic_structures.morphism import check_df_is_0, composition
-from algebraic_structures.hochschild_homology import is_bounded, CH, homology_dim, ChainComplex
+from algebraic_structures.da_bimodule import  Bunch_of_arrows, DA_bimodule
 
 
 # genus 1 bimodules: 
