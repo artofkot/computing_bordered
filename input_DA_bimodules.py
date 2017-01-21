@@ -10,8 +10,8 @@ def init_ID1(torus_A):
                 "x": Generator("x"),
                 "y": Generator("y")
                 })
-    gen_by_name.x.add_idems(torus_A.idem.i0,torus_A.idem.i0)
-    gen_by_name.y.add_idems(torus_A.idem.i1,torus_A.idem.i1)
+    gen_by_name.x.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i0)
+    gen_by_name.y.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i1)
 
     arrows=Bunch_of_arrows([
         (              gen_by_name.x,(torus_A.gen_by_name.r12,),
@@ -40,10 +40,10 @@ def init_ID2(torus_A):
                 "z1": Generator("z1"),
                 "z2": Generator("z2")
                 })
-    gen_by_name.x.add_idems(torus_A.idem.i0,torus_A.idem.i0)
-    gen_by_name.y.add_idems(torus_A.idem.i1,torus_A.idem.i1)
-    gen_by_name.z1.add_idems(torus_A.idem.i0,torus_A.idem.i1)
-    gen_by_name.z2.add_idems(torus_A.idem.i0,torus_A.idem.i1)
+    gen_by_name.x.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i0)
+    gen_by_name.y.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i1)
+    gen_by_name.z1.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i1)
+    gen_by_name.z2.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i1)
 
     arrows=Bunch_of_arrows([
         (       gen_by_name.x,(torus_A.gen_by_name.r12,),
@@ -92,12 +92,12 @@ def init_ID3(torus_A):
                 "w1": Generator("w1"),
                 "w2": Generator("w2")
                 })
-    gen_by_name.x.add_idems(torus_A.idem.i0,torus_A.idem.i0)
-    gen_by_name.y.add_idems(torus_A.idem.i1,torus_A.idem.i1)
-    gen_by_name.z1.add_idems(torus_A.idem.i0,torus_A.idem.i1)
-    gen_by_name.z2.add_idems(torus_A.idem.i0,torus_A.idem.i1)
-    gen_by_name.w1.add_idems(torus_A.idem.i1,torus_A.idem.i0)
-    gen_by_name.w2.add_idems(torus_A.idem.i1,torus_A.idem.i0)
+    gen_by_name.x.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i0)
+    gen_by_name.y.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i1)
+    gen_by_name.z1.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i1)
+    gen_by_name.z2.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i1)
+    gen_by_name.w1.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i0)
+    gen_by_name.w2.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i0)
 
     arrows=Bunch_of_arrows([
         (       gen_by_name.x,(),
@@ -147,9 +147,9 @@ def init_M_RHD(torus_A):
                 "q": Generator("q"),
                 "r": Generator("r")
                 })
-    gen_by_name.p.add_idems(torus_A.idem.i0,torus_A.idem.i0)
-    gen_by_name.q.add_idems(torus_A.idem.i1,torus_A.idem.i1)
-    gen_by_name.r.add_idems(torus_A.idem.i1,torus_A.idem.i0)
+    gen_by_name.p.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i0)
+    gen_by_name.q.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i1)
+    gen_by_name.r.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i0)
 
     arrows=Bunch_of_arrows([
         # from p to q
@@ -190,9 +190,9 @@ def init_M_LHD(torus_A):
                 "q": Generator("q"),
                 "r": Generator("r")
                 })
-    gen_by_name.p.add_idems(torus_A.idem.i0,torus_A.idem.i0)
-    gen_by_name.q.add_idems(torus_A.idem.i1,torus_A.idem.i1)
-    gen_by_name.r.add_idems(torus_A.idem.i1,torus_A.idem.i0)
+    gen_by_name.p.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i0)
+    gen_by_name.q.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i1)
+    gen_by_name.r.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i0)
 
     arrows=Bunch_of_arrows([
         # from p
@@ -229,9 +229,9 @@ def init_L_RHD(torus_A):
                 "q": Generator("q"),
                 "s": Generator("s")
                 })
-    gen_by_name.p.add_idems(torus_A.idem.i0,torus_A.idem.i0)
-    gen_by_name.q.add_idems(torus_A.idem.i1,torus_A.idem.i1)
-    gen_by_name.s.add_idems(torus_A.idem.i0,torus_A.idem.i1)
+    gen_by_name.p.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i0)
+    gen_by_name.q.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i1)
+    gen_by_name.s.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i1)
 
     arrows=Bunch_of_arrows([
         # from p to q
@@ -274,9 +274,9 @@ def init_L_LHD(torus_A):
                 "q": Generator("q"),
                 "s": Generator("s")
                 })
-    gen_by_name.p.add_idems(torus_A.idem.i0,torus_A.idem.i0)
-    gen_by_name.q.add_idems(torus_A.idem.i1,torus_A.idem.i1)
-    gen_by_name.s.add_idems(torus_A.idem.i0,torus_A.idem.i1)
+    gen_by_name.p.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i0)
+    gen_by_name.q.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i1)
+    gen_by_name.s.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i1)
 
     arrows=Bunch_of_arrows([
         # from q
@@ -352,16 +352,16 @@ def init_g2_ID(g2_A):
                 "x2": Generator("x2"),
                 "x3": Generator("x3")
                 })
-    gen_by_name.x0.add_idems(g2_A.idem.i0,g2_A.idem.i0)
-    gen_by_name.x1.add_idems(g2_A.idem.i1,g2_A.idem.i1)
-    gen_by_name.x2.add_idems(g2_A.idem.i2,g2_A.idem.i2)
-    gen_by_name.x3.add_idems(g2_A.idem.i3,g2_A.idem.i3)
+    gen_by_name.x0.add_idems(g2_A.idem_by_name.i0,g2_A.idem_by_name.i0)
+    gen_by_name.x1.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i1)
+    gen_by_name.x2.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i2)
+    gen_by_name.x3.add_idems(g2_A.idem_by_name.i3,g2_A.idem_by_name.i3)
 
     #this is for convenience
-    idem_to_gens={g2_A.idem.i0:gen_by_name.x0,
-                    g2_A.idem.i1:gen_by_name.x1,
-                    g2_A.idem.i2:gen_by_name.x2,
-                    g2_A.idem.i3:gen_by_name.x3}
+    idem_to_gens={g2_A.idem_by_name.i0:gen_by_name.x0,
+                    g2_A.idem_by_name.i1:gen_by_name.x1,
+                    g2_A.idem_by_name.i2:gen_by_name.x2,
+                    g2_A.idem_by_name.i3:gen_by_name.x3}
 
     #initializing all actions
     arrows=Bunch_of_arrows()
@@ -389,18 +389,18 @@ def init_g2_ID_bounded(g2_A):
                 "c2": Generator("c2")
 
                 })
-    gen_by_name.x0.add_idems(g2_A.idem.i0,g2_A.idem.i0)
-    gen_by_name.x1.add_idems(g2_A.idem.i1,g2_A.idem.i1)
-    gen_by_name.x2.add_idems(g2_A.idem.i2,g2_A.idem.i2)
-    gen_by_name.x3.add_idems(g2_A.idem.i3,g2_A.idem.i3)
-    gen_by_name.z1.add_idems(g2_A.idem.i0,g2_A.idem.i1)
-    gen_by_name.z2.add_idems(g2_A.idem.i0,g2_A.idem.i1)
-    gen_by_name.w1.add_idems(g2_A.idem.i1,g2_A.idem.i0)
-    gen_by_name.w2.add_idems(g2_A.idem.i1,g2_A.idem.i0)
-    gen_by_name.t1.add_idems(g2_A.idem.i2,g2_A.idem.i3)
-    gen_by_name.t2.add_idems(g2_A.idem.i2,g2_A.idem.i3)
-    gen_by_name.c1.add_idems(g2_A.idem.i3,g2_A.idem.i2)
-    gen_by_name.c2.add_idems(g2_A.idem.i3,g2_A.idem.i2)
+    gen_by_name.x0.add_idems(g2_A.idem_by_name.i0,g2_A.idem_by_name.i0)
+    gen_by_name.x1.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i1)
+    gen_by_name.x2.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i2)
+    gen_by_name.x3.add_idems(g2_A.idem_by_name.i3,g2_A.idem_by_name.i3)
+    gen_by_name.z1.add_idems(g2_A.idem_by_name.i0,g2_A.idem_by_name.i1)
+    gen_by_name.z2.add_idems(g2_A.idem_by_name.i0,g2_A.idem_by_name.i1)
+    gen_by_name.w1.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i0)
+    gen_by_name.w2.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i0)
+    gen_by_name.t1.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i3)
+    gen_by_name.t2.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i3)
+    gen_by_name.c1.add_idems(g2_A.idem_by_name.i3,g2_A.idem_by_name.i2)
+    gen_by_name.c2.add_idems(g2_A.idem_by_name.i3,g2_A.idem_by_name.i2)
 
     arrows=Bunch_of_arrows([
         # higher torus
@@ -580,11 +580,11 @@ def init_g2_M_RHD(g2_A):
                 "x3": Generator("x3"),
                 "r":Generator("r")
                 })
-    gen_by_name.x0.add_idems(g2_A.idem.i0,g2_A.idem.i0)
-    gen_by_name.x1.add_idems(g2_A.idem.i1,g2_A.idem.i1)
-    gen_by_name.x2.add_idems(g2_A.idem.i2,g2_A.idem.i2)
-    gen_by_name.x3.add_idems(g2_A.idem.i3,g2_A.idem.i3)
-    gen_by_name.r.add_idems(g2_A.idem.i1,g2_A.idem.i0)
+    gen_by_name.x0.add_idems(g2_A.idem_by_name.i0,g2_A.idem_by_name.i0)
+    gen_by_name.x1.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i1)
+    gen_by_name.x2.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i2)
+    gen_by_name.x3.add_idems(g2_A.idem_by_name.i3,g2_A.idem_by_name.i3)
+    gen_by_name.r.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i0)
 
     arrows=Bunch_of_arrows([
         (              gen_by_name.x2,(g2_A.gen_by_name.r56,),
@@ -689,11 +689,11 @@ def init_g2_K_LHD(g2_A):
                 "x3": Generator("x3"),
                 "r":Generator("r")
                 })
-    gen_by_name.x0.add_idems(g2_A.idem.i3,g2_A.idem.i3)
-    gen_by_name.x1.add_idems(g2_A.idem.i2,g2_A.idem.i2)
-    gen_by_name.x2.add_idems(g2_A.idem.i1,g2_A.idem.i1)
-    gen_by_name.x3.add_idems(g2_A.idem.i0,g2_A.idem.i0)
-    gen_by_name.r.add_idems(g2_A.idem.i2,g2_A.idem.i3)
+    gen_by_name.x0.add_idems(g2_A.idem_by_name.i3,g2_A.idem_by_name.i3)
+    gen_by_name.x1.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i2)
+    gen_by_name.x2.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i1)
+    gen_by_name.x3.add_idems(g2_A.idem_by_name.i0,g2_A.idem_by_name.i0)
+    gen_by_name.r.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i3)
 
     arrows_old=Bunch_of_arrows([
         (              gen_by_name.x2,(g2_A.gen_by_name.r56,),
@@ -815,11 +815,11 @@ def init_g2_M_LHD(g2_A):
                 "x3": Generator("x3"),
                 "r":Generator("r")
                 })
-    gen_by_name.x0.add_idems(g2_A.idem.i0,g2_A.idem.i0)
-    gen_by_name.x1.add_idems(g2_A.idem.i1,g2_A.idem.i1)
-    gen_by_name.x2.add_idems(g2_A.idem.i2,g2_A.idem.i2)
-    gen_by_name.x3.add_idems(g2_A.idem.i3,g2_A.idem.i3)
-    gen_by_name.r.add_idems(g2_A.idem.i1,g2_A.idem.i0)
+    gen_by_name.x0.add_idems(g2_A.idem_by_name.i0,g2_A.idem_by_name.i0)
+    gen_by_name.x1.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i1)
+    gen_by_name.x2.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i2)
+    gen_by_name.x3.add_idems(g2_A.idem_by_name.i3,g2_A.idem_by_name.i3)
+    gen_by_name.r.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i0)
 
     arrows=Bunch_of_arrows([
         (              gen_by_name.x2,(g2_A.gen_by_name.r56,),
@@ -921,11 +921,11 @@ def init_g2_K_RHD(g2_A):
                 "x3": Generator("x3"),
                 "r":Generator("r")
                 })
-    gen_by_name.x0.add_idems(g2_A.idem.i3,g2_A.idem.i3)
-    gen_by_name.x1.add_idems(g2_A.idem.i2,g2_A.idem.i2)
-    gen_by_name.x2.add_idems(g2_A.idem.i1,g2_A.idem.i1)
-    gen_by_name.x3.add_idems(g2_A.idem.i0,g2_A.idem.i0)
-    gen_by_name.r.add_idems(g2_A.idem.i2,g2_A.idem.i3)
+    gen_by_name.x0.add_idems(g2_A.idem_by_name.i3,g2_A.idem_by_name.i3)
+    gen_by_name.x1.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i2)
+    gen_by_name.x2.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i1)
+    gen_by_name.x3.add_idems(g2_A.idem_by_name.i0,g2_A.idem_by_name.i0)
+    gen_by_name.r.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i3)
 
     arrows_old=Bunch_of_arrows([
         (              gen_by_name.x2,(g2_A.gen_by_name.r56,),
@@ -1044,11 +1044,11 @@ def init_g2_L_RHD(g2_A):
                 "x3": Generator("x3"),
                 "s":Generator("s")
                 })
-    gen_by_name.x0.add_idems(g2_A.idem.i0,g2_A.idem.i0)
-    gen_by_name.x1.add_idems(g2_A.idem.i1,g2_A.idem.i1)
-    gen_by_name.x2.add_idems(g2_A.idem.i2,g2_A.idem.i2)
-    gen_by_name.x3.add_idems(g2_A.idem.i3,g2_A.idem.i3)
-    gen_by_name.s.add_idems(g2_A.idem.i0,g2_A.idem.i1)
+    gen_by_name.x0.add_idems(g2_A.idem_by_name.i0,g2_A.idem_by_name.i0)
+    gen_by_name.x1.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i1)
+    gen_by_name.x2.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i2)
+    gen_by_name.x3.add_idems(g2_A.idem_by_name.i3,g2_A.idem_by_name.i3)
+    gen_by_name.s.add_idems(g2_A.idem_by_name.i0,g2_A.idem_by_name.i1)
 
     arrows=Bunch_of_arrows([
         (              gen_by_name.x2,(g2_A.gen_by_name.r56,),
@@ -1156,11 +1156,11 @@ def init_g2_N_LHD(g2_A):
                 "x3": Generator("x3"),
                 "s":Generator("s")
                 })
-    gen_by_name.x0.add_idems(g2_A.idem.i3,g2_A.idem.i3)
-    gen_by_name.x1.add_idems(g2_A.idem.i2,g2_A.idem.i2)
-    gen_by_name.x2.add_idems(g2_A.idem.i1,g2_A.idem.i1)
-    gen_by_name.x3.add_idems(g2_A.idem.i0,g2_A.idem.i0)
-    gen_by_name.s.add_idems(g2_A.idem.i3,g2_A.idem.i2)
+    gen_by_name.x0.add_idems(g2_A.idem_by_name.i3,g2_A.idem_by_name.i3)
+    gen_by_name.x1.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i2)
+    gen_by_name.x2.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i1)
+    gen_by_name.x3.add_idems(g2_A.idem_by_name.i0,g2_A.idem_by_name.i0)
+    gen_by_name.s.add_idems(g2_A.idem_by_name.i3,g2_A.idem_by_name.i2)
 
     arrows_old=Bunch_of_arrows([
         (              gen_by_name.x2,(g2_A.gen_by_name.r56,),
@@ -1284,11 +1284,11 @@ def init_g2_L_LHD(g2_A):
                 "x3": Generator("x3"),
                 "s":Generator("s")
                 })
-    gen_by_name.x0.add_idems(g2_A.idem.i0,g2_A.idem.i0)
-    gen_by_name.x1.add_idems(g2_A.idem.i1,g2_A.idem.i1)
-    gen_by_name.x2.add_idems(g2_A.idem.i2,g2_A.idem.i2)
-    gen_by_name.x3.add_idems(g2_A.idem.i3,g2_A.idem.i3)
-    gen_by_name.s.add_idems(g2_A.idem.i0,g2_A.idem.i1)
+    gen_by_name.x0.add_idems(g2_A.idem_by_name.i0,g2_A.idem_by_name.i0)
+    gen_by_name.x1.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i1)
+    gen_by_name.x2.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i2)
+    gen_by_name.x3.add_idems(g2_A.idem_by_name.i3,g2_A.idem_by_name.i3)
+    gen_by_name.s.add_idems(g2_A.idem_by_name.i0,g2_A.idem_by_name.i1)
 
     arrows=Bunch_of_arrows([
         (              gen_by_name.x2,(g2_A.gen_by_name.r56,),
@@ -1386,11 +1386,11 @@ def init_g2_N_RHD(g2_A):
                 "x3": Generator("x3"),
                 "s":Generator("s")
                 })
-    gen_by_name.x0.add_idems(g2_A.idem.i3,g2_A.idem.i3)
-    gen_by_name.x1.add_idems(g2_A.idem.i2,g2_A.idem.i2)
-    gen_by_name.x2.add_idems(g2_A.idem.i1,g2_A.idem.i1)
-    gen_by_name.x3.add_idems(g2_A.idem.i0,g2_A.idem.i0)
-    gen_by_name.s.add_idems(g2_A.idem.i3,g2_A.idem.i2)
+    gen_by_name.x0.add_idems(g2_A.idem_by_name.i3,g2_A.idem_by_name.i3)
+    gen_by_name.x1.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i2)
+    gen_by_name.x2.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i1)
+    gen_by_name.x3.add_idems(g2_A.idem_by_name.i0,g2_A.idem_by_name.i0)
+    gen_by_name.s.add_idems(g2_A.idem_by_name.i3,g2_A.idem_by_name.i2)
 
     arrows_old=Bunch_of_arrows([
         (              gen_by_name.x2,(g2_A.gen_by_name.r56,),
@@ -1515,25 +1515,25 @@ def init_g2_T_LHD(g2_A):
                 "t11":Generator("t11"),
                 "t12":Generator("t12")
                 })
-    gen_by_name.x0.add_idems(g2_A.idem.i0,g2_A.idem.i0)
-    gen_by_name.x1.add_idems(g2_A.idem.i1,g2_A.idem.i1)
-    gen_by_name.x2.add_idems(g2_A.idem.i2,g2_A.idem.i2)
-    gen_by_name.x3.add_idems(g2_A.idem.i3,g2_A.idem.i3)
+    gen_by_name.x0.add_idems(g2_A.idem_by_name.i0,g2_A.idem_by_name.i0)
+    gen_by_name.x1.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i1)
+    gen_by_name.x2.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i2)
+    gen_by_name.x3.add_idems(g2_A.idem_by_name.i3,g2_A.idem_by_name.i3)
 
-    gen_by_name.t1.add_idems(g2_A.idem.i1,g2_A.idem.i1)
-    gen_by_name.t2.add_idems(g2_A.idem.i2,g2_A.idem.i1)
-    gen_by_name.t3.add_idems(g2_A.idem.i1,g2_A.idem.i0)
-    gen_by_name.t4.add_idems(g2_A.idem.i2,g2_A.idem.i0)
+    gen_by_name.t1.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i1)
+    gen_by_name.t2.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i1)
+    gen_by_name.t3.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i0)
+    gen_by_name.t4.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i0)
 
-    gen_by_name.t5.add_idems(g2_A.idem.i1,g2_A.idem.i1)
-    gen_by_name.t6.add_idems(g2_A.idem.i2,g2_A.idem.i1)
-    gen_by_name.t7.add_idems(g2_A.idem.i1,g2_A.idem.i2)
-    gen_by_name.t8.add_idems(g2_A.idem.i2,g2_A.idem.i2)
+    gen_by_name.t5.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i1)
+    gen_by_name.t6.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i1)
+    gen_by_name.t7.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i2)
+    gen_by_name.t8.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i2)
 
-    gen_by_name.t9.add_idems(g2_A.idem.i1,g2_A.idem.i3)
-    gen_by_name.t10.add_idems(g2_A.idem.i2,g2_A.idem.i3)
-    gen_by_name.t11.add_idems(g2_A.idem.i1,g2_A.idem.i2)
-    gen_by_name.t12.add_idems(g2_A.idem.i2,g2_A.idem.i2)
+    gen_by_name.t9.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i3)
+    gen_by_name.t10.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i3)
+    gen_by_name.t11.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i2)
+    gen_by_name.t12.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i2)
 
     arrows=Bunch_of_arrows([
         (              gen_by_name.x2,(g2_A.gen_by_name.r5,),
@@ -1737,25 +1737,25 @@ def init_g2_T_RHD(g2_A):
                 "t11":Generator("t11"),
                 "t12":Generator("t12")
                 })
-    gen_by_name.x0.add_idems(g2_A.idem.i3,g2_A.idem.i3)
-    gen_by_name.x1.add_idems(g2_A.idem.i2,g2_A.idem.i2)
-    gen_by_name.x2.add_idems(g2_A.idem.i1,g2_A.idem.i1)
-    gen_by_name.x3.add_idems(g2_A.idem.i0,g2_A.idem.i0)
+    gen_by_name.x0.add_idems(g2_A.idem_by_name.i3,g2_A.idem_by_name.i3)
+    gen_by_name.x1.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i2)
+    gen_by_name.x2.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i1)
+    gen_by_name.x3.add_idems(g2_A.idem_by_name.i0,g2_A.idem_by_name.i0)
 
-    gen_by_name.t1.add_idems(g2_A.idem.i2,g2_A.idem.i2)
-    gen_by_name.t2.add_idems(g2_A.idem.i1,g2_A.idem.i2)
-    gen_by_name.t3.add_idems(g2_A.idem.i2,g2_A.idem.i3)
-    gen_by_name.t4.add_idems(g2_A.idem.i1,g2_A.idem.i3)
+    gen_by_name.t1.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i2)
+    gen_by_name.t2.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i2)
+    gen_by_name.t3.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i3)
+    gen_by_name.t4.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i3)
 
-    gen_by_name.t5.add_idems(g2_A.idem.i2,g2_A.idem.i2)
-    gen_by_name.t6.add_idems(g2_A.idem.i1,g2_A.idem.i2)
-    gen_by_name.t7.add_idems(g2_A.idem.i2,g2_A.idem.i1)
-    gen_by_name.t8.add_idems(g2_A.idem.i1,g2_A.idem.i1)
+    gen_by_name.t5.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i2)
+    gen_by_name.t6.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i2)
+    gen_by_name.t7.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i1)
+    gen_by_name.t8.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i1)
 
-    gen_by_name.t9.add_idems(g2_A.idem.i2,g2_A.idem.i0)
-    gen_by_name.t10.add_idems(g2_A.idem.i1,g2_A.idem.i0)
-    gen_by_name.t11.add_idems(g2_A.idem.i2,g2_A.idem.i1)
-    gen_by_name.t12.add_idems(g2_A.idem.i1,g2_A.idem.i1)
+    gen_by_name.t9.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i0)
+    gen_by_name.t10.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i0)
+    gen_by_name.t11.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i1)
+    gen_by_name.t12.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i1)
     
     arrows=Bunch_of_arrows([
         (              gen_by_name.x3,(g2_A.gen_by_name.r3,),

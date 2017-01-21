@@ -82,12 +82,12 @@ def init_Right_A_L0(pil_A):
 
                 })
 
-    gen_by_name.z.add_idems(0,pil_A.idem.i0)
-    gen_by_name.w.add_idems(0,pil_A.idem.i2)
-    gen_by_name.s.add_idems(0,pil_A.idem.j2)
-    gen_by_name.t.add_idems(0,pil_A.idem.i1)
-    gen_by_name.y.add_idems(0,pil_A.idem.j1)
-    gen_by_name.x.add_idems(0,pil_A.idem.j0)
+    gen_by_name.z.add_idems(0,pil_A.idem_by_name.i0)
+    gen_by_name.w.add_idems(0,pil_A.idem_by_name.i2)
+    gen_by_name.s.add_idems(0,pil_A.idem_by_name.j2)
+    gen_by_name.t.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.y.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.x.add_idems(0,pil_A.idem_by_name.j0)
 
     right_a_arrows=Bunch_of_arrows([
         (              gen_by_name.z,(pil_A.gen_by_name.et1,pil_A.gen_by_name.ks1)
@@ -116,8 +116,8 @@ def init_Right_A_L6(pil_A):
 
                 })
 
-    gen_by_name.u.add_idems(0,pil_A.idem.i0)
-    gen_by_name.v.add_idems(0,pil_A.idem.j0)
+    gen_by_name.u.add_idems(0,pil_A.idem_by_name.i0)
+    gen_by_name.v.add_idems(0,pil_A.idem_by_name.j0)
 
     right_a_arrows=Bunch_of_arrows([
         (              gen_by_name.u,(pil_A.gen_by_name.et1, pil_A.gen_by_name.ks1, pil_A.gen_by_name.r2, pil_A.gen_by_name.ks3,  pil_A.gen_by_name.et3)
@@ -134,8 +134,8 @@ def init_Right_A_L7(pil_A):
 
                 })
 
-    gen_by_name.u.add_idems(0,pil_A.idem.i2)
-    gen_by_name.v.add_idems(0,pil_A.idem.j2)
+    gen_by_name.u.add_idems(0,pil_A.idem_by_name.i2)
+    gen_by_name.v.add_idems(0,pil_A.idem_by_name.j2)
 
     right_a_arrows=Bunch_of_arrows([
         (              gen_by_name.u,(pil_A.gen_by_name.ks2,)
@@ -169,26 +169,26 @@ def init_Right_A_L1(pil_A):
                 "v": Generator("v"),
                 })
 
-    gen_by_name.a.add_idems(0,pil_A.idem.i0)
-    gen_by_name.b.add_idems(0,pil_A.idem.i0)
-    gen_by_name.z.add_idems(0,pil_A.idem.j0)
-    gen_by_name.w.add_idems(0,pil_A.idem.j0)
-    gen_by_name.t.add_idems(0,pil_A.idem.i2)
-    gen_by_name.s.add_idems(0,pil_A.idem.i2)
-    gen_by_name.c.add_idems(0,pil_A.idem.i1)
-    gen_by_name.g.add_idems(0,pil_A.idem.i1)
-    gen_by_name.d.add_idems(0,pil_A.idem.i1)
-    gen_by_name.h.add_idems(0,pil_A.idem.i1)
-    gen_by_name.r.add_idems(0,pil_A.idem.i1)
-    gen_by_name.e.add_idems(0,pil_A.idem.i1)
-    gen_by_name.p.add_idems(0,pil_A.idem.j2)
-    gen_by_name.q.add_idems(0,pil_A.idem.j2)
-    gen_by_name.x.add_idems(0,pil_A.idem.j1)
-    gen_by_name.y.add_idems(0,pil_A.idem.j1)
-    gen_by_name.u.add_idems(0,pil_A.idem.j1)
-    gen_by_name.v.add_idems(0,pil_A.idem.j1)
-    gen_by_name.l.add_idems(0,pil_A.idem.j1)
-    gen_by_name.m.add_idems(0,pil_A.idem.j1)
+    gen_by_name.a.add_idems(0,pil_A.idem_by_name.i0)
+    gen_by_name.b.add_idems(0,pil_A.idem_by_name.i0)
+    gen_by_name.z.add_idems(0,pil_A.idem_by_name.j0)
+    gen_by_name.w.add_idems(0,pil_A.idem_by_name.j0)
+    gen_by_name.t.add_idems(0,pil_A.idem_by_name.i2)
+    gen_by_name.s.add_idems(0,pil_A.idem_by_name.i2)
+    gen_by_name.c.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.g.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.d.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.h.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.r.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.e.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.p.add_idems(0,pil_A.idem_by_name.j2)
+    gen_by_name.q.add_idems(0,pil_A.idem_by_name.j2)
+    gen_by_name.x.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.y.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.u.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.v.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.l.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.m.add_idems(0,pil_A.idem_by_name.j1)
 
     right_a_arrows=Bunch_of_arrows([
         (              gen_by_name.b,(pil_A.gen_by_name.r0,)
@@ -271,18 +271,18 @@ def init_Right_A_L2(pil_A):
 
                 })
 
-    gen_by_name.a.add_idems(0,pil_A.idem.j1)
-    gen_by_name.b.add_idems(0,pil_A.idem.i1)
-    gen_by_name.c.add_idems(0,pil_A.idem.j1)
-    gen_by_name.d.add_idems(0,pil_A.idem.j0)
-    gen_by_name.x1.add_idems(0,pil_A.idem.j1)
-    gen_by_name.y1.add_idems(0,pil_A.idem.j1)
-    gen_by_name.z1.add_idems(0,pil_A.idem.i1)
-    gen_by_name.t1.add_idems(0,pil_A.idem.i1)
-    gen_by_name.x2.add_idems(0,pil_A.idem.j1)
-    gen_by_name.y2.add_idems(0,pil_A.idem.j1)
-    gen_by_name.z2.add_idems(0,pil_A.idem.i1)
-    gen_by_name.t2.add_idems(0,pil_A.idem.i1)
+    gen_by_name.a.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.b.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.c.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.d.add_idems(0,pil_A.idem_by_name.j0)
+    gen_by_name.x1.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.y1.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.z1.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.t1.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.x2.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.y2.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.z2.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.t2.add_idems(0,pil_A.idem_by_name.i1)
 
     right_a_arrows=Bunch_of_arrows([
         (              gen_by_name.b,(pil_A.gen_by_name.ks1,pil_A.gen_by_name.r2,pil_A.gen_by_name.ks3)
@@ -337,26 +337,26 @@ def init_Right_A_L3(pil_A):
 
                 })
 
-    gen_by_name.a.add_idems(0,pil_A.idem.j1)
-    gen_by_name.b.add_idems(0,pil_A.idem.i1)
-    gen_by_name.c.add_idems(0,pil_A.idem.j1)
-    gen_by_name.d.add_idems(0,pil_A.idem.j0)
-    gen_by_name.x1.add_idems(0,pil_A.idem.i1)
-    gen_by_name.x2.add_idems(0,pil_A.idem.j1)
-    gen_by_name.x3.add_idems(0,pil_A.idem.i1)
-    gen_by_name.x4.add_idems(0,pil_A.idem.j1)
-    gen_by_name.x5.add_idems(0,pil_A.idem.i1)
-    gen_by_name.x6.add_idems(0,pil_A.idem.j1)
-    gen_by_name.x7.add_idems(0,pil_A.idem.i1)
-    gen_by_name.x8.add_idems(0,pil_A.idem.j1)
-    gen_by_name.x9.add_idems(0,pil_A.idem.i1)
-    gen_by_name.x10.add_idems(0,pil_A.idem.j1)
-    gen_by_name.x11.add_idems(0,pil_A.idem.i1)
-    gen_by_name.x12.add_idems(0,pil_A.idem.j1)
-    gen_by_name.x13.add_idems(0,pil_A.idem.i1)
-    gen_by_name.x14.add_idems(0,pil_A.idem.j1)
-    gen_by_name.x15.add_idems(0,pil_A.idem.i1)
-    gen_by_name.x16.add_idems(0,pil_A.idem.j1)
+    gen_by_name.a.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.b.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.c.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.d.add_idems(0,pil_A.idem_by_name.j0)
+    gen_by_name.x1.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.x2.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.x3.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.x4.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.x5.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.x6.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.x7.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.x8.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.x9.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.x10.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.x11.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.x12.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.x13.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.x14.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.x15.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.x16.add_idems(0,pil_A.idem_by_name.j1)
 
     right_a_arrows=Bunch_of_arrows([
         (              gen_by_name.b,(pil_A.gen_by_name.ks1,pil_A.gen_by_name.r2,pil_A.gen_by_name.ks3)
@@ -414,12 +414,12 @@ def init_Right_A_L3(pil_A):
 
 #                 })
 
-#     gen_by_name.z.add_idems(pil_A.idem.i0,0)
-#     gen_by_name.w.add_idems(pil_A.idem.i2,0)
-#     gen_by_name.s.add_idems(pil_A.idem.j2,0)
-#     gen_by_name.t.add_idems(pil_A.idem.i1,0)
-#     gen_by_name.y.add_idems(pil_A.idem.j1,0)
-#     gen_by_name.x.add_idems(pil_A.idem.j0,0)
+#     gen_by_name.z.add_idems(pil_A.idem_by_name.i0,0)
+#     gen_by_name.w.add_idems(pil_A.idem_by_name.i2,0)
+#     gen_by_name.s.add_idems(pil_A.idem_by_name.j2,0)
+#     gen_by_name.t.add_idems(pil_A.idem_by_name.i1,0)
+#     gen_by_name.y.add_idems(pil_A.idem_by_name.j1,0)
+#     gen_by_name.x.add_idems(pil_A.idem_by_name.j0,0)
 
 #     left_a_arrows=Bunch_of_arrows([
 #         (              (pil_A.gen_by_name.et3,),gen_by_name.x
@@ -452,10 +452,10 @@ def init_Left_D_test(pil_A):
 
                 })
 
-    gen_by_name.x.add_idems(pil_A.idem.i0,0)
-    gen_by_name.t.add_idems(pil_A.idem.i0,0)
-    gen_by_name.y.add_idems(pil_A.idem.i1,0)
-    gen_by_name.w.add_idems(pil_A.idem.i2,0)
+    gen_by_name.x.add_idems(pil_A.idem_by_name.i0,0)
+    gen_by_name.t.add_idems(pil_A.idem_by_name.i0,0)
+    gen_by_name.y.add_idems(pil_A.idem_by_name.i1,0)
+    gen_by_name.w.add_idems(pil_A.idem_by_name.i2,0)
     
 
     left_d_arrows=Bunch_of_arrows([
@@ -476,9 +476,9 @@ def init_Right_A_test(pil_A):
                 "z": Generator("z"),
                 })
 
-    gen_by_name.w.add_idems(0,pil_A.idem.i2)
-    gen_by_name.u.add_idems(0,pil_A.idem.i0)
-    gen_by_name.z.add_idems(0,pil_A.idem.i0)
+    gen_by_name.w.add_idems(0,pil_A.idem_by_name.i2)
+    gen_by_name.u.add_idems(0,pil_A.idem_by_name.i0)
+    gen_by_name.z.add_idems(0,pil_A.idem_by_name.i0)
     
     right_a_arrows=Bunch_of_arrows([
         (      gen_by_name.z,(),
@@ -496,9 +496,9 @@ def init_Left_A_test(pil_A):
                 "z": Generator("z"),
                 })
 
-    gen_by_name.w.add_idems(pil_A.idem.i2,0)
-    gen_by_name.t.add_idems(pil_A.idem.i0,0)
-    gen_by_name.z.add_idems(pil_A.idem.i2,0)
+    gen_by_name.w.add_idems(pil_A.idem_by_name.i2,0)
+    gen_by_name.t.add_idems(pil_A.idem_by_name.i0,0)
+    gen_by_name.z.add_idems(pil_A.idem_by_name.i2,0)
     
     left_a_arrows=Bunch_of_arrows([
         (     (pil_A.gen_by_name.et1,pil_A.gen_by_name.ks1), gen_by_name.w,
@@ -517,10 +517,10 @@ def init_DD_test(pil_A):
                 "w": Generator("w"),
                 })
 
-    gen_by_name.x.add_idems(pil_A.idem.i1,pil_A.idem.i2)
-    gen_by_name.w.add_idems(pil_A.idem.i1,pil_A.idem.i2)
-    gen_by_name.y.add_idems(pil_A.idem.i2,pil_A.idem.i1)
-    gen_by_name.l.add_idems(pil_A.idem.j2,pil_A.idem.i0)
+    gen_by_name.x.add_idems(pil_A.idem_by_name.i1,pil_A.idem_by_name.i2)
+    gen_by_name.w.add_idems(pil_A.idem_by_name.i1,pil_A.idem_by_name.i2)
+    gen_by_name.y.add_idems(pil_A.idem_by_name.i2,pil_A.idem_by_name.i1)
+    gen_by_name.l.add_idems(pil_A.idem_by_name.j2,pil_A.idem_by_name.i0)
     
 
     dd_arrows=Bunch_of_arrows([
