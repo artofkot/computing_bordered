@@ -1,15 +1,23 @@
 # -*- coding: utf-8 -*- 
+import sys
+sys.path.append('../')
+
 from algebraic_structures.algebra import torus_A
 from algebraic_structures.basics import  Bunch_of_arrows
-from algebraic_structures.da_bimodule import  randomly_cancel_until_possible, are_equal_smart
-from algebraic_structures.tensoring import da_da_box_tensor_many_efficient_cancelations, da_da_box_tensor_many_no_cancelations
-from algebraic_structures.morphism import check_df_is_0, composition
+from algebraic_structures.da_bimodule import  (
+    da_randomly_cancel_until_possible, are_equal_smart_da,
+    check_df_is_0, composition)
+from algebraic_structures.tensoring import (
+    da_da_box_tensor_many_efficient_cancelations, 
+    da_da_box_tensor_many_no_cancelations)
 from algebraic_structures.hochschild_homology import is_bounded, CH, dimHH
 from algebraic_structures.visual import draw_DA_bimodule, draw_chain_complex
 
-from input_DA_bimodules import ID1,ID2,ID3,M_RHD,M_LHD,L_RHD,L_LHD  
-from input_DA_bimodules import g2_ID, g2_ID_bounded, g2_M_RHD, g2_M_LHD, g2_L_RHD,g2_L_LHD, g2_K_LHD, g2_K_RHD, g2_N_LHD, g2_N_RHD
-from input_DA_bimodules import g2_T_RHD, g2_T_LHD
+from input_DA_bimodules import (
+    ID1,ID2,ID3,M_RHD,M_LHD,L_RHD,L_LHD,
+    g2_ID, g2_ID_bounded, g2_M_RHD, g2_M_LHD, g2_L_RHD,
+    g2_L_LHD, g2_K_LHD, g2_K_RHD, g2_N_LHD, g2_N_RHD,
+    g2_T_RHD, g2_T_LHD)
 from itertools import permutations
 import os
 
@@ -59,8 +67,8 @@ THETA=Bunch_of_arrows([
 
 ########### Boundary Dehn twist
 # AB=da_da_box_tensor_many_no_cancelations(M_RHD,L_RHD)
-# BD=randomly_cancel_until_possible(da_da_box_tensor_many_no_cancelations(AB,AB,AB))
-# BD=randomly_cancel_until_possible(da_da_box_tensor_many_no_cancelations(BD,BD))
+# BD=da_randomly_cancel_until_possible(da_da_box_tensor_many_no_cancelations(AB,AB,AB))
+# BD=da_randomly_cancel_until_possible(da_da_box_tensor_many_no_cancelations(BD,BD))
 # BD_bounded=da_da_box_tensor_many_no_cancelations(ID3,BD,ID3)
 # # draw_DA_bimodule(BD)
 # print "\ndim(HH)=" + str(dimHH(BD_bounded))
@@ -97,11 +105,11 @@ D_inv=g2_L_LHD
 E_inv=g2_M_LHD
 
 ##### checking relations
-# X=da_da_box_tensor_many_efficient_cancelations(B_,C_,B_)
-# Y=da_da_box_tensor_many_efficient_cancelations(C_,B_,C_)
+X=da_da_box_tensor_many_efficient_cancelations(B_,C_,B_)
+Y=da_da_box_tensor_many_efficient_cancelations(C_,B_,C_)
 # X.show()
 # Y.show_short()
-# print are_equal_smart(X,Y)
+print are_equal_smart_da(X,Y)
 
 ##### computing HH
 X=da_da_box_tensor_many_efficient_cancelations(A_,B_,C_,D_)

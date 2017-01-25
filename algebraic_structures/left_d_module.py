@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*- 
-from algebra import check_idempotents_match_left_left, check_idempotents_match_right_left,check_idempotents_match_right_right
+from basics import check_idempotents_match_left_left, check_idempotents_match_right_left,check_idempotents_match_right_right
 from basics import Bunch_of_arrows
 
 def left_d_in_mod_gen(left_d_arrow):
@@ -13,16 +13,17 @@ def left_d_out_mod_gen(left_d_arrow):
 
 
 class Left_D_module(object):
-    def __init__(self,gen_by_name,left_d_arrows,algebra,name):
+    def __init__(self,gen_by_name,left_d_arrows,left_algebra,name,to_check=True):
         self.name=name
         self.gen_by_name=gen_by_name
         self.genset=self.gen_by_name.values()
         #differentials are represented by bunch of left_d_arrows with coefficients 1
         self.left_d_arrows=left_d_arrows
         self.left_d_arrows.delete_arrows_with_even_coeff()
-        self.algebra=algebra
+        self.left_algebra=left_algebra
 
-        self.check()
+        if to_check==True:
+            self.check()
 
     def check(self):
         ##Here we check that our " + self.name + " has all idempotents matching and d_squared=0:
@@ -61,17 +62,29 @@ class Left_D_module(object):
             if not check_idempotents_match_left_left(left_d_out_alg_gen(left_d_arrow),left_d_in_mod_gen(left_d_arrow)): 
                 print str(left_d_arrow) + '   idempotents are messed up in this left_d_arrow!1'
                 count_of_mismatches+=1
+
+            # we don't check the following:
+            # matchings between generators if differential is pure
             
         return count_of_mismatches==0
 
     def compute_d_squared(self):
         d_squared=Bunch_of_arrows()
 
+        #contribution of differential on algebra element
+        for arrow in self.left_d_arrows:
+            a = left_d_out_alg_gen(arrow)
+            if a:
+                for b in [algebra_diff_arrow[1] for algebra_diff_arrow in self.left_algebra.algebra_diff_arrows if algebra_diff_arrow[0]==a]:
+                    ar=(left_d_in_mod_gen(arrow),
+                        b,left_d_out_mod_gen(arrow))
+                    d_squared[ar]+=1
+
         #contribution of double left_d_arrows
         for arrow1 in self.left_d_arrows:
             for arrow2 in self.left_d_arrows:
                 if not left_d_out_mod_gen(arrow1)==left_d_in_mod_gen(arrow2): continue
-                new_alg_gen=self.algebra.multiply(left_d_out_alg_gen(arrow1),left_d_out_alg_gen(arrow2))
+                new_alg_gen=self.left_algebra.multiply(left_d_out_alg_gen(arrow1),left_d_out_alg_gen(arrow2))
                 if not new_alg_gen: continue
                 ar=(left_d_in_mod_gen(arrow1),
                     new_alg_gen,left_d_out_mod_gen(arrow2))

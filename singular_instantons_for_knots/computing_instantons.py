@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*- 
+import sys
+sys.path.append('../')
+
 from algebraic_structures.dualization import dualization_right_to_left_A
 from algebraic_structures.algebra import pil_A
 from input_instanton_modules import DD_bar_dual, Right_A_L0, Right_A_test

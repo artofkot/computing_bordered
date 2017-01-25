@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*- 
-from algebra import check_idempotents_match_left_left, check_idempotents_match_right_left,check_idempotents_match_right_right
+from basics import check_idempotents_match_left_left, check_idempotents_match_right_left,check_idempotents_match_right_right
 from da_bimodule import Bunch_of_arrows
 
 def left_a_in_mod_gen(left_a_arrow):
@@ -13,16 +13,17 @@ def left_a_out_mod_gen(left_a_arrow):
 
 
 class Left_A_module(object):
-    def __init__(self,gen_by_name,left_a_arrows,algebra,name):
+    def __init__(self,gen_by_name,left_a_arrows,left_algebra,name,to_check=True):
         self.name=name
         self.gen_by_name=gen_by_name
         self.genset=self.gen_by_name.values()
         #differentials are represented by bunch of left_a_arrows with coefficients 1
         self.left_a_arrows=left_a_arrows
         self.left_a_arrows.delete_arrows_with_even_coeff()
-        self.algebra=algebra
+        self.left_algebra=left_algebra
 
-        self.check()
+        if to_check==True:
+            self.check()
 
     def check(self):
         ##Here we check that our " + self.name + " has all idempotents matching and d_squared=0:
@@ -71,6 +72,9 @@ class Left_A_module(object):
                     if not check_idempotents_match_right_left(left_a_in_alg_tuple(left_a_arrow)[i-1],left_a_in_alg_tuple(left_a_arrow)[i]): 
                         print left_a_arrow
                         count_of_mismatches+=1
+
+            # we don't check the following:
+            # matchings between generators if differential is pure
             
         return count_of_mismatches==0
 
@@ -86,11 +90,19 @@ class Left_A_module(object):
                 d_squared[ar]+=1
 
 
-        #contribution of factorizing algebra elements        
+        #contribution of factorizing algebra elements, and differentials        
         for arrow in self.left_a_arrows:
             for index, a in enumerate(left_a_in_alg_tuple(arrow)):
+                # factorizations
                 for factorization in getattr(a,'factorizations', []):
                     new_tuple=left_a_in_alg_tuple(arrow)[:index] + factorization + left_a_in_alg_tuple(arrow)[index+1:]
+                    ar=( new_tuple,left_a_in_mod_gen(arrow),
+                        left_a_out_mod_gen(arrow))
+                    d_squared[ar]+=1
+
+                # predifferentials 
+                for b in [algebra_diff_arrow[0] for algebra_diff_arrow in self.left_algebra.algebra_diff_arrows if algebra_diff_arrow[1]==a]:
+                    new_tuple=left_a_in_alg_tuple(aa_arrow)[:index] + (b,) + left_a_in_alg_tuple(aa_arrow)[index+1:]
                     ar=( new_tuple,left_a_in_mod_gen(arrow),
                         left_a_out_mod_gen(arrow))
                     d_squared[ar]+=1

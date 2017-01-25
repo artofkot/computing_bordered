@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*- 
 from da_bimodule import  Bunch_of_arrows, DA_bimodule,cancel_pure_differential,da_arrow_to_str
-from da_bimodule import  randomly_cancel_until_possible, cancel_this_number_of_times
+from da_bimodule import  da_randomly_cancel_until_possible
 from da_bimodule  import da_in_mod_gen, da_out_mod_gen, da_in_alg_tuple, da_out_alg_gen
 import sys
 import networkx as nx

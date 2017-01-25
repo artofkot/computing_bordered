@@ -5,6 +5,10 @@ from collections import Counter
 def debug(whatever):
     return '\033[91m' + str(whatever) + '\033[0m'
 
+# prints in red:
+def in_red(whatever):
+    print '\033[91m' + str(whatever) + '\033[0m'
+
 class AttrDict(dict):
     def __init__(self, *args, **kwargs):
         super(AttrDict, self).__init__(*args, **kwargs)

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*- 
-from algebra import  check_idempotents_match_left_left, check_idempotents_match_right_left,check_idempotents_match_right_right
+from basics import  check_idempotents_match_left_left, check_idempotents_match_right_left,check_idempotents_match_right_right
 from da_bimodule import Bunch_of_arrows
 
 def right_a_in_mod_gen(right_a_arrow):
@@ -13,16 +13,17 @@ def right_a_out_mod_gen(right_a_arrow):
 
 
 class Right_A_module(object):
-    def __init__(self,gen_by_name,right_a_arrows,algebra,name):
+    def __init__(self,gen_by_name,right_a_arrows,right_algebra,name,to_check=True):
         self.name=name
         self.gen_by_name=gen_by_name
         self.genset=self.gen_by_name.values()
         #differentials are represented by bunch of right_a_arrows with coefficients 1
         self.right_a_arrows=right_a_arrows
         self.right_a_arrows.delete_arrows_with_even_coeff()
-        self.algebra=algebra
+        self.right_algebra=right_algebra
 
-        self.check()
+        if to_check==True:
+            self.check()
 
     def check(self):
         ##Here we check that our " + self.name + " has all idempotents matching and d_squared=0:
@@ -70,7 +71,9 @@ class Right_A_module(object):
                     if not check_idempotents_match_right_left(right_a_in_alg_tuple(right_a_arrow)[i-1],right_a_in_alg_tuple(right_a_arrow)[i]): 
                         print right_a_arrow
                         count_of_mismatches+=1
-            
+            # we don't check the following:
+            # matchings between generators if differential is pure
+
         return count_of_mismatches==0
 
     def compute_d_squared(self):
@@ -85,11 +88,19 @@ class Right_A_module(object):
                 d_squared[ar]+=1
 
 
-        #contribution of factorizing algebra elements        
+        #contribution of factorizing algebra elements , and differentials   
         for arrow in self.right_a_arrows:
             for index, a in enumerate(right_a_in_alg_tuple(arrow)):
+                # factorizations
                 for factorization in getattr(a,'factorizations', []):
                     new_tuple=right_a_in_alg_tuple(arrow)[:index] + factorization + right_a_in_alg_tuple(arrow)[index+1:]
+                    ar=(right_a_in_mod_gen(arrow), new_tuple,
+                        right_a_out_mod_gen(arrow))
+                    d_squared[ar]+=1
+
+                # predifferentials 
+                for b in [algebra_diff_arrow[0] for algebra_diff_arrow in self.right_algebra.algebra_diff_arrows if algebra_diff_arrow[1]==a]:
+                    new_tuple=right_a_in_alg_tuple(aa_arrow)[:index] + (b,) + right_a_in_alg_tuple(aa_arrow)[index+1:]
                     ar=(right_a_in_mod_gen(arrow), new_tuple,
                         right_a_out_mod_gen(arrow))
                     d_squared[ar]+=1

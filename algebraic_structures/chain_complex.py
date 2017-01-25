@@ -2,7 +2,7 @@
 from basics import Bunch_of_arrows
 
 class ChainComplex(object):
-    def __init__(self,gen_by_name,arrows,name):
+    def __init__(self,gen_by_name,arrows,name,to_check=True):
         self.name=name
         self.gen_by_name=gen_by_name
         self.genset=self.gen_by_name.values()
@@ -10,13 +10,14 @@ class ChainComplex(object):
         self.arrows=arrows
         self.arrows.delete_arrows_with_even_coeff()
 
-        dd=self.compute_dd()
-        dd.delete_arrows_with_even_coeff()
-        if dd:
-            # self.show()
-            # print '\ndd is wrong:'
-            # dd.show()
-            raise NameError("Chain complex " + self.name + " doesn't satisfy dd=0 !!!")
+        if to_check==True:
+            dd=self.compute_dd()
+            dd.delete_arrows_with_even_coeff()
+            if dd:
+                # self.show()
+                # print '\ndd is wrong:'
+                # dd.show()
+                raise NameError("Chain complex " + self.name + " doesn't satisfy dd=0 !!!")
 
     def compute_dd(self):
         dd=Bunch_of_arrows()

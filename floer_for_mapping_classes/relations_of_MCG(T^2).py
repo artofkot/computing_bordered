@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*- 
+import sys
+sys.path.append('../')
+
 from algebraic_structures.algebra import AttrDict, Generator, A
 from algebraic_structures.da_bimodule import  Bunch_of_arrows, DA_bimodule,cancel_pure_differential,arrow_to_str
 from algebraic_structures.da_bimodule import  randomly_cancel_until_possible, are_equal, box_tensor
@@ -31,7 +34,7 @@ def init_ID1(A):
         (              gen_by_name.x,(A.gen_by_name.r3,),
                 A.gen_by_name.r3,gen_by_name.y)])
 
-    return DA_bimodule(gen_by_name,arrows,A,name="ID1")
+    return DA_bimodule(gen_by_name,arrows,A,A,name="ID1")
 def init_ID2(A):
     gen_by_name=AttrDict({
                 "x": Generator("x"),
@@ -81,7 +84,7 @@ def init_ID2(A):
 
         ])
 
-    return DA_bimodule(gen_by_name,arrows,A,name="ID2")
+    return DA_bimodule(gen_by_name,arrows,A,A,name="ID2")
 # Dehn twist around m (page 147 of "Bimodules im bordered" paper)
 def init_M1(A):
     gen_by_name=AttrDict({
@@ -125,7 +128,7 @@ def init_M1(A):
                 A.gen_by_name.r23,gen_by_name.q)
     ])
 
-    return DA_bimodule(gen_by_name,arrows,A,name="M1")
+    return DA_bimodule(gen_by_name,arrows,A,A,name="M1")
 # Dehn twist around l
 def init_L1(A):
     gen_by_name=AttrDict({
@@ -171,7 +174,7 @@ def init_L1(A):
                 A.gen_by_name.r12,gen_by_name.p)
     ])
 
-    return DA_bimodule(gen_by_name,arrows,A,name="L1")
+    return DA_bimodule(gen_by_name,arrows,A,A,name="L1")
 
 
 

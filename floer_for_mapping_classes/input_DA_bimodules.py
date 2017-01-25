@@ -1,7 +1,15 @@
 # -*- coding: utf-8 -*- 
-from algebraic_structures.algebra import AttrDict, Generator, torus_A, g2_A
-from algebraic_structures.da_bimodule import  Bunch_of_arrows, DA_bimodule
+import sys
+sys.path.append('../')
 
+from algebraic_structures.algebra import (
+    AttrDict, Generator, torus_A, g2_A)
+
+from algebraic_structures.da_bimodule import (
+    Bunch_of_arrows, DA_bimodule)
+
+# from evarist.models import (solution_filters, events,
+#                             parameters)
 
 # genus 1 bimodules: 
 
@@ -32,7 +40,7 @@ def init_ID1(torus_A):
         (              gen_by_name.x,(torus_A.gen_by_name.r3,),
                 torus_A.gen_by_name.r3,gen_by_name.y)])
 
-    return DA_bimodule(gen_by_name,arrows,torus_A,name="ID1")
+    return DA_bimodule(gen_by_name,arrows,torus_A,torus_A,name="ID1")
 def init_ID2(torus_A):
     gen_by_name=AttrDict({
                 "x": Generator("x"),
@@ -82,7 +90,7 @@ def init_ID2(torus_A):
 
         ])
 
-    return DA_bimodule(gen_by_name,arrows,torus_A,name="ID2")
+    return DA_bimodule(gen_by_name,arrows,torus_A,torus_A,name="ID2")
 def init_ID3(torus_A):
     gen_by_name=AttrDict({
                 "x": Generator("x"),
@@ -140,7 +148,7 @@ def init_ID3(torus_A):
 
         ])
 
-    return DA_bimodule(gen_by_name,arrows,torus_A,name="ID3")
+    return DA_bimodule(gen_by_name,arrows,torus_A,torus_A,name="ID3")
 def init_M_RHD(torus_A):
     gen_by_name=AttrDict({
                 "p": Generator("p"),
@@ -183,7 +191,7 @@ def init_M_RHD(torus_A):
                 torus_A.gen_by_name.r23,gen_by_name.q)
     ])
 
-    return DA_bimodule(gen_by_name,arrows,torus_A,name="M_RHD")
+    return DA_bimodule(gen_by_name,arrows,torus_A,torus_A,name="M_RHD")
 def init_M_LHD(torus_A):
     gen_by_name=AttrDict({
                 "p": Generator("p"),
@@ -222,7 +230,7 @@ def init_M_LHD(torus_A):
                 torus_A.gen_by_name.r2,gen_by_name.p),
     ])
 
-    return DA_bimodule(gen_by_name,arrows,torus_A,name="M_LHD")
+    return DA_bimodule(gen_by_name,arrows,torus_A,torus_A,name="M_LHD")
 def init_L_RHD(torus_A):
     gen_by_name=AttrDict({
                 "p": Generator("p"),
@@ -267,7 +275,7 @@ def init_L_RHD(torus_A):
                 torus_A.gen_by_name.r12,gen_by_name.p)
     ])
 
-    return DA_bimodule(gen_by_name,arrows,torus_A,name="L_RHD")
+    return DA_bimodule(gen_by_name,arrows,torus_A,torus_A,name="L_RHD")
 def init_L_LHD(torus_A):
     gen_by_name=AttrDict({
                 "p": Generator("p"),
@@ -303,9 +311,15 @@ def init_L_LHD(torus_A):
                 torus_A.gen_by_name.r12,gen_by_name.p)
     ])
 
-    return DA_bimodule(gen_by_name,arrows,torus_A,name="L_LHD")
+    return DA_bimodule(gen_by_name,arrows,torus_A,torus_A,name="L_LHD")
 
-
+ID1=init_ID1(torus_A) 
+ID2=init_ID2(torus_A)
+ID3=init_ID3(torus_A)
+M_RHD=init_M_RHD(torus_A)
+M_LHD=init_M_LHD(torus_A)
+L_RHD=init_L_RHD(torus_A)
+L_LHD=init_L_LHD(torus_A)
 
 # genus 2 bimodules:
 
@@ -372,7 +386,7 @@ def init_g2_ID(g2_A):
         arrows[(gen_in,(algebra_element,),
                 algebra_element,gen_out)]+=1
 
-    return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_ID")
+    return DA_bimodule(gen_by_name,arrows,g2_A,g2_A,name="g2_ID")
 def init_g2_ID_bounded(g2_A):
     gen_by_name=AttrDict({
                 "x0": Generator("x0"),
@@ -570,7 +584,7 @@ def init_g2_ID_bounded(g2_A):
         ])
     
 
-    return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_ID_bounded")
+    return DA_bimodule(gen_by_name,arrows,g2_A,g2_A,name="g2_ID_bounded")
 
 def init_g2_M_RHD(g2_A):
     gen_by_name=AttrDict({
@@ -580,6 +594,7 @@ def init_g2_M_RHD(g2_A):
                 "x3": Generator("x3"),
                 "r":Generator("r")
                 })
+    
     gen_by_name.x0.add_idems(g2_A.idem_by_name.i0,g2_A.idem_by_name.i0)
     gen_by_name.x1.add_idems(g2_A.idem_by_name.i1,g2_A.idem_by_name.i1)
     gen_by_name.x2.add_idems(g2_A.idem_by_name.i2,g2_A.idem_by_name.i2)
@@ -679,7 +694,7 @@ def init_g2_M_RHD(g2_A):
 
         ])
 
-    return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_M_RHD")
+    return DA_bimodule(gen_by_name,arrows,g2_A,g2_A,name="g2_M_RHD")
 # next bimodule we derive from the previous one by horizontal reflection
 def init_g2_K_LHD(g2_A):
     gen_by_name=AttrDict({
@@ -805,7 +820,7 @@ def init_g2_K_LHD(g2_A):
 
         arrows[new_arrow]+=1
 
-    return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_K_LHD")
+    return DA_bimodule(gen_by_name,arrows,g2_A,g2_A,name="g2_K_LHD")
 
 def init_g2_M_LHD(g2_A):
     gen_by_name=AttrDict({
@@ -911,7 +926,7 @@ def init_g2_M_LHD(g2_A):
 
         ])
 
-    return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_M_LHD")
+    return DA_bimodule(gen_by_name,arrows,g2_A,g2_A,name="g2_M_LHD")
 # next bimodule we derive from the previous one by horizontal reflection
 def init_g2_K_RHD(g2_A):
     gen_by_name=AttrDict({
@@ -1034,7 +1049,7 @@ def init_g2_K_RHD(g2_A):
         arrows[new_arrow]+=1
 
 
-    return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_K_RHD")
+    return DA_bimodule(gen_by_name,arrows,g2_A,g2_A,name="g2_K_RHD")
 
 def init_g2_L_RHD(g2_A):
     gen_by_name=AttrDict({
@@ -1146,7 +1161,7 @@ def init_g2_L_RHD(g2_A):
 
         ])
 
-    return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_L_RHD")
+    return DA_bimodule(gen_by_name,arrows,g2_A,g2_A,name="g2_L_RHD")
 # next bimodule we derive from the previous one by horizontal reflection
 def init_g2_N_LHD(g2_A):
     gen_by_name=AttrDict({
@@ -1274,7 +1289,7 @@ def init_g2_N_LHD(g2_A):
 
         arrows[new_arrow]+=1
 
-    return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_N_LHD")
+    return DA_bimodule(gen_by_name,arrows,g2_A,g2_A,name="g2_N_LHD")
 
 def init_g2_L_LHD(g2_A):
     gen_by_name=AttrDict({
@@ -1376,7 +1391,7 @@ def init_g2_L_LHD(g2_A):
 
         ])
 
-    return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_L_LHD")
+    return DA_bimodule(gen_by_name,arrows,g2_A,g2_A,name="g2_L_LHD")
 # next bimodule we derive from the previous one by horizontal reflection
 def init_g2_N_RHD(g2_A):
     gen_by_name=AttrDict({
@@ -1494,7 +1509,7 @@ def init_g2_N_RHD(g2_A):
 
         arrows[new_arrow]+=1
 
-    return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_N_RHD")
+    return DA_bimodule(gen_by_name,arrows,g2_A,g2_A,name="g2_N_RHD")
 
 def init_g2_T_LHD(g2_A):
     gen_by_name=AttrDict({
@@ -1715,9 +1730,8 @@ def init_g2_T_LHD(g2_A):
 
         ])
 
-    return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_T_LHD")
-
-
+    return DA_bimodule(gen_by_name,arrows,g2_A,g2_A,name="g2_T_LHD")
+# next bimodule we derive from the previous one by horizontal reflection
 def init_g2_T_RHD(g2_A):
     gen_by_name=AttrDict({
                 "x0": Generator("x0"),
@@ -1939,18 +1953,7 @@ def init_g2_T_RHD(g2_A):
 
         ])
 
-    return DA_bimodule(gen_by_name,arrows,g2_A,name="g2_T_RHD")
-
-
-
-# BIMODULES
-ID1=init_ID1(torus_A) 
-ID2=init_ID2(torus_A)
-ID3=init_ID3(torus_A)
-M_RHD=init_M_RHD(torus_A)
-M_LHD=init_M_LHD(torus_A)
-L_RHD=init_L_RHD(torus_A)
-L_LHD=init_L_LHD(torus_A)
+    return DA_bimodule(gen_by_name,arrows,g2_A,g2_A,name="g2_T_RHD")
 
 
 g2_ID=init_g2_ID(g2_A)
