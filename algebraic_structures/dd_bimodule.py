@@ -60,6 +60,24 @@ class DD_bimodule(object):
         for dd_arrow in self.dd_arrows:
             print str(dd_arrow)
 
+    def show_for_tex(self):
+        print '============='
+        print self.name + ':\n'
+        print str(len(self.genset)) + ' generators with their idempotents: \n'
+        for gen in self.genset:
+            # _{i_2}{(t_{12})}_{i_2}
+            print '$_{' + str(gen.idem.left) + '}{(' + str(gen) + ')}_{' + str(gen.idem.right) +'}$,'
+
+        print '\nActions:\n'
+        for generator1 in self.genset:
+            for generator2 in self.genset:
+                arrows=[arrow for arrow in self.dd_arrows if (dd_in_mod_gen(arrow)==generator1 and dd_out_mod_gen(arrow)==generator2)]
+                if len(arrows)!=0:
+                    for arrow in arrows:
+                        print '${}\\rightarrow {} \\otimes {} \\otimes{} $, '.format(str(dd_in_mod_gen(arrow)),str(dd_out_left_alg_gen(arrow)),str(dd_out_mod_gen(arrow)),str(dd_out_right_alg_gen(arrow)))
+                
+            
+
 
     def check_matching_of_idempotents_in_action(self): 
         count_of_mismatches=0

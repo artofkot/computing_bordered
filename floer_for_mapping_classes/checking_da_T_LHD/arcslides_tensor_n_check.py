@@ -43,7 +43,8 @@ from algebras_from_Bohua_program import (
     B6,)
 
 ###### genus=2 
-### invariants for ID
+
+###### genus=2. First, for split pointed matched circle, which we denote by pmc1
 def init_DD_pmc1(B1,A_pmc1_str3):
     gen_by_name=AttrDict({
             "x0": Generator("x0"),
@@ -183,8 +184,187 @@ def init_DD_pmc1(B1,A_pmc1_str3):
         ])
     
     return DD_bimodule(gen_by_name,dd_arrows,B1,A_pmc1_str3,name="K_pmc1")
+def init_DD_pmc1_M_RHD(A_pmc1_str1,A_pmc1_str3):
+    gen_by_name=AttrDict({
+            "x0": Generator("x0"),
+            "x1": Generator("x1"),
+            "x2": Generator("x2"),
+            "x3": Generator("x3"),
+            "r": Generator("r"),
+            })
+
+    gen_by_name.x0.add_idems(A_pmc1_str1.idem_by_name.i0,A_pmc1_str3.idem_by_name['|(1, 3),(4, 6),(5, 7)|'] )
+    gen_by_name.x1.add_idems(A_pmc1_str1.idem_by_name.i1,A_pmc1_str3.idem_by_name['|(0, 2),(4, 6),(5, 7)|'])
+    gen_by_name.x2.add_idems(A_pmc1_str1.idem_by_name.i2,A_pmc1_str3.idem_by_name['|(0, 2),(1, 3),(5, 7)|'] )
+    gen_by_name.x3.add_idems(A_pmc1_str1.idem_by_name.i3,A_pmc1_str3.idem_by_name['|(0, 2),(1, 3),(4, 6)|'])
+    gen_by_name.r.add_idems(A_pmc1_str1.idem_by_name.i1,A_pmc1_str3.idem_by_name['|(1, 3),(4, 6),(5, 7)|'])
+        
+
+    dd_arrows=Bunch_of_arrows([
+                    (gen_by_name.x0,
+        A_pmc1_str1.gen_by_name['r1'], 
+        gen_by_name.x1, 
+        A_pmc1_str3.gen_by_name['|(4, 6),(5, 7),(0->1)|']),
+
+                    (gen_by_name.x0,
+        A_pmc1_str1.gen_by_name['r123'], 
+        gen_by_name.x1, 
+        A_pmc1_str3.gen_by_name['|(4, 6),(5, 7),(0->3)|']),
+
+                    (gen_by_name.x2,
+        A_pmc1_str1.gen_by_name['r5'], 
+        gen_by_name.x3, 
+        A_pmc1_str3.gen_by_name['|(0, 2),(1, 3),(4->5)|']),
+
+                    (gen_by_name.x2,
+        A_pmc1_str1.gen_by_name['r7'], 
+        gen_by_name.x3, 
+        A_pmc1_str3.gen_by_name['|(0, 2),(1, 3),(6->7)|']),
+
+                    (gen_by_name.x2,
+        A_pmc1_str1.gen_by_name['r567'], 
+        gen_by_name.x3, 
+        A_pmc1_str3.gen_by_name['|(0, 2),(1, 3),(4->7)|']),
+
+                    (gen_by_name.x3,
+        A_pmc1_str1.gen_by_name['r6'], 
+        gen_by_name.x2, 
+        A_pmc1_str3.gen_by_name['|(0, 2),(1, 3),(5->6)|']),
+
+                    (gen_by_name.x0,
+        A_pmc1_str1.gen_by_name['r1234'], 
+        gen_by_name.x2, 
+        A_pmc1_str3.gen_by_name['|(1, 3),(5, 7),(0->4)|']),
+
+                    (gen_by_name.x0,
+        A_pmc1_str1.gen_by_name['r34'], 
+        gen_by_name.x2, 
+        A_pmc1_str3.gen_by_name['|(5, 7),(1->4),(2->3)|']),
+
+                    (gen_by_name.x0,
+        A_pmc1_str1.gen_by_name['r3456'], 
+        gen_by_name.x2, 
+        A_pmc1_str3.gen_by_name['|(5, 7),(1->6),(2->3)|']),
+
+                    (gen_by_name.x0,
+        A_pmc1_str1.gen_by_name['r123456'], 
+        gen_by_name.x2, 
+        A_pmc1_str3.gen_by_name['|(1, 3),(5, 7),(0->6)|']),
+
+                    (gen_by_name.x1,
+        A_pmc1_str1.gen_by_name['r4'], 
+        gen_by_name.x2, 
+        A_pmc1_str3.gen_by_name['|(0, 2),(5, 7),(3->4)|']),
+
+                    (gen_by_name.x1,
+        A_pmc1_str1.gen_by_name['r456'], 
+        gen_by_name.x2, 
+        A_pmc1_str3.gen_by_name['|(0, 2),(5, 7),(3->6)|']),
+
+                    (gen_by_name.x1,
+        A_pmc1_str1.gen_by_name['r234'], 
+        gen_by_name.x2, 
+        A_pmc1_str3.gen_by_name['|(0, 2),(5, 7),(1->4)|']),
+
+                    (gen_by_name.x1,
+        A_pmc1_str1.gen_by_name['r23456'], 
+        gen_by_name.x2, 
+        A_pmc1_str3.gen_by_name['|(0, 2),(5, 7),(1->6)|']),
+
+                    (gen_by_name.x1,
+        A_pmc1_str1.gen_by_name['r45'], 
+        gen_by_name.x3, 
+        A_pmc1_str3.gen_by_name['|(0, 2),(4, 6),(3->5)|']),
+
+                    (gen_by_name.x1,
+        A_pmc1_str1.gen_by_name['r4567'], 
+        gen_by_name.x3, 
+        A_pmc1_str3.gen_by_name['|(0, 2),(4, 6),(3->7)|']),
+
+                    (gen_by_name.x1,
+        A_pmc1_str1.gen_by_name['r2345'], 
+        gen_by_name.x3, 
+        A_pmc1_str3.gen_by_name['|(0, 2),(4, 6),(1->5)|']),
+
+                    (gen_by_name.x1,
+        A_pmc1_str1.gen_by_name['r234567'], 
+        gen_by_name.x3, 
+        A_pmc1_str3.gen_by_name['|(0, 2),(4, 6),(1->7)|']),
+
+                    (gen_by_name.x0,
+        A_pmc1_str1.gen_by_name['r345'], 
+        gen_by_name.x3, 
+        A_pmc1_str3.gen_by_name['|(4, 6),(1->5),(2->3)|']),
+
+                    (gen_by_name.x0,
+        A_pmc1_str1.gen_by_name['r34567'], 
+        gen_by_name.x3, 
+        A_pmc1_str3.gen_by_name['|(4, 6),(1->7),(2->3)|']),
+
+                    (gen_by_name.x0,
+        A_pmc1_str1.gen_by_name['r12345'], 
+        gen_by_name.x3, 
+        A_pmc1_str3.gen_by_name['|(1, 3),(4, 6),(0->5)|']),
+
+                    (gen_by_name.x0,
+        A_pmc1_str1.gen_by_name['r1234567'], 
+        gen_by_name.x3, 
+        A_pmc1_str3.gen_by_name['|(1, 3),(4, 6),(0->7)|']),
+
+                    (gen_by_name.r,
+        A_pmc1_str1.gen_by_name['r2'], 
+        gen_by_name.x0, 
+        1),
+                    (gen_by_name.r,
+        1, 
+        gen_by_name.x1, 
+        A_pmc1_str3.gen_by_name['|(4, 6),(5, 7),(2->3)|']),
+
+                    (gen_by_name.x1,
+        A_pmc1_str1.gen_by_name['r23'], 
+        gen_by_name.r, 
+        A_pmc1_str3.gen_by_name['|(4, 6),(5, 7),(1->2)|']),
+
+                    (gen_by_name.x0,
+        A_pmc1_str1.gen_by_name['r3'], 
+        gen_by_name.r, 
+        A_pmc1_str3.gen_by_name['|(4, 6),(5, 7),(1->3)|']),
+
+                    (gen_by_name.r,
+        A_pmc1_str1.gen_by_name['r45'], 
+        gen_by_name.x3, 
+        A_pmc1_str3.gen_by_name['|(1, 3),(4, 6),(2->5)|']),
+
+                    (gen_by_name.r,
+        A_pmc1_str1.gen_by_name['r4567'], 
+        gen_by_name.x3, 
+        A_pmc1_str3.gen_by_name['|(1, 3),(4, 6),(2->7)|']),
+
+                    (gen_by_name.r,
+        A_pmc1_str1.gen_by_name['r4'], 
+        gen_by_name.x2, 
+        A_pmc1_str3.gen_by_name['|(1, 3),(5, 7),(2->4)|']),
+
+                    (gen_by_name.r,
+        A_pmc1_str1.gen_by_name['r456'], 
+        gen_by_name.x2, 
+        A_pmc1_str3.gen_by_name['|(1, 3),(5, 7),(2->6)|']),
+
+        ])
+    
+    return DD_bimodule(gen_by_name,dd_arrows,A_pmc1_str1,A_pmc1_str3,name="DD_pmc1_M_RHD")
 K_pmc1=init_DD_pmc1(B1,A_pmc1_str3)
 DA_pmc1=g2_ID
+
+####### experimenting with M_RHD
+g2_M_RHD=g2_M_RHD
+# g2_M_RHD.show()
+DD_pmc1_M_RHD=init_DD_pmc1_M_RHD(B1,A_pmc1_str3)
+mb_dd=da_dd_box_tensor_product(g2_M_RHD,K_pmc1)
+
+# YES, THEY ARE EQUAL!
+
+
 
 ### DA1 arcslide
 def init_DA1(B1,B2):
@@ -307,6 +487,7 @@ def init_DA1(B1,B2):
 
     return DA_bimodule(gen_by_name,arrows,B1,B2,name="DA1")
 DA1=init_DA1(B1,B2)
+# DA1.show_for_tex()
 
 ### DA2 arcslide, over B2, B3
 def init_DA2(B2,B3):
@@ -434,6 +615,7 @@ def init_DA2(B2,B3):
 
     return DA_bimodule(gen_by_name,arrows,B2,B3,name="DA2")
 DA2=init_DA2(B2,B3)
+# DA2.show_for_tex()
 
 ### DA3 arcslide, over B3, B4
 def init_DA3(B3,B4):
@@ -568,6 +750,7 @@ def init_DA3(B3,B4):
 
     return DA_bimodule(gen_by_name,arrows,B3,B4,name="DA3")
 DA3=init_DA3(B3,B4)
+# DA3.show_for_tex()
 
 ### DA4 arcslide, over B4, B5
 def init_DA4(B4,B5):
@@ -714,6 +897,7 @@ def init_DA4(B4,B5):
 
     return DA_bimodule(gen_by_name,arrows,B4,B5,name="DA4")
 DA4=init_DA4(B4,B5)
+# DA4.show_for_tex()
 
 ### DA5 arcslide, over B5, B6=B2
 def init_DA5(B5,B6):
@@ -851,6 +1035,7 @@ def init_DA5(B5,B6):
 
     return DA_bimodule(gen_by_name,arrows,B5,B6,name="DA5")
 DA5=init_DA5(B5,B6)
+# DA5.show_for_tex()
 
 ### DA6 arcslide, over B6=B2, B1
 def init_DA6(B6,B1):
@@ -970,11 +1155,12 @@ def init_DA6(B6,B1):
 
     return DA_bimodule(gen_by_name,arrows,B6,B1,name="DA6")
 DA6=init_DA6(B6,B1)
+# DA6.show_for_tex()
 
 ### FINAL COMPUTATION - WORKS!
-WOW_DA=da_da_box_tensor_many_efficient_cancelations(DA1,DA2,DA3,DA4,DA5,DA6)
-g2_T_LHD_red=da_randomly_cancel_until_possible(g2_T_LHD)
-in_red(are_equal_smart_da(WOW_DA,g2_T_LHD_red))
+# WOW_DA=da_da_box_tensor_many_efficient_cancelations(DA1,DA2,DA3,DA4,DA5,DA6)
+# g2_T_LHD_red=da_randomly_cancel_until_possible(g2_T_LHD)
+# in_red(are_equal_smart_da(WOW_DA,g2_T_LHD_red))
 
 ############# genus=1 playing around with AA(id) - not important
 def init_g1_DD_id(torus_A,torus_A2):
