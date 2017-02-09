@@ -53,6 +53,7 @@ THETA=Bunch_of_arrows([
                 1,M_RHD.gen_by_name.q)
     ])
 
+
 ########## COMPUTATIONS ##########
 
 # F2_THETA=composition(F2,THETA,A)
@@ -105,16 +106,17 @@ D_inv=g2_L_LHD
 E_inv=g2_M_LHD
 
 ##### checking relations
-X=da_da_box_tensor_many_efficient_cancelations(B_,C_,B_)
-Y=da_da_box_tensor_many_efficient_cancelations(C_,B_,C_)
+# X=da_da_box_tensor_many_efficient_cancelations(B_,C_,B_)
+# Y=da_da_box_tensor_many_efficient_cancelations(C_,B_,C_)
 # X.show()
 # Y.show_short()
-print are_equal_smart_da(X,Y)
+# print are_equal_smart_da(X,Y)
 
 ##### computing HH
-X=da_da_box_tensor_many_efficient_cancelations(A_,B_,C_,D_)
-X=da_da_box_tensor_many_efficient_cancelations(X)
-X=da_da_box_tensor_many_no_cancelations(g2_ID_bounded,X,g2_ID_bounded)
+# X=da_da_box_tensor_many_efficient_cancelations(A_,B_,C_,D_,E_)
+# X=da_da_box_tensor_many_efficient_cancelations(X,X,X,X,X,X)
+# X=da_da_box_tensor_many_efficient_cancelations(X, X)
+# X=da_da_box_tensor_many_no_cancelations(g2_ID_bounded,X,g2_ID_bounded)
 # X.show_short()
 print "\ndim(HH)=" + str(dimHH(X))
 # HC=CH(X)

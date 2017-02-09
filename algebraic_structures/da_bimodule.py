@@ -32,8 +32,8 @@ class DA_bimodule(object):
         self.left_algebra=left_algebra
         self.right_algebra=right_algebra
 
-        if to_check==True:
-            self.check()
+        # if to_check==True:
+        #     self.check()
 
     def check(self):
         ##Here we check that our " + self.name + " has all idempotents matching and d_squared=0:
