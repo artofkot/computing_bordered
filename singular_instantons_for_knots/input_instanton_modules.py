@@ -487,6 +487,34 @@ def init_DD_test(pil_A):
                                     ])
 
     return DD_bimodule(gen_by_name,dd_arrows,pil_A,pil_A,name="DD_test")
+def init_Right_A_L8(pil_A):
+    gen_by_name=AttrDict({
+                "j1": Generator("j1"),
+                "i1": Generator("i1"),
+                "i2": Generator("i2"),
+                "j2": Generator("j2"),
+
+                })
+
+    gen_by_name.i1.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.i2.add_idems(0,pil_A.idem_by_name.i2)
+    gen_by_name.j2.add_idems(0,pil_A.idem_by_name.j2)
+    gen_by_name.j1.add_idems(0,pil_A.idem_by_name.j1)
+
+
+    right_a_arrows=Bunch_of_arrows([
+        (              gen_by_name.i1,(pil_A.gen_by_name.ks1,)
+                        ,gen_by_name.i2),
+        (              gen_by_name.i2,(pil_A.gen_by_name.ks2,)
+                        ,gen_by_name.j2),
+        (              gen_by_name.j2,(pil_A.gen_by_name.ks3,)
+                        ,gen_by_name.j1),
+        (              gen_by_name.i1,(pil_A.gen_by_name.et2,)
+                        ,gen_by_name.j1),
+                                    ])
+    return Right_A_module(gen_by_name,right_a_arrows,pil_A,name="Right_A_L8")
+
+
 
 DD_test=init_DD_test(pil_A)
 Left_A_test=init_Left_A_test(pil_A)
@@ -500,6 +528,6 @@ Right_A_L7=init_Right_A_L7(pil_A) #curve around north-east puncture
 Right_A_L1=init_Right_A_L1(pil_A) #curve for (5,11) torus knot
 Right_A_L2=init_Right_A_L2(pil_A) #curve for (3,7) torus knot
 Right_A_L3=init_Right_A_L3(pil_A) #curve for (5,7) torus knot
-
+Right_A_L8=init_Right_A_L8(pil_A)
 
 
