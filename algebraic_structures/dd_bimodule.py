@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*- 
-from basics import (
+from basics import ( debug,
     in_red,check_idempotents_match_left_left, 
     check_idempotents_match_right_left,
     check_idempotents_match_right_right)
 from da_bimodule import Bunch_of_arrows
+from random import shuffle
 
 # def dd_arrow_to_str(tuplee): #works only for DD arrows
     # if len(tuplee)==4:
@@ -52,11 +53,11 @@ class DD_bimodule(object):
     def show(self):
         print "=========="
         print self.name + ':\n'
-        print 'Generators with their idempotents (' + str(len(self.genset))+ ' generators)'
+        print '{} generators with their idempotents:'.format(str(len(self.genset)))
         for gen in self.genset:
             print str(gen.idem.left) + '___' + str(gen) + '___' + str(gen.idem.right)
 
-        print '\nActions:'
+        print '\n{} actions:'.format(len(list(self.dd_arrows)))
         for dd_arrow in self.dd_arrows:
             print str(dd_arrow)
 
@@ -66,7 +67,7 @@ class DD_bimodule(object):
         print str(len(self.genset)) + ' generators with their idempotents: \n'
         for gen in self.genset:
             # _{i_2}{(t_{12})}_{i_2}
-            print '$_{' + str(gen.idem.left) + '}{(' + str(gen) + ')}_{' + str(gen.idem.right) +'}$,'
+            print '$_{' + gen.idem.left.tex_name + '}{(' + gen.tex_name + ')}_{' + gen.idem.right.tex_name +'}$,'
 
         print '\nActions:\n'
         for generator1 in self.genset:
@@ -74,7 +75,7 @@ class DD_bimodule(object):
                 arrows=[arrow for arrow in self.dd_arrows if (dd_in_mod_gen(arrow)==generator1 and dd_out_mod_gen(arrow)==generator2)]
                 if len(arrows)!=0:
                     for arrow in arrows:
-                        print '${}\\rightarrow {} \\otimes {} \\otimes{} $, '.format(str(dd_in_mod_gen(arrow)),str(dd_out_left_alg_gen(arrow)),str(dd_out_mod_gen(arrow)),str(dd_out_right_alg_gen(arrow)))
+                        print '${}\\rightarrow {} \\otimes {} \\otimes {} $, '.format(getattr(dd_in_mod_gen(arrow),'tex_name',1),getattr(dd_out_left_alg_gen(arrow),'tex_name',1),getattr(dd_out_mod_gen(arrow),'tex_name',1),getattr(dd_out_right_alg_gen(arrow),'tex_name',1))
                 
             
 
@@ -174,7 +175,7 @@ def are_equal_smart_dd(DD1,DD2):
 
 
 # morphism is represented by bunch of arrows, where all coefficients are 1!
-# and also I assume tha there are no differentials in algebra!
+# and also I assume that there are no differentials in algebra!
 def compute_df(DD1,DD2,f):
     df=Bunch_of_arrows()
 
@@ -236,6 +237,61 @@ def check_df_is_0(DD1,DD2,f):
             return False
     print 'Everything is ok, we found isomorphism f such that df=0!'
     return True
+
+def dd_cancel_pure_differential(DDbimodule_old,pure_differential):
+    #z1--->z2
+    z1=dd_in_mod_gen(pure_differential)
+    z2=dd_out_mod_gen(pure_differential)
+
+    #form generators
+    generators_of_new_DD=DDbimodule_old.gen_by_name
+    del generators_of_new_DD[z1.name]
+    del generators_of_new_DD[z2.name]
+
+    #form old differentials
+    old_arrows_that_survive=[arrow for arrow in DDbimodule_old.dd_arrows if (dd_out_mod_gen(arrow)!=z1 and dd_out_mod_gen(arrow)!=z2  and dd_in_mod_gen(arrow)!=z1 and dd_in_mod_gen(arrow)!=z2 ) ]
+    arrows_in_new_DD=Bunch_of_arrows(old_arrows_that_survive)
+
+    #form new differentials
+    arrows_in_z2=[arrow for arrow in DDbimodule_old.dd_arrows if (dd_out_mod_gen(arrow)==z2 and dd_in_mod_gen(arrow)!=z1 and dd_in_mod_gen(arrow)!=z2)]
+    arrows_from_z1=[arrow for arrow in DDbimodule_old.dd_arrows if (dd_in_mod_gen(arrow)==z1 and dd_out_mod_gen(arrow)!=z2 and dd_out_mod_gen(arrow)!=z1)]
+
+    for arrow_in_z2 in arrows_in_z2:
+        for arrow_from_z1 in arrows_from_z1:
+
+            new_out_left_alg_gen=DDbimodule_old.left_algebra.multiply(dd_out_left_alg_gen(arrow_in_z2),dd_out_left_alg_gen(arrow_from_z1))
+            new_out_right_alg_gen=DDbimodule_old.right_algebra.multiply(dd_out_right_alg_gen(arrow_from_z1),dd_out_right_alg_gen(arrow_in_z2))
+
+            if new_out_left_alg_gen and new_out_right_alg_gen:
+                # debug(arrow_in_z2)
+                # debug(arrow_from_z1)
+                # print '\n'
+                new_arrow=(dd_in_mod_gen(arrow_in_z2),
+                    new_out_left_alg_gen,dd_out_mod_gen(arrow_from_z1),new_out_right_alg_gen )
+                arrows_in_new_DD[new_arrow]+=1
+
+
+    arrows_in_new_DD.delete_arrows_with_even_coeff()
+
+    return DD_bimodule(generators_of_new_DD,arrows_in_new_DD,DDbimodule_old.left_algebra,DDbimodule_old.right_algebra,name= DDbimodule_old.name +'_red')
+
+
+def dd_randomly_cancel_until_possible(DD):
+    there_is_diff=0
+    arrs=list(DD.dd_arrows)
+    shuffle(arrs)
+    for arrow in arrs:
+        if (dd_out_left_alg_gen(arrow)==1 and dd_out_right_alg_gen(arrow)==1 and dd_in_mod_gen(arrow)!=dd_out_mod_gen(arrow)):
+            # now we need to check that there are no other arrows between these two generators
+            other_arrows=[ar for ar in arrs if (dd_in_mod_gen(ar)==dd_in_mod_gen(arrow) and dd_out_mod_gen(ar)==dd_out_mod_gen(arrow) and ar!=arrow)]
+            if other_arrows: continue
+            else:
+                there_is_diff=1
+                canceled_DD=dd_cancel_pure_differential(DD,arrow)
+                return (dd_randomly_cancel_until_possible(canceled_DD))
+
+    if there_is_diff==0:
+        return DD
 
 
 

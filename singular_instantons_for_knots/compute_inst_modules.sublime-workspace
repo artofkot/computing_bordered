@@ -1,0 +1,1455 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"da_da",
+				"da_da_box_tensor_many_efficient_cancelations"
+			],
+			[
+				"kew",
+				"keywords"
+			],
+			[
+				"module",
+				"module_homos"
+			],
+			[
+				"g2_",
+				"g2_ID"
+			],
+			[
+				"ID",
+				"g2_ID"
+			],
+			[
+				"genset",
+				"genset1"
+			],
+			[
+				"all",
+				"all_bijections"
+			],
+			[
+				"gen",
+				"gen1"
+			],
+			[
+				"genst",
+				"genset1"
+			],
+			[
+				"ge",
+				"genset1"
+			],
+			[
+				"DA",
+				"DA1"
+			],
+			[
+				"find",
+				"find_bijections"
+			],
+			[
+				"gens",
+				"genset1"
+			],
+			[
+				"mo",
+				"module_homos"
+			],
+			[
+				"g2",
+				"g2_ID"
+			],
+			[
+				"I",
+				"g2_ID"
+			],
+			[
+				"g2_ID",
+				"g2_ID_bounded"
+			],
+			[
+				"ar",
+				"are_equal"
+			],
+			[
+				"row",
+				"row2"
+			],
+			[
+				"out",
+				"out_alg"
+			],
+			[
+				"g",
+				"g2_algebra_involution"
+			],
+			[
+				"B",
+				"Bunch_of_arrows"
+			],
+			[
+				"arr",
+				"arrows"
+			],
+			[
+				"g2_M",
+				"g2_M_LHD"
+			],
+			[
+				"a",
+				"arrow2"
+			],
+			[
+				"arro",
+				"arrow_to_str"
+			],
+			[
+				"box",
+				"box_tensor_efficient"
+			],
+			[
+				"ini",
+				"init_M_LHD"
+			],
+			[
+				"arrow",
+				"arrow_to_str"
+			],
+			[
+				"M",
+				"M_RHD"
+			],
+			[
+				"in",
+				"in_alg_tuple"
+			],
+			[
+				"gen_",
+				"gen_out"
+			],
+			[
+				"alge",
+				"algebra_element"
+			],
+			[
+				"init",
+				"init_genus2_algebra"
+			],
+			[
+				"j",
+				"j1"
+			],
+			[
+				"L",
+				"L_RHD"
+			],
+			[
+				"dra",
+				"draw_DA_bimodule"
+			],
+			[
+				"ed",
+				"edges"
+			],
+			[
+				"ou",
+				"out_mod_gen"
+			],
+			[
+				"can",
+				"canceled_DA"
+			],
+			[
+				"BD",
+				"BD_bounded"
+			],
+			[
+				"M_",
+				"M_LHD"
+			],
+			[
+				"dim",
+				"dimHH"
+			],
+			[
+				"end",
+				"ending_arrows"
+			],
+			[
+				"curre",
+				"current_gen"
+			],
+			[
+				"fir",
+				"first_gen"
+			],
+			[
+				"curr",
+				"current_alg_tuple"
+			],
+			[
+				"dr",
+				"draw_chain_complex"
+			],
+			[
+				"edg",
+				"edge_labels"
+			],
+			[
+				"com",
+				"compute_dd"
+			],
+			[
+				"new",
+				"new_arrows"
+			],
+			[
+				"ne",
+				"new_arrows"
+			],
+			[
+				"Gene",
+				"generators"
+			],
+			[
+				"first",
+				"first_gen"
+			],
+			[
+				"firs",
+				"first_arrow"
+			],
+			[
+				"im",
+				"import"
+			],
+			[
+				"fi",
+				"first_gen"
+			],
+			[
+				"arrw",
+				"arrow"
+			],
+			[
+				"is",
+				"is_bounded"
+			],
+			[
+				"is_",
+				"is_cyclic"
+			],
+			[
+				"M1",
+				"M1_L1"
+			],
+			[
+				"the",
+				"there_is_diff"
+			],
+			[
+				"cance",
+				"cancel_pure_differential"
+			],
+			[
+				"arrows",
+				"arrows"
+			],
+			[
+				"def",
+				"delete_arrows_with_even_coeff"
+			],
+			[
+				"check",
+				"check_df_is_0"
+			],
+			[
+				"Da",
+				"DA1"
+			],
+			[
+				"X",
+				"X"
+			],
+			[
+				"arrow_in",
+				"arrows_in_new_DA"
+			],
+			[
+				"Y",
+				"Y"
+			],
+			[
+				"fin",
+				"final_list_of_sequences_of_arrows"
+			],
+			[
+				"gene",
+				"generator_from_DA2"
+			],
+			[
+				"generators",
+				"generators_of_tensor_product_by_name"
+			],
+			[
+				"arrows_in",
+				"arrows_in_new_DA"
+			],
+			[
+				"DAb",
+				"DAbimodule1"
+			],
+			[
+				"arrow_",
+				"arrow_in_z2"
+			],
+			[
+				"genera",
+				"generator1"
+			],
+			[
+				"alg_",
+				"alg_tuple"
+			],
+			[
+				"gem",
+				"gen_by_name"
+			],
+			[
+				"Gn",
+				"Generator"
+			],
+			[
+				"che",
+				"check_idempotents_match"
+			],
+			[
+				"My",
+				"MyCounter"
+			],
+			[
+				"ad",
+				"add_factorizations"
+			],
+			[
+				"fac",
+				"factorization"
+			],
+			[
+				"fact",
+				"factorizations"
+			],
+			[
+				"in_",
+				"in_mod_gen"
+			],
+			[
+				"s",
+				"self"
+			],
+			[
+				"r",
+				"r1"
+			],
+			[
+				"diff",
+				"differential_of_generator"
+			],
+			[
+				"Id",
+				"Id_DA"
+			],
+			[
+				"i",
+				"is_ok"
+			],
+			[
+				"ch",
+				"check_matching_of_idempotents_in_action"
+			],
+			[
+				"mi",
+				"multiplication_table"
+			],
+			[
+				"add",
+				"add_idems"
+			],
+			[
+				"m",
+				"multiply"
+			],
+			[
+				"b",
+				"b_tensor_x"
+			],
+			[
+				"alg",
+				"algebra_generator"
+			],
+			[
+				"al",
+				"algebra_generator"
+			],
+			[
+				"el",
+				"element2"
+			],
+			[
+				"elem",
+				"element1"
+			],
+			[
+				"mul",
+				"multiplication_table"
+			],
+			[
+				"__",
+				"__id"
+			],
+			[
+				"prob",
+				"problem"
+			],
+			[
+				"mode",
+				"moderators"
+			],
+			[
+				"debu",
+				"debug_mode_required"
+			],
+			[
+				"see",
+				"send_reminder"
+			],
+			[
+				"send",
+				"send_reminder"
+			],
+			[
+				"Obj",
+				"objects"
+			],
+			[
+				"pro",
+				"problem_set"
+			],
+			[
+				"cou",
+				"course"
+			],
+			[
+				"probl",
+				"problem_set"
+			],
+			[
+				"reg",
+				"register_delete_rule"
+			],
+			[
+				"matan",
+				"matan_course"
+			],
+			[
+				"Prob",
+				"Problem_set"
+			],
+			[
+				"va",
+				"validate_on_submit"
+			],
+			[
+				"Course",
+				"CourseForm"
+			],
+			[
+				"cours",
+				"course_name"
+			],
+			[
+				"R",
+				"ReferenceField"
+			],
+			[
+				"ima",
+				"image_url"
+			],
+			[
+				"cur",
+				"current_solutions"
+			],
+			[
+				"chec",
+				"checked_correct"
+			],
+			[
+				"checked",
+				"checked_sols"
+			],
+			[
+				"pa",
+				"parent_solution"
+			],
+			[
+				"count",
+				"count3"
+			],
+			[
+				"co",
+				"count2"
+			],
+			[
+				"coun",
+				"count2"
+			],
+			[
+				"voted",
+				"voted_solution"
+			],
+			[
+				"gener",
+				"general_comment_form"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/Users/ARTOFKOT/Google Drive/Math/Princeton/Lowdim/code/computing_bordered/algebraic_structures/basics.py",
+			"settings":
+			{
+				"buffer_size": 2974,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "input_instanton_modules.py",
+			"settings":
+			{
+				"buffer_size": 27233,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/ARTOFKOT/Google Drive/Math/Princeton/Lowdim/code/computing_bordered/algebraic_structures/algebra.py",
+			"settings":
+			{
+				"buffer_size": 26915,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "computing_instantons.py",
+			"settings":
+			{
+				"buffer_size": 1176,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/ARTOFKOT/Google Drive/Math/Princeton/Lowdim/code/computing_bordered/floer_for_mapping_classes/computing_CFDA.py",
+			"settings":
+			{
+				"buffer_size": 5847,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					""
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Traditional"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"PdfLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"XeLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"LuaLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - PdfLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - XeLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - LuaLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Script Builder"
+				]
+			],
+			[
+				"Packages/LaTeXTools/LaTeX.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/LaTeXing/LaTeX.sublime-build",
+					""
+				],
+				[
+					"Packages/LaTeXing/LaTeX.sublime-build",
+					"Clean up Files"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/LaTeXing/LaTeX.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Markdown Preview/Markdown.sublime-build",
+					""
+				],
+				[
+					"Packages/User/MDtoPDF.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/User/MDtoPDF.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Markdown Preview/Markdown.sublime-build",
+					""
+				],
+				[
+					"Packages/User/pandoc-markdown-to-pdf.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/User/pandoc-markdown-to-pdf.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 367.0,
+		"last_filter": "Package Control: ",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Add Repository"
+			],
+			[
+				"pan",
+				"Pandoc: Convert a Pandoc file to PDF"
+			],
+			[
+				"packa",
+				"Package Control: Disable Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"pand",
+				"Pandoc"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"markdow",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"synta bash",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"synt shel",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"synt bash",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"synta html",
+				"Set Syntax: HTML"
+			],
+			[
+				"synt p",
+				"Set Syntax: Python"
+			],
+			[
+				"synt html",
+				"Set Syntax: HTML"
+			],
+			[
+				"synt pyth",
+				"Set Syntax: Python"
+			],
+			[
+				"synta bas",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"synt bas",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"synt ht",
+				"Set Syntax: HTML"
+			],
+			[
+				"synt js",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"packa insta",
+				"Package Control: Install Package"
+			],
+			[
+				"bash",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"synt sc",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"synt plane",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"synta tex",
+				"Set Syntax: LaTeX"
+			],
+			[
+				"plain",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"synt",
+				"Set Syntax: Markdown"
+			],
+			[
+				"synta e",
+				"Set Syntax: Emmet"
+			],
+			[
+				"synt sh",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"synt she",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"synt htm",
+				"Set Syntax: HTML"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/ARTOFKOT/Google Drive/Math/Princeton/Lowdim/code/computing_bordered/algebraic_structures/dd_bimodule.py",
+		"/Users/ARTOFKOT/Google Drive/Math/Princeton/Lowdim/code/computing_bordered/floer_for_mapping_classes/computing_CFDA.py",
+		"/Users/ARTOFKOT/Math/Princeton/Lowdim/code/computing_bordered/floer_for_mapping_classes/computing_CFDA.py",
+		"/Users/ARTOFKOT/Math/Princeton/Lowdim/code/computing_bordered/singular_instantons_for_knots/input_instanton_modules.py",
+		"/Users/ARTOFKOT/Math/Princeton/Lowdim/code/computing_bordered/singular_instantons_for_knots/computing_instantons.py",
+		"/Users/ARTOFKOT/Math/Princeton/Lowdim/code/computing_bordered/algebraic_structures/basics.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/tex/conjectural_iso/inv_for_mc.tex",
+		"/Users/ARTOFKOT/Downloads/1003.0598v4/heegaard-diag.tex",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/tex/conjectural_iso/plan.txt",
+		"/Users/ARTOFKOT/Downloads/1603.06559/intro.tex",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/tex/Seidel_example.tex",
+		"/Users/ARTOFKOT/Downloads/1603.06559/BorderedKnots.tex",
+		"/Users/ARTOFKOT/Math/Princeton/Lowdim/Fibered_Y^3/code/computing_bordered/algebraic_structures/chain_complex.py",
+		"/Users/ARTOFKOT/Math/Princeton/Lowdim/Fibered_Y^3/code/computing_bordered/floer_for_mapping_classes/computing_CFDA.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/code/computing_bordered/algebraic_structures/algebra.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/code/computing_bordered/singular_instantons_for_knots/input_instanton_modules.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/code/computing_bordered/singular_instantons_for_knots/computing_instantons.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/code/computing_bordered/.gitignore",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/code/computing_bordered/.gitig",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/code/computing_bordered/floer_for_mapping_classes/computing_CFDA.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/code/computing_bordered/algebraic_structures/da_bimodule.py",
+		"/Users/ARTOFKOT/Downloads/1404.1352/lefschetz40.tex",
+		"/Users/ARTOFKOT/Downloads/1010.2550v4/background.tex",
+		"/Users/ARTOFKOT/Downloads/1603.06559/crossing.tex",
+		"/Users/ARTOFKOT/Downloads/1003.0598/macros.tex",
+		"/Users/ARTOFKOT/Downloads/1003.0598/pairingthms.tex",
+		"/Users/ARTOFKOT/Downloads/1003.0598/matchcirc.tex",
+		"/Users/ARTOFKOT/Downloads/1003.0598/duality.tex",
+		"/Users/ARTOFKOT/Downloads/1003.0598/defs.tex",
+		"/Users/ARTOFKOT/Downloads/1003.0598/Bimodules.tex",
+		"/Users/ARTOFKOT/Downloads/Kavabata_Yasunari_Master_igry_v_go.txt",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/code/computing_bordered/floer_for_mapping_classes/checking_da_T_LHD/arcslides_tensor_n_check.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/code/computing_bordered/floer_for_mapping_classes/input_DA_bimodules.py",
+		"/Users/ARTOFKOT/Projects/HackWeb.txt",
+		"/Users/ARTOFKOT/Desktop/txt.txt",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/code/Bohua/test_Artem.py",
+		"/Users/ARTOFKOT/Documents/resume_latex/resume_AK.tex",
+		"/Users/ARTOFKOT/Downloads/mail to LeoLabs",
+		"/Users/ARTOFKOT/Library/Application Support/Sublime Text 3/Packages/User/LaTeXTools.sublime-settings",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/code/computing_CFDA/algebraic_structures/hochschild_homology.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/code/computing_CFDA/computing.py",
+		"/Users/ARTOFKOT/Projects/spacex_jobs.py",
+		"/Users/ARTOFKOT/Desktop/Best Mapping Class Group presentation- Part I _ Low Dimensional Topology.html",
+		"/Users/ARTOFKOT/Google Drive/todo_math.txt",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/tex/examples/example.tex",
+		"/Users/ARTOFKOT/Library/Application Support/Sublime Text 3/Packages/LaTeXTools/LaTeXTools.sublime-settings",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/tex/examples/example",
+		"/Users/ARTOFKOT/Math/Diplom_MSU->paper/tex/H-min_paper.tex",
+		"/Users/ARTOFKOT/Downloads/1005.1248",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/code/computing_CFDA/algebraic_structures/da_bimodule.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/code/computing_CFDA/algebraic_structures/morphism.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/code/computing_CFDA/algebraic_structures/visual.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/code/computing_CFDA/input_bimodules.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/code/computing_CFDA/algebraic_structures/algebra.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/tex/examples/tex_cribsheet.tex",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/tex/conjectural_iso/text.tex",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3(research)/tex/templates/tex_cribsheet.tex",
+		"/Users/ARTOFKOT/.bash_profile.macports-saved_2016-09-30_at_09:45:57",
+		"/Users/ARTOFKOT/.gitconfig",
+		"/Users/ARTOFKOT/.git-prompt.sh",
+		"/etc/hosts",
+		"/Users/ARTOFKOT/Downloads/bash_profile_course",
+		"/Users/ARTOFKOT/.git-completion.bash",
+		"/Users/ARTOFKOT/.dbshell",
+		"/Users/ARTOFKOT/.bash_eternal_history",
+		"/Users/ARTOFKOT/.bash_history",
+		"/Users/ARTOFKOT/.mongorc.js",
+		"/Users/ARTOFKOT/.appcfg_cookies",
+		"/Users/ARTOFKOT/.appcfg_nag",
+		"/Users/ARTOFKOT/.CFUserTextEncoding",
+		"/Users/ARTOFKOT/.netrc",
+		"/Users/ARTOFKOT/.node_history",
+		"/Users/ARTOFKOT/.npmrc",
+		"/Users/ARTOFKOT/.rnd",
+		"/Users/ARTOFKOT/.viminfo",
+		"/Users/ARTOFKOT/.octave_hist",
+		"/Users/ARTOFKOT/.octaverc",
+		"/Users/ARTOFKOT/Books/Ajeroport.txt",
+		"/Users/ARTOFKOT/.basrc",
+		"/Users/ARTOFKOT/.bash_profile",
+		"/Users/ARTOFKOT/.bashrc_custom",
+		"/Users/ARTOFKOT/.bashrc",
+		"/Users/ARTOFKOT/Projects/business_notes.txt",
+		"/Users/ARTOFKOT/Google Drive/todo_life.txt",
+		"/Users/ARTOFKOT/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/todo math",
+		"/Users/ARTOFKOT/todo life",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/relations_of_MCG(T^2).py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/computing.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/algebraic_structures/da_bimodule.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/algebraic_structures/hochschild_homology.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/input_bimodules.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/algebraic_structures/algebra.py",
+		"/Users/ARTOFKOT/Projects/Notes on coding(older_file).txt",
+		"/Users/ARTOFKOT/Projects/HackWeb2.0.txt",
+		"/Users/ARTOFKOT/Downloads/Ethereum-Wallet-macosx-0-7-4/README.txt",
+		"/Users/ARTOFKOT/Downloads/projective_challenge/README",
+		"/Users/ARTOFKOT/Downloads/03-413 (1)/03-413.tex",
+		"/Users/ARTOFKOT/Documents/challenge1.py",
+		"/Users/ARTOFKOT/Math/Diplom_MSU->paper/tex/AKotelskiy_paper_JSG.tex",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/algebraic_structures/hochschild_homology.pyc",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/algebraic_structures/morphism.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/algebraic_structures/visual.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/visual.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/algebraic_structures/input_bimodules.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/dehn_twists_and_co.py",
+		"/Users/ARTOFKOT/.matplotlib/matplotlibrc",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/.gitignore",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/algebra.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/da_bimodule.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/morphism.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/utility.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/algebra_and_DA.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code/computing_CFDA/my_counter.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code_HH,CFDA/playing.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code_HH,CFDA/Bohua/utility.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code_HH,CFDA/Bohua/dastructure.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code_HH,CFDA/Chris/bimodule.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code_HH,CFDA/Bohua/algebra.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code_HH,CFDA/bfh_python(Bohua)/algebra.py",
+		"/Users/ARTOFKOT/Google Drive/Fibered_Y^3/code_HH,CFDA/Bohua/algebratest.py",
+		"/Users/ARTOFKOT/Math/Lowdim/sage/exotic.py",
+		"/Users/ARTOFKOT/Math/Lowdim/sage/S^2xS^2_FS.sage",
+		"/Users/ARTOFKOT/Documents/temp/some.txt",
+		"/Users/ARTOFKOT/Downloads/Ethereum-Wallet-macosx-0-5-2/README.txt",
+		"/Users/ARTOFKOT/Math/Zadacha AE Mironova/rxx,rxy,ryy.nb",
+		"/Users/ARTOFKOT/Documents/prohibited/omg.txt",
+		"/Users/ARTOFKOT/Desktop/Уточнение ТЗ.txt"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 102.0,
+		"where_history":
+		[
+			"/Users/ARTOFKOT/Projects/evarist/evarist"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"comput",
+			"x",
+			"\\}",
+			"\\",
+			"\\{",
+			"{{",
+			"\\",
+			"idem",
+			"str",
+			"idemleft",
+			"ks",
+			"'a'",
+			"X",
+			"have boundary con",
+			"have bounda",
+			"have the",
+			"hi \\c",
+			"phi \\circ \\psi^1_{X_{H_t",
+			"by considerin",
+			"tilde{\\phi",
+			"tilde{",
+			"phi \\circ",
+			"\\phi \\ci",
+			"mapping torus",
+			"constant section",
+			"section",
+			"symplectiz",
+			"symplectz",
+			"symplect",
+			"symplec",
+			"positive pa",
+			"lefschetz fibr",
+			"lefschet",
+			"exact aut",
+			"epsilo",
+			"\\epsilon",
+			"$\\epsilon$",
+			"plectic fibra",
+			"symplectic fibratio",
+			"double branch",
+			"eq:bimodule ",
+			"Sei5",
+			"partially_wrapped_2bpts",
+			"_g",
+			"following",
+			"fibrations",
+			"possibly",
+			"more recent",
+			"Sei3",
+			"Sei3i",
+			"Sei3",
+			"Sei4",
+			"in case",
+			"bordered=",
+			"scale",
+			"bordered<",
+			"\\section",
+			"subsecti",
+			"needsp",
+			"Lefschetz",
+			"P",
+			"role",
+			"pseudo",
+			"{BEE",
+			"tra}",
+			"tra",
+			"of $(\\Si",
+			"in the case wit",
+			"completion",
+			"completeion",
+			"remark",
+			"exact",
+			",)",
+			"liouville do",
+			"when taking",
+			"along \\R",
+			"\\R",
+			"{ER}",
+			"ER}",
+			"ER",
+			"recall",
+			"Gau",
+			"bee",
+			"monotone",
+			"gau}",
+			"gau]",
+			"monotone",
+			"mathbb",
+			"bathbb",
+			"monotone",
+			"{ER}",
+			"ER}",
+			"ratiu",
+			"Tra}",
+			"Tra",
+			"it is defined",
+			"todo",
+			"exact symp",
+			"defined using count",
+			"defined",
+			"it picture",
+			"see the next sub",
+			"see next sub",
+			"pulling back",
+			"pulling",
+			"in our case",
+			"Aur}",
+			"looks like",
+			"fig:",
+			"fig:2b",
+			"fig:2bp",
+			"perturbation",
+			"open-close",
+			"exact symple",
+			"ddot",
+			"\\ddot",
+			"\\ddot{",
+			"\\dot{",
+			"_{2bp}",
+			"-dimension",
+			"\\ddot",
+			"\\ddot{",
+			"\\ddot",
+			"\\dot{",
+			"_{1b",
+			"\\ddot{",
+			"\\dot{",
+			"4bpt"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/Users/ARTOFKOT/Google Drive/Math/Princeton/Lowdim/code/computing_bordered/algebraic_structures/basics.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2974,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								984,
+								984
+							]
+						],
+						"settings":
+						{
+							"bs_sintax": "python",
+							"buffer_scroll_name": "14b55d81",
+							"encoding_helper_encoding": "UTF-8",
+							"encoding_thread_running": true,
+							"spell_check": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 20.0,
+						"translation.y": 25.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "input_instanton_modules.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 27233,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3569,
+								3569
+							]
+						],
+						"settings":
+						{
+							"bs_sintax": "python",
+							"buffer_scroll_name": "b8343754",
+							"encoding_helper_encoding": "UTF-8",
+							"encoding_thread_running": true,
+							"spell_check": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Users/ARTOFKOT/Google Drive/Math/Princeton/Lowdim/code/computing_bordered/algebraic_structures/algebra.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 26915,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								22524,
+								22524
+							]
+						],
+						"settings":
+						{
+							"bs_sintax": "python",
+							"buffer_scroll_name": "a1e78072",
+							"encoding_helper_encoding": "UTF-8",
+							"encoding_thread_running": true,
+							"spell_check": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 7238.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"file": "computing_instantons.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1176,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								969,
+								969
+							]
+						],
+						"settings":
+						{
+							"bs_sintax": "python",
+							"buffer_scroll_name": "0323973a",
+							"encoding_helper_encoding": "UTF-8",
+							"encoding_thread_running": true,
+							"spell_check": true,
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/Users/ARTOFKOT/Google Drive/Math/Princeton/Lowdim/code/computing_bordered/floer_for_mapping_classes/computing_CFDA.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5847,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3814,
+								3814
+							]
+						],
+						"settings":
+						{
+							"bs_sintax": "python",
+							"buffer_scroll_name": "244bd789",
+							"encoding_helper_encoding": "UTF-8",
+							"encoding_thread_running": true,
+							"spell_check": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1626.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.491699020242,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 109.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.latextools":
+	{
+		"height": 118.0
+	},
+	"output.markdown":
+	{
+		"height": 118.0
+	},
+	"pinned_build_system": "",
+	"project": "compute_inst_modules.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"root",
+				"evarist/templates/roots.html"
+			],
+			[
+				"basicht",
+				"Startups/HTML,CSS,JS/html,css/Basic.html"
+			],
+			[
+				"tema",
+				"Downloads/SOP for Tema-1.txt"
+			],
+			[
+				"chat",
+				"coding/UdacityWebDev/Forms_micro-runner-781/chat.txt"
+			],
+			[
+				"main",
+				"coding/UdacityWebDev/Forms_micro-runner-781/main.py"
+			],
+			[
+				"sign",
+				".Trash/templates/signup-form.html"
+			],
+			[
+				"bitsta",
+				".Trash/bitstarter/index.html"
+			],
+			[
+				"no",
+				"coding/Notes on coding.txt"
+			],
+			[
+				"cha",
+				"coding/UdacityWebDev/chat.txt"
+			],
+			[
+				"omg",
+				"Documents/Texts/omg.txt"
+			],
+			[
+				"a",
+				".Trash/myapp/app.yaml"
+			],
+			[
+				"scr",
+				"StartupEngineering/node_basics/Script_delete_first_letters.py"
+			],
+			[
+				"babyna",
+				"Google-PythonExercises/babynames/babynames.py"
+			],
+			[
+				"",
+				"/Volumes/Disk Image/logs/D.txt"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": false,
+	"side_bar_visible": true,
+	"side_bar_width": 186.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+		"max_columns": 2
+	}
+}

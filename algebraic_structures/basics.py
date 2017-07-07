@@ -3,7 +3,7 @@ from collections import Counter
 
 # turns printing in red:
 def debug(whatever):
-    return '\033[91m' + str(whatever) + '\033[0m'
+    print '\033[91m' + str(whatever) + '\033[0m'
 
 # prints in red:
 def in_red(whatever):
@@ -31,9 +31,12 @@ class Bunch_of_arrows(Counter):
             del self[ar]
 
 class Generator(object):
-    def __init__(self, name):
+    def __init__(self, name,tex_name="WRONG:TEX NAME NOT SPECIFIED",reverse_tex_name="WRONG:REVERSE TEX NAME NOT SPECIFIED"):
         self.name = name
+        self.tex_name=tex_name
         self.factorizations=[]
+        self.tex_name=tex_name
+        self.reverse_tex_name=reverse_tex_name
 
     def add_idems(self,idem1,idem2):
         self.idem=AttrDict({"left":idem1, "right":idem2})

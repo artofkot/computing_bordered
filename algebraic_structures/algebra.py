@@ -366,30 +366,31 @@ def init_genus2_algebra():
 
 def init_pillowcase_algebra():
     gen_by_name=AttrDict({
-                "i0": Generator("i0"),
-                "i1": Generator("i1"),
-                "i2": Generator("i2"),
-                "j0": Generator("j0"),
-                "j1": Generator("j1"),
-                "j2": Generator("j2"),
+                "i0": Generator("i0","i_0"),
+                "i1": Generator("i1","i_1"),
+                "i2": Generator("i2","i_2"),
+                "j0": Generator("j0","j_0"),
+                "j1": Generator("j1","j_1"),
+                "j2": Generator("j2","j_2"),
 
-                "r0": Generator("r0"),
-                "r2": Generator("r2"),
+                "r0": Generator("r0","r_0","r'_0"),
+                "r2": Generator("r2","r_2","r'_2"),
 
-                "et1": Generator("et1"),
-                "et2": Generator("et2"),
-                "et3": Generator("et3"),
-                "et12": Generator("et12"),
-                "et23": Generator("et23"),
-                "et123": Generator("et123"),
+                "et1": Generator("et1","\\eta_1","\\eta'_1"),
+                "et2": Generator("et2","\\eta_2","\\eta'_2"),
+                "et3": Generator("et3","\\eta_3","\\eta'_3"),
+                "et12": Generator("et12","\\eta_{12}","\\eta'_{21}"),
+                "et23": Generator("et23","\\eta_{23}","\\eta'_{32}"),
+                "et123": Generator("et123","\\eta_{123}","\\eta'_{321}"),
 
-                "ks1": Generator("ks1"),
-                "ks2": Generator("ks2"),
-                "ks3": Generator("ks3"),
-                "ks12": Generator("ks12"),
-                "ks23": Generator("ks23"),
-                "ks123": Generator("ks123"),
+                "ks1": Generator("ks1","\\xi_1","\\xi'_1"),
+                "ks2": Generator("ks2","\\xi_2","\\xi'_2"),
+                "ks3": Generator("ks3","\\xi_3","\\xi'_3"),
+                "ks12": Generator("ks12","\\xi_{12}","\\xi'_{21}"),
+                "ks23": Generator("ks23","\\xi_{23}","\\xi'_{32}"),
+                "ks123": Generator("ks123","\\xi_{123}","\\xi'_{321}"),
                 })
+
 
     # now this stuff is done when algebra is initiated
     # gen_by_name.et12.add_factorizations((gen_by_name.et1,gen_by_name.et2))
@@ -463,7 +464,6 @@ def init_pillowcase_algebra():
 
 torus_A=init_torus_algebra()
 g2_A=init_genus2_algebra()
-
 pil_A=init_pillowcase_algebra()
 # g2_A.show()
 # A.show()

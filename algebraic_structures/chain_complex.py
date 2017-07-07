@@ -32,10 +32,10 @@ class ChainComplex(object):
     def show(self):
         print "=========="
         print self.name + ':\n'
-        print "Generators:"
+        print "{} generators:".format(len(self.genset))
         for gen in self.genset:
             print str(gen)
-        print "\nDifferentials"
+        print "\n{} differentials:".format(len(self.arrows))
         self.arrows.show()
 
 def cancel_differential(C,d):

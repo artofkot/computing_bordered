@@ -49,6 +49,23 @@ class Right_A_module(object):
         for right_a_arrow in self.right_a_arrows:
             print str(right_a_arrow)
 
+    # def show_for_tex(self):
+    #     print '============='
+    #     print self.name + ':\n'
+    #     print str(len(self.genset)) + ' generators with their idempotents: \n'
+    #     for gen in self.genset:
+    #         # _{i_2}{(t_{12})}_{i_2}
+    #         print '${(' + gen.tex_name + ')}_{' + gen.idem.right.tex_name +'}$,'
+
+    #     print '\nActions:\n'
+    #     for generator1 in self.genset:
+    #         for generator2 in self.genset:
+    #             arrows=[arrow for arrow in self.right_a_arrows if (right_a_in_mod_gen(arrow)==generator1 and right_a_out_mod_gen(arrow)==generator2)]
+    #             if len(arrows)!=0:
+    #                 for arrow in arrows:
+    #                     print '${}\\otimes {} \\longrightarrow {} $, '.format(getattr(right_a_in_mod_gen(arrow),'tex_name',1),getattr(right_a_in_mod_gen(arrow),'tex_name',1))
+       
+
 
     def check_matching_of_idempotents_in_action(self): 
         count_of_mismatches=0

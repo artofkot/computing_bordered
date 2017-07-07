@@ -8,6 +8,12 @@ from algebraic_structures.algebra import (
 from algebraic_structures.da_bimodule import (
     Bunch_of_arrows, DA_bimodule)
 
+from algebraic_structures.aa_bimodule import (
+    AA_bimodule)
+
+from algebraic_structures.dd_bimodule import (
+    DD_bimodule)
+
 # from evarist.models import (solution_filters, events,
 #                             parameters)
 
@@ -313,6 +319,266 @@ def init_L_LHD(torus_A):
 
     return DA_bimodule(gen_by_name,arrows,torus_A,torus_A,name="L_LHD")
 
+def init_AA_ID1(torus_A):
+    gen_by_name=AttrDict({
+                "y": Generator("y"),
+                "x": Generator("x"),
+                "z1": Generator("z1"),
+                "z2": Generator("z2"),
+                "w1": Generator("w1"),
+                "w2": Generator("w2"),
+                
+                })
+
+    gen_by_name.x.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i0)
+    gen_by_name.y.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i1)
+    gen_by_name.z1.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i1)
+    gen_by_name.z2.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i1)
+    gen_by_name.w1.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i0)
+    gen_by_name.w2.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i0)
+
+    aa_arrows=Bunch_of_arrows([
+        (       (torus_A.gen_by_name.r2,),gen_by_name.y,(torus_A.gen_by_name.r2,)
+                        ,gen_by_name.x),
+
+        (       (),gen_by_name.x,(torus_A.gen_by_name.r3,)
+                        ,gen_by_name.z2),
+        (       (torus_A.gen_by_name.r1,),gen_by_name.x,()
+                        ,gen_by_name.w2),
+
+        (       (torus_A.gen_by_name.r23,),gen_by_name.z1,(torus_A.gen_by_name.r2,)
+                        ,gen_by_name.x),
+        (       (torus_A.gen_by_name.r2,),gen_by_name.w1,(torus_A.gen_by_name.r12,)
+                        ,gen_by_name.x),
+
+        (      (torus_A.gen_by_name.r2,),gen_by_name.y,(torus_A.gen_by_name.r23,)
+                        ,gen_by_name.z2),
+        (       (torus_A.gen_by_name.r12,),gen_by_name.y,(torus_A.gen_by_name.r2,)
+                        ,gen_by_name.w2),
+
+        (       (torus_A.gen_by_name.r3,),gen_by_name.z1,()
+                        ,gen_by_name.y),
+        (       (),gen_by_name.w1,(torus_A.gen_by_name.r1,)
+                        ,gen_by_name.y),
+
+        (       (),gen_by_name.z1,()
+                        ,gen_by_name.z2),
+        (       (torus_A.gen_by_name.r23,),gen_by_name.z1,(torus_A.gen_by_name.r23,)
+                        ,gen_by_name.z2),
+        (       (),gen_by_name.w1,()
+                        ,gen_by_name.w2),
+        (       (torus_A.gen_by_name.r12,),gen_by_name.w1,(torus_A.gen_by_name.r12,)
+                        ,gen_by_name.w2),
+
+        (       (torus_A.gen_by_name.r2,),gen_by_name.w1,(torus_A.gen_by_name.r123,)
+                        ,gen_by_name.z2),
+        (       (torus_A.gen_by_name.r2,),gen_by_name.w1,(torus_A.gen_by_name.r3,torus_A.gen_by_name.r2,torus_A.gen_by_name.r1)
+                        ,gen_by_name.z2),
+
+
+        (       (torus_A.gen_by_name.r123,),gen_by_name.z1,(torus_A.gen_by_name.r2,)
+                        ,gen_by_name.w2),
+                                    ])
+    return AA_bimodule(gen_by_name,aa_arrows,torus_A,torus_A,name="AA_id",to_check=True)
+def init_DD_ID1(torus_A):
+    gen_by_name=AttrDict({
+                "p": Generator("p"),
+                "q": Generator("q"),
+                })
+
+    gen_by_name.p.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i1)
+    gen_by_name.q.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i0)
+
+    dd_arrows=Bunch_of_arrows([
+        (                   gen_by_name.q,
+        torus_A.gen_by_name.r2,gen_by_name.p,torus_A.gen_by_name.r2),
+
+        (                   gen_by_name.p,
+        torus_A.gen_by_name.r3,gen_by_name.q,torus_A.gen_by_name.r3),
+
+        (                   gen_by_name.p,
+        torus_A.gen_by_name.r1,gen_by_name.q,torus_A.gen_by_name.r1),
+        (                   gen_by_name.p,
+        torus_A.gen_by_name.r123,gen_by_name.q,torus_A.gen_by_name.r123)
+
+                                    ])
+    return DD_bimodule(gen_by_name,dd_arrows,torus_A,torus_A,name="DD_id")
+
+def init_DD_TC(torus_A):
+    gen_by_name=AttrDict({
+                "afi": Generator("afi"),
+                "afj": Generator("afj"),
+                "afk": Generator("afk"),
+                "afl": Generator("afl"),
+                "ahi": Generator("ahi"),
+                "ahj": Generator("ahj"),
+                "ahk": Generator("ahk"),
+                "ahl": Generator("ahl"),
+                "ang": Generator("ang"),
+                "amg": Generator("amg"),
+                "ebi": Generator("ebi"),
+                "ebj": Generator("ebj"),
+                "ebk": Generator("ebk"),
+                "ebl": Generator("ebl"),
+                "edi": Generator("edi"),
+                "edj": Generator("edj"),
+                "edk": Generator("edk"),
+                "edl": Generator("edl"),
+                "enc": Generator("enc"),
+                "emc": Generator("emc")
+                })
+
+
+    gen_by_name.afi.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i0)
+    gen_by_name.afj.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i1)
+    gen_by_name.afk.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i0)
+    gen_by_name.afl.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i1)
+    gen_by_name.ahi.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i0)
+    gen_by_name.ahj.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i1)
+    gen_by_name.ahk.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i0)
+    gen_by_name.ahl.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i1)
+    gen_by_name.ang.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i0)
+    gen_by_name.amg.add_idems(torus_A.idem_by_name.i1,torus_A.idem_by_name.i0)
+    gen_by_name.ebi.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i0)
+    gen_by_name.ebj.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i1)
+    gen_by_name.ebk.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i0)
+    gen_by_name.ebl.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i1)
+    gen_by_name.edi.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i0)
+    gen_by_name.edj.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i1)
+    gen_by_name.edk.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i0)
+    gen_by_name.edl.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i1)
+    gen_by_name.enc.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i1)
+    gen_by_name.emc.add_idems(torus_A.idem_by_name.i0,torus_A.idem_by_name.i1)
+
+    dd_arrows=Bunch_of_arrows([
+        (                   gen_by_name.ebl,
+        torus_A.gen_by_name.r3,gen_by_name.afl,1),
+        (                   gen_by_name.afl,
+        torus_A.gen_by_name.r2,gen_by_name.edl,1),
+        (                   gen_by_name.edl,
+        torus_A.gen_by_name.r1,gen_by_name.ahl,1),
+
+        (                   gen_by_name.ebk,
+        torus_A.gen_by_name.r3,gen_by_name.afk,1),
+        (                   gen_by_name.afk,
+        torus_A.gen_by_name.r2,gen_by_name.edk,1),
+        (                   gen_by_name.edk,
+        torus_A.gen_by_name.r1,gen_by_name.ahk,1),
+
+        (                   gen_by_name.ebj,
+        torus_A.gen_by_name.r3,gen_by_name.afj,1),
+        (                   gen_by_name.afj,
+        torus_A.gen_by_name.r2,gen_by_name.edj,1),
+        (                   gen_by_name.edj,
+        torus_A.gen_by_name.r1,gen_by_name.ahj,1),
+
+        (                   gen_by_name.ebi,
+        torus_A.gen_by_name.r3,gen_by_name.afi,1),
+        (                   gen_by_name.afi,
+        torus_A.gen_by_name.r2,gen_by_name.edi,1),
+        (                   gen_by_name.edi,
+        torus_A.gen_by_name.r1,gen_by_name.ahi,1),
+
+        (                   gen_by_name.ebl,
+        1,gen_by_name.ebk,torus_A.gen_by_name.r1),
+        (                   gen_by_name.ebk,
+        1,gen_by_name.ebj,torus_A.gen_by_name.r2),
+        (                   gen_by_name.ebj,
+        1,gen_by_name.ebi,torus_A.gen_by_name.r3),
+
+        (                   gen_by_name.afl,
+        1,gen_by_name.afk,torus_A.gen_by_name.r1),
+        (                   gen_by_name.afk,
+        1,gen_by_name.afj,torus_A.gen_by_name.r2),
+        (                   gen_by_name.afj,
+        1,gen_by_name.afi,torus_A.gen_by_name.r3),
+
+        (                   gen_by_name.edl,
+        1,gen_by_name.edk,torus_A.gen_by_name.r1),
+        (                   gen_by_name.edk,
+        1,gen_by_name.edj,torus_A.gen_by_name.r2),
+        (                   gen_by_name.edj,
+        1,gen_by_name.edi,torus_A.gen_by_name.r3),
+
+        (                   gen_by_name.ahl,
+        1,gen_by_name.ahk,torus_A.gen_by_name.r1),
+        (                   gen_by_name.ahk,
+        1,gen_by_name.ahj,torus_A.gen_by_name.r2),
+        (                   gen_by_name.ahj,
+        1,gen_by_name.ahi,torus_A.gen_by_name.r3),
+
+        (                   gen_by_name.ebl,
+        1,gen_by_name.ebi,torus_A.gen_by_name.r123),
+        (                   gen_by_name.afl,
+        1,gen_by_name.afi,torus_A.gen_by_name.r123),
+        (                   gen_by_name.edl,
+        1,gen_by_name.edi,torus_A.gen_by_name.r123),
+        (                   gen_by_name.ahl,
+        1,gen_by_name.ahi,torus_A.gen_by_name.r123),
+
+
+        # all connected to enc
+        (                   gen_by_name.enc,
+        torus_A.gen_by_name.r1,gen_by_name.ang,torus_A.gen_by_name.r1),
+        (                   gen_by_name.enc,
+        torus_A.gen_by_name.r123,gen_by_name.ang,torus_A.gen_by_name.r123),
+        (                   gen_by_name.enc,
+        torus_A.gen_by_name.r3,gen_by_name.ang,torus_A.gen_by_name.r3),
+        (                   gen_by_name.ang,
+        torus_A.gen_by_name.r2,gen_by_name.enc,torus_A.gen_by_name.r2),
+
+        (                   gen_by_name.ebl,
+        1,gen_by_name.enc,1),
+        (                   gen_by_name.edl,
+        1,gen_by_name.enc,torus_A.gen_by_name.r23),
+        (                   gen_by_name.ebj,
+        torus_A.gen_by_name.r12,gen_by_name.enc,1),
+
+        # all connected to ang (ecxcept enc)
+
+        (                   gen_by_name.afl,
+        1,gen_by_name.ang,torus_A.gen_by_name.r3),
+        (                   gen_by_name.ahl,
+        1,gen_by_name.ang,torus_A.gen_by_name.r123),
+        (                   gen_by_name.ebk,
+        torus_A.gen_by_name.r1,gen_by_name.ang,1),
+        (                   gen_by_name.ebi,
+        torus_A.gen_by_name.r123,gen_by_name.ang,1),
+
+        # all connected to emc
+
+        (                   gen_by_name.emc,
+        torus_A.gen_by_name.r1,gen_by_name.amg,torus_A.gen_by_name.r1),
+        (                   gen_by_name.emc,
+        torus_A.gen_by_name.r123,gen_by_name.amg,torus_A.gen_by_name.r123),
+        (                   gen_by_name.emc,
+        torus_A.gen_by_name.r3,gen_by_name.amg,torus_A.gen_by_name.r3),
+        (                   gen_by_name.amg,
+        torus_A.gen_by_name.r2,gen_by_name.emc,torus_A.gen_by_name.r2),
+
+        (                   gen_by_name.emc,
+        torus_A.gen_by_name.r3,gen_by_name.ahj,1),
+        (                   gen_by_name.emc,
+        torus_A.gen_by_name.r123,gen_by_name.ahl,1),
+        (                   gen_by_name.emc,
+        1,gen_by_name.edi,torus_A.gen_by_name.r1),
+        (                   gen_by_name.emc,
+        1,gen_by_name.ebi,torus_A.gen_by_name.r123),
+
+        # all connected to amg (ecxcept emc)
+
+        (                   gen_by_name.amg,
+        torus_A.gen_by_name.r23,gen_by_name.ahk,1),
+        (                   gen_by_name.amg,
+        1,gen_by_name.ahi,1),
+        (                   gen_by_name.amg,
+        1,gen_by_name.afi,torus_A.gen_by_name.r12),
+
+                                    ])
+
+    return DD_bimodule(gen_by_name,dd_arrows,torus_A,torus_A,name="DD_TC")
+
+
 ID1=init_ID1(torus_A) 
 ID2=init_ID2(torus_A)
 ID3=init_ID3(torus_A)
@@ -320,6 +586,9 @@ M_RHD=init_M_RHD(torus_A)
 M_LHD=init_M_LHD(torus_A)
 L_RHD=init_L_RHD(torus_A)
 L_LHD=init_L_LHD(torus_A)
+AA_id=init_AA_ID1(torus_A)
+DD_id=init_DD_ID1(torus_A)
+DD_TC=init_DD_TC(torus_A)
 
 # genus 2 bimodules:
 
@@ -1985,5 +2254,6 @@ g2_N_LHD=init_g2_N_LHD(g2_A)
 g2_N_RHD=init_g2_N_RHD(g2_A)
 g2_T_RHD=init_g2_T_RHD(g2_A)
 g2_T_LHD=init_g2_T_LHD(g2_A)
+
 
 

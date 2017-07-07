@@ -3,7 +3,7 @@ import sys
 sys.path.append('../')
 
 from algebraic_structures.algebra import torus_A
-from algebraic_structures.basics import  Bunch_of_arrows
+from algebraic_structures.basics import  Bunch_of_arrows,in_red
 from algebraic_structures.da_bimodule import  (
     da_randomly_cancel_until_possible, are_equal_smart_da,
     check_df_is_0, composition)
@@ -113,11 +113,10 @@ E_inv=g2_M_LHD
 # print are_equal_smart_da(X,Y)
 
 ##### computing HH
-# X=da_da_box_tensor_many_efficient_cancelations(A_,B_,C_,D_,E_)
-# X=da_da_box_tensor_many_efficient_cancelations(X,X,X,X,X,X)
+X=da_da_box_tensor_many_efficient_cancelations(D_inv,B_inv,C_inv,A_inv)
 # X=da_da_box_tensor_many_efficient_cancelations(X, X)
-# X=da_da_box_tensor_many_no_cancelations(g2_ID_bounded,X,g2_ID_bounded)
-# X.show_short()
+X=da_da_box_tensor_many_no_cancelations(g2_ID_bounded,X,g2_ID_bounded)
+X.show_short()
 print "\ndim(HH)=" + str(dimHH(X))
 # HC=CH(X)
 # HC.show()
@@ -147,19 +146,26 @@ print "\ndim(HH)=" + str(dimHH(X))
 #     print "\ndim(HH)=" + str(dimHH(X1)),
 #     print " dim(HH)=" + str(dimHH(X2))
 
-##### experiment, where one computes possible ranks
-# a=[A_,A_inv,B_,B_inv,C_,C_inv,A_,A_inv,B_,B_inv]
-# for i in range(10):
-#     for j in range(10):
-#         for k in range(10):
-#             for l in range(10):
-#                 X=da_da_box_tensor_many_efficient_cancelations(a[i],a[j],a[k],a[l])
-#                 X=da_da_box_tensor_many_no_cancelations(g2_ID_bounded,X,g2_ID_bounded)
-#                 BINGO=dimHH(X)
-#                 if BINGO==0: 
-#                     print 'YEAHEAYEAYEAYHEAHAEYEAYAEEHA'
-#                     os._exit(1)
-#                 print "\ndim(HH)=" + str(BINGO)
+#### experiment, where one computes possible ranks
+# k=0
+# a=[A_,A_inv,B_,B_inv,C_,C_inv,A_,A_inv,B_,B_inv,g2_ID]
+# for i in range(11):
+#     for j in range(11):
+#         for k in range(11):
+#                 X=da_da_box_tensor_many_efficient_cancelations(a[i],a[j],a[k])
+#                 Y=da_da_box_tensor_many_no_cancelations(g2_ID_bounded,X,g2_ID_bounded)
+#                 hf=dimHH(Y)
+#                 if hf==1: 
+#                     in_red('YAY, 1 dimensional homology!')
+#                     i.show_short()
+#                     j.show_short()
+#                     k.show_short()
+#                     l.show_short()
+#                     k=k+1
+#                 else:
+#                     print 'Ok: homology is {}'.format(str(hf))
+# print k
+
 
 
 
