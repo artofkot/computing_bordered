@@ -418,7 +418,7 @@ def init_Right_A_R4(pil_A):
                         ,gen_by_name.h),
                                     ])
     return Right_A_module(gen_by_name,right_a_arrows,pil_A,name="Right_A_R4")
-def init_Right_A_L2(pil_A):
+def init_Right_A_L37(pil_A):
     gen_by_name=AttrDict({
                 "a": Generator("a"),
                 "b": Generator("b"),
@@ -474,7 +474,7 @@ def init_Right_A_L2(pil_A):
         (              gen_by_name.z2,(pil_A.gen_by_name.et2,)
                         ,gen_by_name.x2),
                                     ])
-    return Right_A_module(gen_by_name,right_a_arrows,pil_A,name="Right_A_L2")
+    return Right_A_module(gen_by_name,right_a_arrows,pil_A,name="Right_A_L37")
 def init_Right_A_L3(pil_A):
     gen_by_name=AttrDict({
                 "a": Generator("a"),
@@ -684,47 +684,45 @@ def init_Right_A_L8(pil_A):
                         ,gen_by_name.j1),
                                     ])
     return Right_A_module(gen_by_name,right_a_arrows,pil_A,name="Right_A_L8")
-def init_Right_A_L9(pil_A):
+def init_Right_A_L9(pil_A): #belt
     gen_by_name=AttrDict({
-                "i2": Generator("i2"),
-                "j0": Generator("j0"),
-                "j2": Generator("j2"),
-                "i0": Generator("i0"),
+                "w": Generator("w"),
+                "x": Generator("x"),
+                "s": Generator("s"),
+                "z": Generator("z"),
 
                 })
 
-    gen_by_name.i2.add_idems(0,pil_A.idem_by_name.i2)
-    gen_by_name.j0.add_idems(0,pil_A.idem_by_name.j0)
-    gen_by_name.i0.add_idems(0,pil_A.idem_by_name.i0)
-    gen_by_name.j2.add_idems(0,pil_A.idem_by_name.j2)
+    gen_by_name.w.add_idems(0,pil_A.idem_by_name.i2)
+    gen_by_name.x.add_idems(0,pil_A.idem_by_name.j0)
+    gen_by_name.z.add_idems(0,pil_A.idem_by_name.i0)
+    gen_by_name.s.add_idems(0,pil_A.idem_by_name.j2)
 
 
     right_a_arrows=Bunch_of_arrows([
-        (gen_by_name.i0,(pil_A.gen_by_name.et1,pil_A.gen_by_name.ks1)
-        ,gen_by_name.i2),
+        (gen_by_name.z,(pil_A.gen_by_name.et1,pil_A.gen_by_name.ks1)
+        ,gen_by_name.w),
 
-        (gen_by_name.i2,(pil_A.gen_by_name.ks2,)
-        ,gen_by_name.j2),
+        (gen_by_name.w,(pil_A.gen_by_name.ks2,)
+        ,gen_by_name.s),
 
-        (gen_by_name.i0,(pil_A.gen_by_name.et1,pil_A.gen_by_name.ks12)
-        ,gen_by_name.j2),
+        (gen_by_name.z,(pil_A.gen_by_name.et1,pil_A.gen_by_name.ks12)
+        ,gen_by_name.s),
 
-        (gen_by_name.j2,(pil_A.gen_by_name.ks3,pil_A.gen_by_name.et3)
-        ,gen_by_name.j0),
+        (gen_by_name.s,(pil_A.gen_by_name.ks3,pil_A.gen_by_name.et3)
+        ,gen_by_name.x),
 
-        (gen_by_name.i2,(pil_A.gen_by_name.ks23,pil_A.gen_by_name.et3)
-        ,gen_by_name.j0),
+        (gen_by_name.w,(pil_A.gen_by_name.ks23,pil_A.gen_by_name.et3)
+        ,gen_by_name.x),
 
-        (gen_by_name.i0,(pil_A.gen_by_name.et1,pil_A.gen_by_name.ks123,pil_A.gen_by_name.et3)
-        ,gen_by_name.j0),
+        (gen_by_name.z,(pil_A.gen_by_name.et1,pil_A.gen_by_name.ks123,pil_A.gen_by_name.et3)
+        ,gen_by_name.x),
 
-        (gen_by_name.i0,(pil_A.gen_by_name.r0,)
-        ,gen_by_name.j0),
+        (gen_by_name.z,(pil_A.gen_by_name.r0,)
+        ,gen_by_name.x),
 
                                     ])
     return Right_A_module(gen_by_name,right_a_arrows,pil_A,name="Right_A_L9")
-
-
 def init_Right_A_R00(pil_A):
     gen_by_name=AttrDict({
                 "x": Generator("x"),
@@ -750,7 +748,7 @@ DD_bar_dual=init_DD_bar_dual(pil_A)
 Right_A_L0=init_Right_A_L0(pil_A) #eight curve
 Right_A_LU=init_Right_A_LU(pil_A) #unknot
 Right_A_LT23=init_Right_A_LT23(pil_A) #T(2,3)
-Right_A_L2=init_Right_A_L2(pil_A) #curve for (3,7) torus knot
+Right_A_L37=init_Right_A_L37(pil_A) #curve for (3,7) torus knot
 Right_A_R4=init_Right_A_R4(pil_A) #curve for (5,11) torus knot
 
 

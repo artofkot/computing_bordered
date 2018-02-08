@@ -13,6 +13,7 @@ from algebraic_structures.tensoring import (
 from algebraic_structures.hochschild_homology import is_bounded, CH, dimHH
 from algebraic_structures.visual import draw_DA_bimodule, draw_chain_complex
 
+
 from input_DA_bimodules import (
     ID1,ID2,ID3,M_RHD,M_LHD,L_RHD,L_LHD,
     g2_ID, g2_ID_bounded, g2_M_RHD, g2_M_LHD, g2_L_RHD,
@@ -20,7 +21,7 @@ from input_DA_bimodules import (
     g2_T_RHD, g2_T_LHD)
 from itertools import permutations
 import os
-
+import timeit
 
 ####################### genus one algebra computations
 # MORPHISMS
@@ -60,10 +61,14 @@ THETA=Bunch_of_arrows([
 # F2_THETA.show()
 # check_df_is_0(ID2,M_RHD,F2_THETA)
 
-########### Pseudo_Anosov mapping class
+# ########## Pseudo_Anosov mapping class
+# start_time = timeit.default_timer()
 # X=da_da_box_tensor_many_efficient_cancelations(L_RHD,M_LHD)
+# X=da_da_box_tensor_many_efficient_cancelations(X,X,X)
 # X=da_da_box_tensor_many_no_cancelations(ID3,X,ID3)
 # print "\ndim(HH)=" + str(dimHH(X))
+# elapsed = timeit.default_timer() - start_time
+# print elapsed
 
 
 ########### Boundary Dehn twist
@@ -106,20 +111,23 @@ D_inv=g2_L_LHD
 E_inv=g2_M_LHD
 
 ##### checking relations
-# X=da_da_box_tensor_many_efficient_cancelations(B_,C_,B_)
-# Y=da_da_box_tensor_many_efficient_cancelations(C_,B_,C_)
-# X.show()
-# Y.show_short()
-# print are_equal_smart_da(X,Y)
+# X=da_da_box_tensor_many_efficient_cancelations(A_,B_,C_,D_,E_,E_,D_,C_,B_,A_)
+# Z_=da_da_box_tensor_many_efficient_cancelations(E_,D_,C_,B_)
+# Z=da_da_box_tensor_many_efficient_cancelations(Z_,Z_,Z_,Z_,Z_)
+# # X.show()
+# print are_equal_smart_da(X,Z)
 
-##### computing HH
-X=da_da_box_tensor_many_efficient_cancelations(D_inv,B_inv,C_inv,A_inv)
-# X=da_da_box_tensor_many_efficient_cancelations(X, X)
+##### computing HH 
+# start_time = timeit.default_timer()
+X=da_da_box_tensor_many_efficient_cancelations(A_inv,A_inv)
+# X=da_da_box_tensor_many_efficient_cancelations(X, X, X, X, X)
 X=da_da_box_tensor_many_no_cancelations(g2_ID_bounded,X,g2_ID_bounded)
 X.show_short()
 print "\ndim(HH)=" + str(dimHH(X))
-# HC=CH(X)
-# HC.show()
+# elapsed = timeit.default_timer() - start_time
+# print elapsed
+HC=CH(X)
+HC.show()
 
 ##### experiment, that shows that order of elements in the product matters for HH
 ##### (cyclic order doesnt matter due to conjugation invariance)

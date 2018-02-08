@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*- 
-from basics import AttrDict, Bunch_of_arrows, Generator
+from basics import AttrDict, Bunch_of_arrows, Generator, debug
 from sets import Set
 
 # I will assume that algebra is vector space over F2, and does not have differentials, 
 # which happens in the first symmetric product
-class DGAlgebra(object):
-    def __init__(self,gen_by_name,idem_by_name,multiplication_table,name,algebra_diff_arrows=Bunch_of_arrows([]),to_check=True):
+class dg_algebra(object):
+    def __init__(self,gen_by_name,
+                idem_by_name,
+                multiplication_table,
+                name,
+                algebra_diff_arrows=Bunch_of_arrows([]),
+                a_inf_actions=Bunch_of_arrows([]),
+                to_check=True):
         self.algebra_diff_arrows=algebra_diff_arrows
         self.name=name
         self.gen_by_name=gen_by_name #dictionary of generators, where keys are their names
@@ -13,6 +19,7 @@ class DGAlgebra(object):
         self.idem_by_name=idem_by_name #dictionary with idempotents, where keys are their names
         self.idemset=idem_by_name.values() #list of idempotents
         self.multiplication_table=multiplication_table
+        self.a_inf_actions=a_inf_actions
 
         # adding factorizations of elements which are not idempotents into non-idempotent product
         for gen1 in set(self.genset) - set(self.idemset):
@@ -22,6 +29,7 @@ class DGAlgebra(object):
                     gen3.add_factorizations((gen1,gen2))
                     
         for gen in self.genset:
+            
             for idem1 in self.idemset:
                 for idem2 in self.idemset:
                     if (self.multiplication_table.get((gen,idem2))==gen) and (self.multiplication_table.get((idem1,gen))==gen):
@@ -84,6 +92,7 @@ class DGAlgebra(object):
         # for k in self.multiplication_table:
         #     print str(k[0]) + '*' + str(k[1]) + '=' + str(self.multiplication_table[k])
 
+
 #########################################################################################################
 #########################################################################################################
 
@@ -128,7 +137,7 @@ def init_torus_algebra():
                         (gen_by_name.r123,gen_by_name.i1):gen_by_name.r123,
                                     }
 
-    return DGAlgebra(gen_by_name=gen_by_name,idem_by_name=idem_by_name,multiplication_table=multiplication_table,name='torus_A')
+    return dg_algebra(gen_by_name=gen_by_name,idem_by_name=idem_by_name,multiplication_table=multiplication_table,name='torus_A')
 
 def init_genus2_algebra():
     gen_by_name=AttrDict({
@@ -360,9 +369,7 @@ def init_genus2_algebra():
                 
                                     }
 
-    return DGAlgebra(gen_by_name=gen_by_name,idem_by_name=idem_by_name,multiplication_table=multiplication_table,name='g2_A')
-
-#### the following algebra is generated using Bohua's code
+    return dg_algebra(gen_by_name=gen_by_name,idem_by_name=idem_by_name,multiplication_table=multiplication_table,name='g2_A')
 
 def init_pillowcase_algebra():
     gen_by_name=AttrDict({
@@ -460,7 +467,7 @@ def init_pillowcase_algebra():
                         (gen_by_name.ks123,gen_by_name.j1):gen_by_name.ks123,
                                     }
 
-    return DGAlgebra(gen_by_name=gen_by_name,idem_by_name=idem_by_name,multiplication_table=multiplication_table,name='pil_A')
+    return dg_algebra(gen_by_name=gen_by_name,idem_by_name=idem_by_name,multiplication_table=multiplication_table,name='pil_A')
 
 torus_A=init_torus_algebra()
 g2_A=init_genus2_algebra()

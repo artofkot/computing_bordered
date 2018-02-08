@@ -26,7 +26,7 @@ DA_id_closed=da_randomly_cancel_until_possible(DA_id_closed)
 
 ##### computing HH=HF(Y_phi)
 X=da_da_box_tensor_many_efficient_cancelations(DA_id_closed)
-# X=da_da_box_tensor_many_efficient_cancelations(X, X, X)
+X=da_da_box_tensor_many_efficient_cancelations(X, X)
 X=da_da_box_tensor_many_no_cancelations(ID3,X,ID3)
 X.show_short()
 print "\ndim(HH)=" + str(dimHH(X))

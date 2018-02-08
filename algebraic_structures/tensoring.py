@@ -6,7 +6,9 @@ from aa_bimodule import AA_bimodule, aa_in_left_alg_tuple, aa_in_right_alg_tuple
 from dd_bimodule import DD_bimodule, dd_in_mod_gen, dd_out_left_alg_gen, dd_out_right_alg_gen, dd_out_mod_gen
 from left_a_module import Left_A_module, left_a_in_mod_gen, left_a_in_alg_tuple, left_a_out_mod_gen
 from left_d_module import Left_D_module, left_d_in_mod_gen, left_d_out_alg_gen, left_d_out_mod_gen
+from right_d_module import Right_D_module, right_d_in_mod_gen, right_d_out_alg_gen, right_d_out_mod_gen
 from right_a_module import Right_A_module, right_a_in_mod_gen, right_a_in_alg_tuple, right_a_out_mod_gen
+
 from chain_complex import ChainComplex
 
 ############### here we code DA⊠DA=DA ####################
@@ -391,7 +393,7 @@ def aa_da_box_tensor_product(AA,DA,to_check=True):
 
     return AA_bimodule(generators_of_tensor_product_by_name,arrows_in_tensor_product,AA.left_algebra,DA.right_algebra,name= AA.name +'⊠'+DA.name,to_check=to_check)
 
-
+################ here we code DA⊠DD #################
 def da_dd_box_tensor_product(DA,DD,to_check=True):
     def find_sequence_for_da_dd_box_tensor_product(final_list_of_sequences_of_arrows,
                                             needed_alg_tuple_to_finish_sequence,
@@ -466,4 +468,139 @@ def da_dd_box_tensor_product(DA,DD,to_check=True):
     arrows_in_tensor_product.delete_arrows_with_even_coeff()
 
     return DD_bimodule(generators_of_tensor_product_by_name,arrows_in_tensor_product,DA.left_algebra,DD.right_algebra,name= DA.name +'⊠'+DD.name,to_check=to_check)
+
+################ here we code AA⊠D #################
+def aa_d_box_tensor_product(AA,D,to_check=True):
+    def find_sequence_for_aa_d_box_tensor_product(final_list_of_sequences_of_arrows,
+                                            needed_alg_tuple_to_finish_sequence,
+                                            current_gen,
+                                            arrows,
+                                            presequence_of_arrows_from_right):
+
+        if len(needed_alg_tuple_to_finish_sequence)>0:
+            arrows_to_continue=[arrow for arrow in arrows if (left_d_out_alg_gen(arrow)==needed_alg_tuple_to_finish_sequence[0] and current_gen==left_d_in_mod_gen(arrow))]
+            for arrow in arrows_to_continue:
+
+                find_sequence_for_aa_d_box_tensor_product(final_list_of_sequences_of_arrows,
+                                                    needed_alg_tuple_to_finish_sequence[1:],
+                                                    left_d_out_mod_gen(arrow),
+                                                    arrows,
+                                                    presequence_of_arrows_from_right+[arrow])
+
+        if len(needed_alg_tuple_to_finish_sequence)==0:
+            final_list_of_sequences_of_arrows.append(presequence_of_arrows_from_right)
+
+
+    #let's compute generators
+    generators_of_tensor_product_by_name=AttrDict({})
+    for generator_from_AA in AA.genset:
+        for generator_from_D in D.genset:
+            if generator_from_AA.idem.right!=generator_from_D.idem.left:
+                continue
+            else:
+                generators_of_tensor_product_by_name[generator_from_AA.name+'⊗'+generator_from_D.name]=Generator(generator_from_AA.name+'⊗'+generator_from_D.name)
+                generators_of_tensor_product_by_name[generator_from_AA.name+'⊗'+generator_from_D.name].add_idems(generator_from_AA.idem.left,0)
+                        
+    #we want to compute differential now
+    arrows_in_tensor_product=Bunch_of_arrows()
+
+    for generator_from_AA in AA.genset:
+        for generator_from_D in D.genset:
+            in_generator_of_tensor_product=generators_of_tensor_product_by_name.get(generator_from_AA.name+'⊗'+generator_from_D.name, None)
+            if not in_generator_of_tensor_product: continue
+
+            #here we compute differentials with 0 actions on AA, and one action on D
+            arrows_in_D_without_out_alg_gen=[arrow for arrow in D.left_d_arrows if (left_d_in_mod_gen(arrow)==generator_from_D and left_d_out_alg_gen(arrow)==1)]
+            for ar in arrows_in_D_without_out_alg_gen:
+                #add differential
+                arrows_in_tensor_product[( (),in_generator_of_tensor_product,
+                    generators_of_tensor_product_by_name[generator_from_AA.name+'⊗'+left_d_out_mod_gen(ar).name]) ]+=1
+
+            #differentials with one action on the left AA and multiple on the right D
+            for arrow_on_AA_side in [arrow for arrow in AA.aa_arrows if (aa_in_mod_gen(arrow)==generator_from_AA)]:
+                
+                final_list_of_sequences_of_arrows=[]
+                find_sequence_for_aa_d_box_tensor_product(final_list_of_sequences_of_arrows,
+                                                    aa_in_right_alg_tuple(arrow_on_AA_side),
+                                                    generator_from_D,
+                                                    D.left_d_arrows,
+                                                    presequence_of_arrows_from_right=[])
+
+                for sequence in final_list_of_sequences_of_arrows:
+                    final_gen_on_D_side=generator_from_D 
+                    if sequence: final_gen_on_D_side=left_d_out_mod_gen(sequence[-1])
+                    #add differential
+                    arrows_in_tensor_product[(aa_in_left_alg_tuple(arrow_on_AA_side), in_generator_of_tensor_product,
+                            generators_of_tensor_product_by_name[aa_out_mod_gen(arrow_on_AA_side).name+'⊗'+final_gen_on_D_side.name])]+=1
+
+    arrows_in_tensor_product.delete_arrows_with_even_coeff()
+
+    return Left_A_module(generators_of_tensor_product_by_name,arrows_in_tensor_product,AA.left_algebra,name= AA.name +'⊠'+D.name,to_check=to_check)
+
+################ here we code D⊠AA #################
+def d_aa_box_tensor_product(D,AA,to_check=True):
+    def find_sequence_for_d_aa_box_tensor_product(final_list_of_sequences_of_arrows,
+                                            needed_alg_tuple_to_finish_sequence,
+                                            current_gen,
+                                            arrows,
+                                            presequence_of_arrows_from_right):
+
+        if len(needed_alg_tuple_to_finish_sequence)>0:
+            arrows_to_continue=[arrow for arrow in arrows if (right_d_out_alg_gen(arrow)==needed_alg_tuple_to_finish_sequence[0] and current_gen==right_d_in_mod_gen(arrow))]
+            for arrow in arrows_to_continue:
+                find_sequence_for_d_aa_box_tensor_product(final_list_of_sequences_of_arrows,
+                                                    needed_alg_tuple_to_finish_sequence[1:],
+                                                    right_d_out_mod_gen(arrow),
+                                                    arrows,
+                                                    presequence_of_arrows_from_right+[arrow])
+
+        if len(needed_alg_tuple_to_finish_sequence)==0:
+            final_list_of_sequences_of_arrows.append(presequence_of_arrows_from_right)
+
+
+    #let's compute generators
+    generators_of_tensor_product_by_name=AttrDict({})
+    for generator_from_AA in AA.genset:
+        for generator_from_D in D.genset:
+            if generator_from_D.idem.right!=generator_from_AA.idem.left:
+                continue
+            else:
+                generators_of_tensor_product_by_name[generator_from_D.name+'⊗'+generator_from_AA.name]=Generator(generator_from_D.name+'⊗'+generator_from_AA.name)
+                generators_of_tensor_product_by_name[generator_from_D.name+'⊗'+generator_from_AA.name].add_idems(0,generator_from_AA.idem.right)
+                        
+    #we want to compute differential now
+    arrows_in_tensor_product=Bunch_of_arrows()
+
+    for generator_from_AA in AA.genset:
+        for generator_from_D in D.genset:
+            in_generator_of_tensor_product=generators_of_tensor_product_by_name.get(generator_from_D.name+'⊗'+generator_from_AA.name, None)
+            if not in_generator_of_tensor_product: continue
+
+            #here we compute differentials with 0 actions on AA, and one action on D
+            arrows_in_D_without_out_alg_gen=[arrow for arrow in D.right_d_arrows if (right_d_in_mod_gen(arrow)==generator_from_D and right_d_out_alg_gen(arrow)==1)]
+            for ar in arrows_in_D_without_out_alg_gen:
+                #add differential
+                arrows_in_tensor_product[( in_generator_of_tensor_product,(),
+                    generators_of_tensor_product_by_name[right_d_out_mod_gen(ar).name+'⊗'+generator_from_AA.name]) ]+=1
+
+            #differentials with one action on the right AA and multiple on the left D
+            for arrow_on_AA_side in [arrow for arrow in AA.aa_arrows if (aa_in_mod_gen(arrow)==generator_from_AA)]:
+                
+                final_list_of_sequences_of_arrows=[]
+                find_sequence_for_d_aa_box_tensor_product(final_list_of_sequences_of_arrows,
+                                                    aa_in_left_alg_tuple(arrow_on_AA_side)[::-1], #tuple is reversed!
+                                                    generator_from_D,
+                                                    D.right_d_arrows,
+                                                    presequence_of_arrows_from_right=[])
+
+                for sequence in final_list_of_sequences_of_arrows:
+                    final_gen_on_D_side=generator_from_D 
+                    if sequence: final_gen_on_D_side=right_d_out_mod_gen(sequence[-1])
+                    #add differential
+                    arrows_in_tensor_product[( in_generator_of_tensor_product,aa_in_right_alg_tuple(arrow_on_AA_side),
+                            generators_of_tensor_product_by_name[final_gen_on_D_side.name+'⊗'+aa_out_mod_gen(arrow_on_AA_side).name])]+=1
+
+    arrows_in_tensor_product.delete_arrows_with_even_coeff()
+
+    return Right_A_module(generators_of_tensor_product_by_name,arrows_in_tensor_product,AA.right_algebra,name= D.name+'⊠'+AA.name ,to_check=to_check)
 

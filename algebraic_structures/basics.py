@@ -31,12 +31,13 @@ class Bunch_of_arrows(Counter):
             del self[ar]
 
 class Generator(object):
-    def __init__(self, name,tex_name="WRONG:TEX NAME NOT SPECIFIED",reverse_tex_name="WRONG:REVERSE TEX NAME NOT SPECIFIED"):
+    def __init__(self, name,tex_name="WRONG:TEX NAME NOT SPECIFIED",reverse_tex_name="WRONG:REVERSE TEX NAME NOT SPECIFIED",aux_info=None):
         self.name = name
         self.tex_name=tex_name
         self.factorizations=[]
         self.tex_name=tex_name
         self.reverse_tex_name=reverse_tex_name
+        self.aux_info=aux_info
 
     def add_idems(self,idem1,idem2):
         self.idem=AttrDict({"left":idem1, "right":idem2})

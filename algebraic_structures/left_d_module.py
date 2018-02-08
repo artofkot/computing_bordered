@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*- 
+from chain_complex import ChainComplex
+from basics import AttrDict, debug
 from basics import check_idempotents_match_left_left, check_idempotents_match_right_left,check_idempotents_match_right_right
 from basics import Bunch_of_arrows
+from random import shuffle
+from algebra import Generator, dg_algebra
+from itertools import product
 
 def left_d_in_mod_gen(left_d_arrow):
     return left_d_arrow[0]
@@ -92,5 +97,85 @@ class Left_D_module(object):
 
         return d_squared
 
+def left_d_cancel_pure_differential(Left_D_module_old,pure_differential):
+    #z1--->z2
+    z1=left_d_in_mod_gen(pure_differential)
+    z2=left_d_out_mod_gen(pure_differential)
+
+    #form generators
+    generators_of_new_Left_D=Left_D_module_old.gen_by_name
+    del generators_of_new_Left_D[z1.name]
+    del generators_of_new_Left_D[z2.name]
+
+    #form old differentials
+    old_arrows_that_survive=[arrow for arrow in Left_D_module_old.left_d_arrows if (left_d_out_mod_gen(arrow)!=z1 and left_d_out_mod_gen(arrow)!=z2  and left_d_in_mod_gen(arrow)!=z1 and left_d_in_mod_gen(arrow)!=z2 ) ]
+    arrows_in_new_Left_D=Bunch_of_arrows(old_arrows_that_survive)
+
+    #form new differentials
+    arrows_in_z2=[arrow for arrow in Left_D_module_old.left_d_arrows if (left_d_out_mod_gen(arrow)==z2 and left_d_in_mod_gen(arrow)!=z1 and left_d_in_mod_gen(arrow)!=z2)]
+    arrows_from_z1=[arrow for arrow in Left_D_module_old.left_d_arrows if (left_d_in_mod_gen(arrow)==z1 and left_d_out_mod_gen(arrow)!=z2 and left_d_out_mod_gen(arrow)!=z1)]
+
+    for arrow_in_z2 in arrows_in_z2:
+        for arrow_from_z1 in arrows_from_z1:
+
+            new_out_left_alg_gen=Left_D_module_old.left_algebra.multiply(left_d_out_alg_gen(arrow_in_z2),left_d_out_alg_gen(arrow_from_z1))
+
+            if new_out_left_alg_gen:
+                new_arrow=(left_d_in_mod_gen(arrow_in_z2),
+                    new_out_left_alg_gen,left_d_out_mod_gen(arrow_from_z1))
+                arrows_in_new_Left_D[new_arrow]+=1
 
 
+    arrows_in_new_Left_D.delete_arrows_with_even_coeff()
+
+    return Left_D_module(generators_of_new_Left_D,arrows_in_new_Left_D,Left_D_module_old.left_algebra,name= Left_D_module_old.name +'_red')
+
+
+def left_d_randomly_cancel_until_possible(Left_D):
+    there_is_diff=0
+    arrs=list(Left_D.left_d_arrows)
+    shuffle(arrs)
+    for arrow in arrs:
+        if (left_d_out_alg_gen(arrow)==1 and left_d_in_mod_gen(arrow)!=left_d_out_mod_gen(arrow)):
+            # now we need to check that there are no other arrows between these two generators
+            other_arrows=[ar for ar in arrs if (left_d_in_mod_gen(ar)==left_d_in_mod_gen(arrow) and left_d_out_mod_gen(ar)==left_d_out_mod_gen(arrow) and ar!=arrow)]
+            if other_arrows: continue
+            else:
+                there_is_diff=1
+                canceled_Left_D=left_d_cancel_pure_differential(Left_D,arrow)
+                return (left_d_randomly_cancel_until_possible(canceled_Left_D))
+
+    if there_is_diff==0:
+        return Left_D
+
+def morphism_space_for_left_D_structures(D1,D2):
+    generators_of_mor_space=AttrDict({})
+    A=D1.left_algebra
+    for genD1 in D1.genset:
+        for a in A.genset:
+            if not a.idem.left==genD1.idem.left: continue
+            for genD2 in D2.genset:
+                if not a.idem.right==genD2.idem.left: continue
+                f=(genD1,a,genD2)
+                generators_of_mor_space[str(f)]=Generator(name=str(f), aux_info=f)
+    arrows_in_mor_space=Bunch_of_arrows()
+    for morphism_gen in generators_of_mor_space.values():
+        f=morphism_gen.aux_info
+        
+        for arrow1 in [ar for ar in D1.left_d_arrows if left_d_out_mod_gen(ar)==left_d_in_mod_gen(f)]:
+            a_new=A.multiply( left_d_out_alg_gen(arrow1),left_d_out_alg_gen(f) )
+            if a_new:
+                df=(left_d_in_mod_gen(arrow1),a_new,left_d_out_mod_gen(f))
+                arrows_in_mor_space[(generators_of_mor_space[str(f)],generators_of_mor_space[str(df)])]+=1
+
+
+        for arrow2 in [ar for ar in D2.left_d_arrows if left_d_in_mod_gen(ar)==left_d_out_mod_gen(f)]:
+
+            a_new=A.multiply( left_d_out_alg_gen(f),left_d_out_alg_gen(arrow2) )
+            if a_new:
+                df=(left_d_in_mod_gen(f),a_new,left_d_out_mod_gen(arrow2))
+                arrows_in_mor_space[(generators_of_mor_space[str(f)],generators_of_mor_space[str(df)])]+=1
+    
+    arrows_in_mor_space.delete_arrows_with_even_coeff()
+
+    return ChainComplex(generators_of_mor_space,arrows_in_mor_space,name= 'Mor('+D1.name+','+D2.name +')',to_check=True)

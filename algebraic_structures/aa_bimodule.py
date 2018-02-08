@@ -192,13 +192,11 @@ def a_A_a(algebra,to_check=True):
         arrows[((),gen_by_name[''+diff_arrow[0].name+''],(),gen_by_name[''+diff_arrow[1].name+''])]+=1
 
     for mult in algebra.multiplication_table:
-        # we don't care about idempotents here, the action of idempotents is encapsulated 8 rows before
-        if (mult[0] in algebra.idemset): continue
-        if (mult[1] in algebra.idemset): continue
-        if (algebra.multiplication_table[mult] in algebra.idemset): continue
-        
-        arrows[((),gen_by_name[''+mult[0].name+''],(mult[1],),gen_by_name[''+algebra.multiplication_table[mult].name+''])]+=1
-        arrows[((mult[0],),gen_by_name[''+mult[1].name+''],(),gen_by_name[''+algebra.multiplication_table[mult].name+''])]+=1
+
+        if not (mult[1] in algebra.idemset):
+            arrows[((),gen_by_name[''+mult[0].name+''],(mult[1],),gen_by_name[''+algebra.multiplication_table[mult].name+''])]+=1
+        if not (mult[0] in algebra.idemset):
+            arrows[((mult[0],),gen_by_name[''+mult[1].name+''],(),gen_by_name[''+algebra.multiplication_table[mult].name+''])]+=1
 
     return AA_bimodule(gen_by_name,arrows,algebra,algebra,name="AA("+algebra.name+')',to_check=to_check)
 
