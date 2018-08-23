@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*- 
-from basics import check_idempotents_match_left_left, check_idempotents_match_right_left,check_idempotents_match_right_right
+from basics import *
 from random import shuffle
 from basics import Bunch_of_arrows
 
@@ -37,7 +37,6 @@ class DA_bimodule(object):
 
     def check(self):
         ##Here we check that our " + self.name + " has all idempotents matching and d_squared=0:
-        
         if not self.check_matching_of_idempotents_in_action():
             print "\nSomething is wrong with idempotents!"
             raise NameError("DA_bimodule " + self.name + " has problems with idempotents")
@@ -58,7 +57,7 @@ class DA_bimodule(object):
         for gen in self.genset:
             print str(gen.idem.left) + '___' + str(gen) + '___' + str(gen.idem.right)
 
-        print '\nActions'
+        print '\n' + str(len(self.da_arrows))+ ' actions'
         for generator1 in self.genset:
             for generator2 in self.genset:
                 arrows=[arrow for arrow in self.da_arrows if (da_in_mod_gen(arrow)==generator1 and da_out_mod_gen(arrow)==generator2)]
@@ -240,6 +239,25 @@ def da_randomly_cancel_until_possible(DA1):
     if there_is_diff==0:
         return DA1
 
+def da_cancel_until_possible(DA1):
+    there_is_diff=0
+    # arrs=DA1.da_arrows
+    DA1.da_arrows.delete_arrows_with_even_coeff()
+    arrs=sorted(list(DA1.da_arrows),key=str)
+    for arrow in arrs:
+        if (da_in_alg_tuple(arrow)==() and da_out_alg_gen(arrow)==1 and da_in_mod_gen(arrow)!=da_out_mod_gen(arrow)):
+            
+            # now we need to check that there are no other arrows between these two generators
+            other_arrows=[ar for ar in arrs if (da_in_mod_gen(ar)==da_in_mod_gen(arrow) and da_out_mod_gen(ar)==da_out_mod_gen(arrow) and ar!=arrow)]
+            if other_arrows: continue
+            else:
+                there_is_diff=1
+                canceled_DA=cancel_pure_differential(DA1,arrow)
+                return (da_cancel_until_possible(canceled_DA))
+
+    if there_is_diff==0:
+        return DA1
+
 # bijection = list of pairs (tuples)
 # set of bijections= list of lists of pairs
 # possible_images_of_generators = dictionary with keys from genset1, and values lists of gens in genset2
@@ -294,14 +312,14 @@ def are_equal_smart_da(DA1,DA2):
         for pair in bijection:
             f[(pair[0],(),
                 1,pair[1])]+=1
-        if check_df_is_0(DA1,DA2,f): return True
+        if da_check_df_is_0(DA1,DA2,f): return True
     print 'there is no bijective isomorphism'
     return False
 
 
 # morphism is represented by bunch of arrows, where all coefficients are 1!
 # and also I assume tha there are no differentials in algebra!
-def compute_df(DA1,DA2,f):
+def da_compute_df(DA1,DA2,f):
     df=Bunch_of_arrows()
 
     #contribution of double arrows, with morphism on the second place
@@ -348,16 +366,14 @@ def compute_df(DA1,DA2,f):
 
             # predifferential
             for b in [algebra_diff_arrow[0] for algebra_diff_arrow in DA1.right_algebra.algebra_diff_arrows if algebra_diff_arrow[1]==a]:
-                    new_tuple=da_in_alg_tuple(arrow)[:index] + (b,) + da_in_alg_tuple(arrow)[index+1:]
-                    new_arrow_in_df=(da_in_mod_gen(arrow), new_tuple,
-                            da_out_alg_gen(arrow),da_out_mod_gen(arrow))
-                    df[new_arrow_in_df]+=1
-
-
+                new_tuple=da_in_alg_tuple(arrow)[:index] + (b,) + da_in_alg_tuple(arrow)[index+1:]
+                new_arrow_in_df=(da_in_mod_gen(arrow), new_tuple,
+                        da_out_alg_gen(arrow),da_out_mod_gen(arrow))
+                df[new_arrow_in_df]+=1
     return df
 
-def check_df_is_0(DA1,DA2,f):
-    df=compute_df(DA1,DA2,f)
+def da_check_df_is_0(DA1,DA2,f):
+    df=da_compute_df(DA1,DA2,f)
     df.delete_arrows_with_even_coeff()
     # print '\n{\nHere are all the arrows in df'
     # df.show()

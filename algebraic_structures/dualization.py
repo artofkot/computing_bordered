@@ -58,3 +58,5 @@ def dualization_of_AA(AA,to_check=True):
     return AA_bimodule(gen_by_name,new_arrows,left_algebra=AA.right_algebra,right_algebra=AA.left_algebra,name=AA.name + '_dual',to_check=to_check)
 
 
+
+

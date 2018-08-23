@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*- 
 from basics import check_idempotents_match_left_left, check_idempotents_match_right_left,check_idempotents_match_right_right
 from da_bimodule import Bunch_of_arrows
+from random import shuffle
 
 def left_a_in_mod_gen(left_a_arrow):
     return left_a_arrow[1]
@@ -109,5 +110,50 @@ class Left_A_module(object):
 
         return d_squared
 
+def left_a_cancel_pure_differential(left_A_module_old,pure_differential):
+    #z1--->z2
+    z1=left_a_in_mod_gen(pure_differential)
+    z2=left_a_out_mod_gen(pure_differential)
+
+    #form generators
+    generators_of_new_left_A=left_A_module_old.gen_by_name
+    del generators_of_new_left_A[z1.name]
+    del generators_of_new_left_A[z2.name]
+
+    #form old differentials
+    old_arrows_that_survive=[arrow for arrow in left_A_module_old.left_a_arrows if (left_a_out_mod_gen(arrow)!=z1 and left_a_out_mod_gen(arrow)!=z2  and left_a_in_mod_gen(arrow)!=z1 and left_a_in_mod_gen(arrow)!=z2 ) ]
+    arrows_in_new_left_A=Bunch_of_arrows(old_arrows_that_survive)
+
+    #form new differentials
+    arrows_in_z2=[arrow for arrow in left_A_module_old.left_a_arrows if (left_a_out_mod_gen(arrow)==z2 and left_a_in_mod_gen(arrow)!=z1 and left_a_in_mod_gen(arrow)!=z2)]
+    arrows_from_z1=[arrow for arrow in left_A_module_old.left_a_arrows if (left_a_in_mod_gen(arrow)==z1 and left_a_out_mod_gen(arrow)!=z2 and left_a_out_mod_gen(arrow)!=z1)]
+
+    for arrow_in_z2 in arrows_in_z2:
+        for arrow_from_z1 in arrows_from_z1:
+            new_arrow=(left_a_in_alg_tuple(arrow_from_z1)+left_a_in_alg_tuple(arrow_in_z2),left_a_in_mod_gen(arrow_in_z2),
+                        left_a_out_mod_gen(arrow_from_z1) )
+            arrows_in_new_left_A[new_arrow]+=1
+
+
+    arrows_in_new_left_A.delete_arrows_with_even_coeff()
+    return Left_A_module(generators_of_new_left_A,arrows_in_new_left_A,left_A_module_old.left_algebra,name= left_A_module_old.name +'_red')
+
+def left_a_randomly_cancel_until_possible(left_A):
+    there_is_diff=0
+    # arrs=left_A.left_a_arrows
+    arrs=list(left_A.left_a_arrows)
+    shuffle(arrs)
+    for arrow in arrs:
+        if (left_a_in_alg_tuple(arrow)==() and left_a_in_mod_gen(arrow)!=left_a_out_mod_gen(arrow)):
+            # now we need to check that there are no other arrows between these two generators
+            other_arrows=[ar for ar in arrs if (left_a_in_mod_gen(ar)==left_a_in_mod_gen(arrow) and left_a_out_mod_gen(ar)==left_a_out_mod_gen(arrow) and ar!=arrow)]
+            if other_arrows: continue
+            else:
+                there_is_diff=1
+                canceled_AA=left_a_cancel_pure_differential(left_A,arrow)
+                return (left_a_randomly_cancel_until_possible(canceled_AA))
+
+    if there_is_diff==0:
+        return left_A
 
 

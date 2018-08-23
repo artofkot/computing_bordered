@@ -6,7 +6,7 @@ from algebraic_structures.algebra import torus_A
 from algebraic_structures.basics import  Bunch_of_arrows,in_red
 from algebraic_structures.da_bimodule import  (
     da_randomly_cancel_until_possible, are_equal_smart_da,
-    check_df_is_0, composition)
+    da_check_df_is_0, composition)
 from algebraic_structures.tensoring import (
     da_da_box_tensor_many_efficient_cancelations, 
     da_da_box_tensor_many_no_cancelations,

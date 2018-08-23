@@ -5,6 +5,7 @@ from basics import check_idempotents_match_left_left, check_idempotents_match_ri
 from basics import Bunch_of_arrows
 from random import shuffle
 from algebra import Generator, dg_algebra
+from aa_bimodule import AA_bimodule
 from itertools import product
 from algebraic_structures.left_d_module import (
     Left_D_module, 
@@ -58,37 +59,96 @@ class simpler_A_inf_Algebra(object):
             raise NameError("Algebra " + self.name + " doesn't satisfy d_squared=0.")
 
 
-    def show(self, restrict=[]):
+    def show(self, restrict=[], only_diff=False):
         if restrict: gens=[gen for gen in self.genset if gen in restrict]
         else: gens=self.genset
         print '========\n'+ self.name +'.'
         if restrict: debug("RESTRICTED TO " + str(restrict) +'\n')
         print '{} generators in this algebra:'.format(len(gens))
-        print str(gens) + '\n'
-        print 'A∞ actions:'
-        for act in sorted(self.a_inf_actions, key=lambda action: -len(action)):
-            k=1
-            if restrict:
-                for a in act:
-                    if not (a in restrict): k=0
-            if k: print_algebra_action(act)
+        for gen in sorted(gens, key=lambda gen: str(gen)) :
+            print gen
+        if only_diff:
+            print 'A∞ actions: ...'
+            print 'Differentials:'
+            diffs=[act 
+                for act 
+                in self.a_inf_actions 
+                if len(act)==2]
+            for dif in diffs:
+                k=1
+                if restrict:
+                    for a in dif:
+                        if not (a in restrict): k=0
+                if k: print_algebra_action(dif)
+        else: 
+            print 'A∞ actions:'
+            for act in sorted(self.a_inf_actions, key=lambda action: (-len(action),str(action))):
+                k=1
+                if restrict:
+                    for a in act:
+                        if not (a in restrict): k=0
+                if k: print_algebra_action(act)
+
+# Fuk is simpler_A_inf_Algebra
+def base_change_AA_from_fuk(Fuk,generators,left_dg_algebra,right_dg_algebra):
+    def check_validity(x,action):
+        if action[:-1].count(x)==1 and (action[-1] in generators):
+            index_of_x=action[:-1].index(x)
+            for el in action[: index_of_x]:
+                if not el.name in left_dg_algebra.gen_by_name.keys(): return False
+            for el in action[index_of_x+1: -1]:
+                if not el.name in right_dg_algebra.gen_by_name.keys(): return False
+            return True
+        else: return False
+    gen_by_name=AttrDict({})
+    for x in generators:
+        gen_by_name[''+x.name+'']=Generator(''+x.name+'')
+        # gen_by_name[''+x.name+''].add_idems(x.idem.left, x.idem.right)        
+
+        # adding idempotents
+        for action in [act for act in Fuk.a_inf_actions if (len(act)==3  and (act[0].name in left_dg_algebra.idem_by_name.keys() ) and (x == act[1]) and (x == act[-1]))]:
+            left_idem=left_dg_algebra.idem_by_name[action[0].name]
+        for action in [act for act in Fuk.a_inf_actions if (len(act)==3 and (act[1].name in right_dg_algebra.idem_by_name.keys() ) and (x == act[0]) and (x == act[-1]))]:
+            right_idem=right_dg_algebra.idem_by_name[action[1].name]
+        gen_by_name[''+x.name+''].add_idems(left_idem, right_idem)
+
+    arrows=Bunch_of_arrows([])
+    for y in generators:
+        for action in Fuk.a_inf_actions:
+            if (len(action)==3  and (action[0].name in left_dg_algebra.idem_by_name.keys() ) and (y == action[1]) and (y == action[-1])):
+                continue
+            if  (len(action)==3 and (action[1].name in right_dg_algebra.idem_by_name.keys() ) and (y == action[0]) and (y == action[-1])):
+                continue
+            if check_validity(y,action):
+                index_of_y=action[:-1].index(y)
+                tuple_from_left= tuple([ (lambda z: left_dg_algebra.gen_by_name[z.name])(z) for z in action[:index_of_y]])
+                tuple_from_right= tuple([ (lambda z: right_dg_algebra.gen_by_name[z.name])(z) for z in action[index_of_y+1:-1]])
+                arrows[( tuple_from_left,gen_by_name[''+y.name+''],tuple_from_right,
+                    gen_by_name[''+action[-1].name+''])]+=1
+
+    return AA_bimodule(gen_by_name,
+                    arrows,
+                    left_dg_algebra,
+                    right_dg_algebra,
+            name= 'AA_from_Fuk',
+            to_check=True)
+
 
 # def apply(linear_map, #it is just a bunch of arrows (x_1,x_2)
 #             element):
 #     for arrow in linear_map:
 #         if arrow==element:
 
-def act_by_G2(B,G2): # check Seidel's paper on quartic
+def act_by_G2(B,G2,max_a_infty_action=15): # check Seidel's paper on quartic
     # form generators as a new dictionary
     B_new_gen_by_name=AttrDict(dict(B.gen_by_name))
 
     #form old differentials
     new_B_inf_actions=Bunch_of_arrows()
     
-    # this is the maximum a inf action we are computing
-    maxi=15
+    # max_a_infty_action is the maximum a inf action we are computing
 
-    new_mu=[Bunch_of_arrows([]) for i in range(maxi)]
+    new_mu=[Bunch_of_arrows([]) for i in range(max_a_infty_action)]
     new_mu[1]=Bunch_of_arrows([translate_arrow(B_new_gen_by_name,ar) for ar in B.a_inf_actions if (len(ar)==2) ]) 
     new_mu[2]=Bunch_of_arrows([translate_arrow(B_new_gen_by_name,ar) for ar in B.a_inf_actions if (len(ar)==3) ]) 
     new_mu[3]=Bunch_of_arrows([translate_arrow(B_new_gen_by_name,ar) for ar in B.a_inf_actions if (len(ar)==4) ]) 
@@ -186,7 +246,7 @@ def translate_arrow(new_gens_by_name,arrow):
         new_arrow=new_arrow+(new_gens_by_name[el.name],)
     return new_arrow
 
-def perturb_algebra(A_old,pure_action):
+def perturb_algebra(A_old,pure_action,max_a_infty_action=25):
     x=pure_action[0]
     y=pure_action[1]
 
@@ -209,25 +269,24 @@ def perturb_algebra(A_old,pure_action):
     #form old differentials
     new_A_inf_actions=Bunch_of_arrows()
     
-    # this is the maximum a inf action we are computing
-    maxi=25
+    # max_a_infty_action this is the maximum a inf action we are computing
 
-    I=[Bunch_of_arrows([]) for i in range(maxi)]
+    I=[Bunch_of_arrows([]) for i in range(max_a_infty_action)]
     I[1]=Bunch_of_arrows([ (gen, A_cb.gen_by_name[gen.name]) for gen in A_new_gen_by_name.values() ])
 
-    new_mu=[Bunch_of_arrows([]) for i in range(maxi)]
+    new_mu=[Bunch_of_arrows([]) for i in range(max_a_infty_action)]
     new_mu[1]=Bunch_of_arrows([translate_arrow(A_new_gen_by_name,ar) for ar in A_cb.a_inf_actions if (len(ar)==2 and ar!=(x,y) ) ]) 
     new_A_inf_actions=Bunch_of_arrows(new_A_inf_actions+new_mu[1])
 
     all_I=I[1]
 
-    # max_length_action=maxi([len(action) for action in A_cb.a_inf_actions ])
+    # max_length_action=max_a_infty_action([len(action) for action in A_cb.a_inf_actions ])
 
-    for k in range(maxi)[2:] :
+    for k in range(max_a_infty_action)[2:] :
         # Тут интересно, надо композицию наборов стрелок 
         # искать в обратном порядке, тогда будет эффективно!
 
-        # Вычисляем I[maxi]
+        # Вычисляем I[max_a_infty_action]
         # пример: I[3](a1,a2,a3)=H ( old_mu( I[2](a1,a2), I[1](a3) ) )
         old_mu_incoming_possibilities=[action[:-1] for action in A_cb.a_inf_actions if (action[-1]==y and len(action)<=k+1 )]
         for old_mu_incoming_action in old_mu_incoming_possibilities:
@@ -246,7 +305,7 @@ def perturb_algebra(A_old,pure_action):
                 i_k_action=i_k_action + (x,)
                 I[k][i_k_action]+=1
 
-        # Вычисляем new_mu[maxi]
+        # Вычисляем new_mu[max_a_infty_action]
         # пример: new_mu[3](a1,a2,a3)=P ( old_mu( I[2](a1,a2), I[1](a3) ) )
         old_mu_incoming_possibilities=[action for action in A_cb.a_inf_actions if (action[-1]!=y and action[-1]!=x and len(action)<=k+1 )]
         for old_mu_incoming_action in old_mu_incoming_possibilities:

@@ -4,6 +4,7 @@ sys.path.append('../')
 
 from algebraic_structures.dualization import dualization_right_to_left_A
 from algebraic_structures.algebra import pil_A
+from algebraic_structures.specific_algebras_modules_bimodules import *
 from input_instanton_modules import DD_bar_dual, Right_A_L0, Right_A_test
 from input_instanton_modules import (
     Left_D_test,Left_A_test,DD_test, 
@@ -17,7 +18,7 @@ from algebraic_structures.chain_complex import homology_dim
 from algebraic_structures.dd_bimodule import dd_randomly_cancel_until_possible
 
 
-DD=dd_randomly_cancel_until_possible(DD_bar_dual)
+DD=DD_bar_r_dual
 
 ##### experimenting HF(L0,R4)
 RA=Right_A_L9

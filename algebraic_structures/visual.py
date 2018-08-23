@@ -3,6 +3,8 @@ from da_bimodule import  Bunch_of_arrows, DA_bimodule,cancel_pure_differential,d
 from da_bimodule import  da_randomly_cancel_until_possible
 from da_bimodule  import da_in_mod_gen, da_out_mod_gen, da_in_alg_tuple, da_out_alg_gen
 import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 import networkx as nx
 import matplotlib.pyplot as plt
 import pygraphviz as gv
@@ -19,7 +21,7 @@ def draw_DA_bimodule(DA1):
 
     for generator1 in DA1.genset:
         for generator2 in DA1.genset:
-            arrows=[arrow for arrow in DA1.arrows if (da_in_mod_gen(arrow)==generator1 and da_out_mod_gen(arrow)==generator2)]
+            arrows=[arrow for arrow in DA1.da_arrows if (da_in_mod_gen(arrow)==generator1 and da_out_mod_gen(arrow)==generator2)]
 
             if len(arrows)!=0:
                 x=''
@@ -32,18 +34,38 @@ def draw_DA_bimodule(DA1):
 
 
     # labels=[arrow_to_label(arrow) for arrow in DA1.arrows]
-    # graph=[(da_in_mod_gen(arrow),da_out_mod_gen(arrow)) for arrow in DA1.arrows]
+    # graph=[(da_in_mod_gen(arrow),da_out_mod_gen(arrow)) for arrow in DA1.da_arrows]
 
     # draw_graph_using_gv(graph, nodes=DA1.genset, labels=labels)
     draw_graph(graph, nodes=DA1.genset, labels=labels)
+
+def draw_D_bimodule(D):
+    labels=[]
+    graph=[]
+
+    for generator1 in D.genset:
+        for generator2 in D.genset:
+            arrows=[arrow for arrow in D.left_d_arrows if (arrow[0]==generator1 and arrow[2]==generator2)]
+            x=''
+            for ind, arrow in enumerate(arrows):
+                x= x + str(arrow[1])
+                if ind+1!=len(arrows): x=x+' + '
+            # print str(generator1) + '--' + x + '-->'+ str(generator2)
+            labels.append(x)
+            graph.append((arrow[0],arrow[2]))
+
+
+    # labels=[arrow_to_label(arrow) for arrow in DA1.arrows]
+    # graph=[(da_in_mod_gen(arrow),da_out_mod_gen(arrow)) for arrow in DA1.da_arrows]
+
+    # draw_graph_using_gv(graph, nodes=DA1.genset, labels=labels)
+    draw_graph(graph, nodes=D.genset, labels=labels)
 
 def draw_chain_complex(C):
     graph=[(arrow[0],arrow[1]) for arrow in C.arrows]
 
     # draw_graph_using_gv(graph, nodes=DA1.genset, labels=labels)
     draw_graph(graph,nodes=C.genset)
-
-
 
 # def draw_graph_using_gv(graph, nodes=None, labels=None, graph_layout='shell',
 #                node_size=0, node_color='blue', node_alpha=0.8,

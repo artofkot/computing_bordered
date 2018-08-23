@@ -131,12 +131,17 @@ class DD_bimodule(object):
         #contribution of double dd_arrows
         for dd_arrow1 in self.dd_arrows:
             for dd_arrow2 in self.dd_arrows:
+                # if str(dd_arrow1)=="(p01_c1, 1, p01, c1)" and str(dd_arrow2)=="(p01, p01, l1, 1)":
+                #     debug('Yes')
                 if not dd_out_mod_gen(dd_arrow1)==dd_in_mod_gen(dd_arrow2): continue
                 a1a2_left=self.left_algebra.multiply(dd_out_left_alg_gen(dd_arrow1),dd_out_left_alg_gen(dd_arrow2))
                 a1a2_right=self.right_algebra.multiply(dd_out_right_alg_gen(dd_arrow2),dd_out_right_alg_gen(dd_arrow1))
                 if a1a2_left and a1a2_right:
                     ar=(dd_in_mod_gen(dd_arrow1),a1a2_left,dd_out_mod_gen(dd_arrow2),a1a2_right)
                     d_squared[ar]+=1
+                    # if str(ar)=="(p01_c1, p01, l1, c1)": 
+                    #     debug(str(dd_arrow1))
+                    #     debug(str(dd_arrow2))
         return d_squared
 
 
@@ -169,14 +174,14 @@ def are_equal_smart_dd(DD1,DD2):
         for pair in bijection:
             f[(pair[0],
                 1,pair[1],1)]+=1
-        if check_df_is_0(DD1,DD2,f): return True
+        if dd_check_df_is_0(DD1,DD2,f): return True
     print 'there is no bijective isomorphism'
     return False
 
 
 # morphism is represented by bunch of arrows, where all coefficients are 1!
 # and also I assume that there are no differentials in algebra!
-def compute_df(DD1,DD2,f):
+def dd_compute_df(DD1,DD2,f):
     df=Bunch_of_arrows()
 
     #contribution of double arrows, with morphism on the second place
@@ -226,8 +231,8 @@ def compute_df(DD1,DD2,f):
 
     return df
 
-def check_df_is_0(DD1,DD2,f):
-    df=compute_df(DD1,DD2,f)
+def dd_check_df_is_0(DD1,DD2,f):
+    df=dd_compute_df(DD1,DD2,f)
     df.delete_arrows_with_even_coeff()
     # print '\n{\nHere are all the arrows in df'
     # df.show()

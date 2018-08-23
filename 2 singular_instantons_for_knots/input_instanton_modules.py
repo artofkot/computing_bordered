@@ -2,12 +2,14 @@
 import sys
 sys.path.append('../')
 
-from algebraic_structures.algebra import AttrDict, Generator, pil_A
+from algebraic_structures.algebra import AttrDict, Generator, pil_A, B_r
 from algebraic_structures.basics import  Bunch_of_arrows
-from algebraic_structures.dd_bimodule import DD_bimodule
+from algebraic_structures.dd_bimodule import DD_bimodule, dd_randomly_cancel_until_possible
 from algebraic_structures.right_a_module import Right_A_module
 from algebraic_structures.left_a_module import Left_A_module
 from algebraic_structures.left_d_module import Left_D_module
+from algebraic_structures.aa_bimodule import a_AA_a
+from algebraic_structures.specific_algebras_modules_bimodules import *
 
 ##### graph of pillow algebra
 vertices=pil_A.idemset
@@ -28,7 +30,6 @@ def paths(idem1,idem2):
             for a_path in auxilary_paths:  
                 paths_to_add.add((edge,)+a_path)
     return paths_to_add
-
 def reverse_str(path):
     if path[0].idem.left==path[0].idem.right: out = '('+str(path[0])+"'" +')'
     else:
@@ -38,7 +39,6 @@ def reverse_str(path):
         out=out[:-1]
         out=out+')'
     return out
-
 def reverse_tex_str(path):
     if path[0].idem.left==path[0].idem.right: out = '('+str(path[0].tex_name)+"'" +')'
     else:
@@ -48,7 +48,6 @@ def reverse_tex_str(path):
         out=out[:-1]
         out=out+')'
     return out
-
 
 ##### dual(A^bar^A) DD-bimodule from Mor paper, for algebra with no differential
 def init_DD_bar_dual(pil_A):
@@ -745,6 +744,9 @@ Left_D_test=init_Left_D_test(pil_A)
 Right_A_test=init_Right_A_test(pil_A)
 
 DD_bar_dual=init_DD_bar_dual(pil_A)
+DD_bar_r_dual=dd_randomly_cancel_until_possible(DD_bar_dual)
+DD_bar_r_dual.show()
+
 Right_A_L0=init_Right_A_L0(pil_A) #eight curve
 Right_A_LU=init_Right_A_LU(pil_A) #unknot
 Right_A_LT23=init_Right_A_LT23(pil_A) #T(2,3)
@@ -762,5 +764,58 @@ Right_A_R1=init_Right_A_R1(pil_A)
 Right_A_R2=init_Right_A_R2(pil_A)
 Right_A_R3=init_Right_A_R3(pil_A)
 Right_A_R00=init_Right_A_R00(pil_A)
+
+def init_new_Right_A_L0(pil_A):
+    gen_by_name=AttrDict({
+                "z": Generator("z"),
+                "w": Generator("w"),
+                "s": Generator("s"),
+                "t": Generator("t"),
+                "y": Generator("y"),
+                "x": Generator("x"),
+                "v": Generator("v"),
+                "u": Generator("u")
+
+                })
+
+    gen_by_name.z.add_idems(0,pil_A.idem_by_name.i2)
+    gen_by_name.w.add_idems(0,pil_A.idem_by_name.j0)
+    gen_by_name.s.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.t.add_idems(0,pil_A.idem_by_name.i1)
+    gen_by_name.y.add_idems(0,pil_A.idem_by_name.j1)
+    gen_by_name.x.add_idems(0,pil_A.idem_by_name.i0)
+    gen_by_name.v.add_idems(0,pil_A.idem_by_name.j2)
+    gen_by_name.u.add_idems(0,pil_A.idem_by_name.j1)
+
+    right_a_arrows=Bunch_of_arrows([
+        (              gen_by_name.s,(pil_A.gen_by_name.ks1,)
+                        ,gen_by_name.z),
+        (              gen_by_name.z,(pil_A.gen_by_name.ks2,)
+                        ,gen_by_name.v),
+        (              gen_by_name.v,(pil_A.gen_by_name.ks3,)
+                        ,gen_by_name.y),
+        (              gen_by_name.s,(pil_A.gen_by_name.ks12,)
+                        ,gen_by_name.v),
+        (              gen_by_name.z,(pil_A.gen_by_name.ks23,)
+                        ,gen_by_name.y),
+        (              gen_by_name.s,(pil_A.gen_by_name.ks123,)
+                        ,gen_by_name.y),
+        (              gen_by_name.s,(pil_A.gen_by_name.et2,)
+                        ,gen_by_name.u),
+        (              gen_by_name.u,(pil_A.gen_by_name.et3,)
+                        ,gen_by_name.w),
+        (              gen_by_name.s,(pil_A.gen_by_name.et23,)
+                        ,gen_by_name.w),
+        (              gen_by_name.x,(pil_A.gen_by_name.r0,)
+                        ,gen_by_name.w),
+        (              gen_by_name.x,(pil_A.gen_by_name.et1,)
+                        ,gen_by_name.t),
+        (              gen_by_name.t,(pil_A.gen_by_name.et2,)
+                        ,gen_by_name.y),
+        (              gen_by_name.x,(pil_A.gen_by_name.et12,)
+                        ,gen_by_name.y),
+                                    ])
+    return Right_A_module(gen_by_name,right_a_arrows,pil_A,name="new_Right_A_L0")
+new_Right_A_L0=init_new_Right_A_L0(pil_A) # new eight curve
 
 

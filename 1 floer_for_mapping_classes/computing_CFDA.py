@@ -6,7 +6,7 @@ from algebraic_structures.algebra import torus_A
 from algebraic_structures.basics import  Bunch_of_arrows,in_red
 from algebraic_structures.da_bimodule import  (
     da_randomly_cancel_until_possible, are_equal_smart_da,
-    check_df_is_0, composition)
+    da_check_df_is_0, composition)
 from algebraic_structures.tensoring import (
     da_da_box_tensor_many_efficient_cancelations, 
     da_da_box_tensor_many_no_cancelations)
@@ -59,7 +59,7 @@ THETA=Bunch_of_arrows([
 
 # F2_THETA=composition(F2,THETA,A)
 # F2_THETA.show()
-# check_df_is_0(ID2,M_RHD,F2_THETA)
+# da_check_df_is_0(ID2,M_RHD,F2_THETA)
 
 # ########## Pseudo_Anosov mapping class
 # start_time = timeit.default_timer()

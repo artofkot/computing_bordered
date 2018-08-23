@@ -1,6 +1,18 @@
 # -*- coding: utf-8 -*- 
 from collections import Counter
 
+def simpler_names_for_generators(module):
+    for ind,gen in enumerate(sorted(module.gen_by_name.values(), key=str)):
+        module.gen_by_name.pop(gen.name, None)
+        gen.name='x'+str(ind)
+        module.gen_by_name['x'+str(ind)]=gen
+
+def rename_gen_in_module(module,name1,name2):
+    gen=module.gen_by_name[name1]
+    module.gen_by_name.pop(name1, None)
+    gen.name=name2
+    module.gen_by_name[name2]=gen
+
 # turns printing in red:
 def debug(whatever):
     print '\033[91m' + str(whatever) + '\033[0m'
@@ -16,7 +28,7 @@ class AttrDict(dict):
 
 class Bunch_of_arrows(Counter):
     def show(self):
-        for arrow_as_a_tuple in self:
+        for arrow_as_a_tuple in sorted(self, key=str):
             print str(arrow_as_a_tuple) + '     *' + str(self[arrow_as_a_tuple])
 
     def delete_arrows_with_even_coeff(self): 

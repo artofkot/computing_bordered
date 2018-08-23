@@ -50,7 +50,7 @@ class Left_D_module(object):
         for gen in self.genset:
             print str(gen.idem.left) + '___'  + str(gen)
 
-        print '\nActions:'
+        print '\n' + str(len(self.left_d_arrows)) + ' actions:'
         for left_d_arrow in self.left_d_arrows:
             print str(left_d_arrow)
 
